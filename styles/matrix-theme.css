@@ -1,0 +1,764 @@
+/* ============================================
+   MATRIX THEME - Terminal & Reduced Green Saturation
+   ============================================ */
+
+:root {
+  /* Colors - Balanced Matrix palette */
+  --matrix-black: #000000;
+  --matrix-dark: #0d1117;
+  --matrix-darker: #161b22;
+  --matrix-gray: #21262d;
+  --matrix-gray-light: #30363d;
+  
+  /* Green palette - reduced saturation */
+  --matrix-green: #00d455;
+  --matrix-green-bright: #26d467;
+  --matrix-green-dim: #238636;
+  --matrix-green-dark: #1a5f2e;
+  --matrix-green-glow: rgba(0, 212, 85, 0.6);
+  --matrix-green-text: #7ee787;
+  
+  /* Terminal colors */
+  --terminal-bg: rgba(13, 17, 23, 0.95);
+  --terminal-border: var(--matrix-green-dim);
+  --prompt-color: var(--matrix-green-bright);
+  --cursor-color: var(--matrix-green);
+  
+  /* Typography */
+  --font-primary: 'Orbitron', monospace;
+  --font-mono: 'Share Tech Mono', monospace;
+  
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Shadows */
+  --shadow-glow: 0 0 20px var(--matrix-green-glow);
+  --shadow-text: 0 0 10px var(--matrix-green-glow);
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-mono);
+  background: var(--matrix-black);
+  color: var(--matrix-green-text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ============================================
+   BACKGROUND EFFECTS
+   ============================================ */
+
+#matrixRain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+#starfield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+
+.main-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  position: relative;
+  z-index: 1;
+}
+
+.content {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+/* ============================================
+   FLOATING CAT MASCOT
+   ============================================ */
+
+.floating-cat {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.floating-cat:hover {
+  transform: scale(1.1);
+}
+
+.floating-cat:active {
+  transform: scale(0.95);
+}
+
+.ai-cat {
+  width: 120px;
+  height: 120px;
+  filter: drop-shadow(var(--shadow-glow));
+  transition: all var(--transition-base);
+  animation: float 4s ease-in-out infinite;
+}
+
+.ai-cat:hover {
+  filter: drop-shadow(0 0 25px var(--matrix-green-glow));
+}
+
+/* Animación de purr cuando se hace click */
+.ai-cat.purring {
+  animation: purr 0.8s ease-in-out, float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+@keyframes purr {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1) rotate(-2deg); }
+  50% { transform: scale(1.05) rotate(2deg); }
+  75% { transform: scale(1.1) rotate(-1deg); }
+}
+
+.cat-status {
+  margin-top: var(--space-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--matrix-green-text);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.floating-cat:hover .cat-status {
+  opacity: 1;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--matrix-green);
+  box-shadow: 0 0 8px var(--matrix-green-glow);
+}
+
+.status-dot.active {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.hero {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.greeting {
+  margin-bottom: var(--space-md);
+}
+
+.matrix-text {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--matrix-green);
+  text-shadow: var(--shadow-text);
+  letter-spacing: 0.2em;
+  animation: textGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  from { text-shadow: 0 0 10px var(--matrix-green-glow); }
+  to { text-shadow: 0 0 20px var(--matrix-green-glow), 0 0 30px var(--matrix-green-glow); }
+}
+
+.hero-title {
+  font-family: var(--font-primary);
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--space-lg);
+  color: #ffffff;
+}
+
+.matrix-highlight {
+  color: var(--matrix-green);
+  text-shadow: var(--shadow-text);
+  position: relative;
+}
+
+.matrix-highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--matrix-green), transparent);
+  animation: scanline 2s linear infinite;
+}
+
+@keyframes scanline {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.hero-description {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--matrix-green-text);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+.accent-text {
+  color: var(--matrix-green-bright);
+  font-weight: 600;
+}
+
+/* ============================================
+   TERMINAL/CHAT SECTION
+   ============================================ */
+
+.chat-section {
+  margin-bottom: var(--space-xl);
+}
+
+.terminal-container {
+  background: var(--terminal-bg);
+  border: 2px solid var(--terminal-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-glow);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.terminal-header {
+  background: var(--matrix-darker);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--terminal-border);
+}
+
+.terminal-controls {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.control {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.control.close { background: #ff5f57; }
+.control.minimize { background: #ffbd2e; }
+.control.maximize { background: #28ca42; }
+
+.terminal-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-mono);
+  color: var(--matrix-green);
+  font-weight: 600;
+}
+
+.terminal-icon {
+  color: var(--matrix-green-bright);
+}
+
+.terminal-body {
+  padding: var(--space-md);
+}
+
+.chat-messages {
+  height: 400px;
+  overflow-y: auto;
+  padding-right: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+/* Custom scrollbar */
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: var(--matrix-dark);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: var(--matrix-green-dim);
+  border-radius: 3px;
+}
+
+.message {
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.message.system .prompt {
+  color: var(--prompt-color);
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  display: block;
+}
+
+.message-content {
+  flex: 1;
+  font-family: var(--font-mono);
+  line-height: 1.6;
+}
+
+.message-content p {
+  margin-bottom: var(--space-xs);
+  color: var(--matrix-green-text);
+}
+
+.message-content p:last-child {
+  margin-bottom: 0;
+}
+
+.terminal-input {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  border-top: 1px solid var(--terminal-border);
+  padding-top: var(--space-md);
+}
+
+.prompt {
+  color: var(--prompt-color);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.terminal-input-field {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--matrix-green-text);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: var(--space-sm);
+  outline: none;
+  position: relative;
+}
+
+.terminal-input-field::placeholder {
+  color: var(--matrix-green-dim);
+}
+
+.terminal-input-field:focus {
+  color: #ffffff;
+}
+
+/* Typing cursor effect */
+.terminal-input-field:focus::after {
+  content: '_';
+  color: var(--cursor-color);
+  animation: blink 1s infinite;
+  position: absolute;
+  right: 2px;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.send-btn {
+  background: linear-gradient(45deg, var(--matrix-green-dim), var(--matrix-green));
+  color: var(--matrix-black);
+  border: none;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.send-btn:hover {
+  background: linear-gradient(45deg, var(--matrix-green), var(--matrix-green-bright));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--matrix-green-glow);
+}
+
+.send-btn:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
+
+.cta-section {
+  text-align: center;
+}
+
+.cta-terminal {
+  background: var(--terminal-bg);
+  border: 2px solid var(--terminal-border);
+  border-radius: 12px;
+  padding: var(--space-xl);
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-glow);
+}
+
+.cta-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  font-family: var(--font-mono);
+  color: var(--matrix-green-text);
+}
+
+.cta-prompt {
+  color: var(--prompt-color);
+  font-weight: 600;
+}
+
+.cta-command {
+  color: var(--matrix-green-bright);
+}
+
+.cta-title {
+  font-family: var(--font-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--matrix-green);
+  margin-bottom: var(--space-md);
+  text-shadow: var(--shadow-text);
+}
+
+.cta-description {
+  font-family: var(--font-mono);
+  color: var(--matrix-green-text);
+  margin-bottom: var(--space-lg);
+  line-height: 1.8;
+}
+
+.matrix-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: linear-gradient(45deg, var(--matrix-green-dim), var(--matrix-green));
+  color: var(--matrix-black);
+  text-decoration: none;
+  padding: var(--space-md) var(--space-xl);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.matrix-button:hover {
+  background: linear-gradient(45deg, var(--matrix-green), var(--matrix-green-bright));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--matrix-green-glow);
+}
+
+.matrix-button:active {
+  transform: translateY(0);
+}
+
+.button-cursor {
+  animation: blink 1s infinite;
+}
+
+/* ============================================
+   MODAL
+   ============================================ */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: var(--terminal-bg);
+  border: 2px solid var(--terminal-border);
+  border-radius: 12px;
+  padding: var(--space-xl);
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  box-shadow: var(--shadow-glow);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--matrix-green);
+}
+
+.modal-prompt {
+  color: var(--prompt-color);
+}
+
+.modal-description {
+  font-family: var(--font-mono);
+  color: var(--matrix-green-text);
+  margin-bottom: var(--space-lg);
+  line-height: 1.8;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+  .content {
+    gap: var(--space-lg);
+  }
+  
+  .floating-cat {
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .ai-cat {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .cat-status {
+    font-size: 0.7rem;
+  }
+  
+  .matrix-text {
+    font-size: 1.5rem;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+  }
+  
+  .chat-messages {
+    height: 300px;
+  }
+  
+  .terminal-input {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-sm);
+  }
+  
+  .send-btn {
+    align-self: flex-end;
+  }
+  
+  .cta-terminal {
+    padding: var(--space-lg);
+  }
+  
+  .modal-content {
+    padding: var(--space-lg);
+    margin: var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    padding: var(--space-sm);
+  }
+  
+  .floating-cat {
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .ai-cat {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .cat-status {
+    font-size: 0.6rem;
+  }
+  
+  .matrix-text {
+    font-size: 1.3rem;
+  }
+  
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .chat-messages {
+    height: 250px;
+  }
+  
+  .terminal-container {
+    border-radius: 8px;
+  }
+  
+  .terminal-body {
+    padding: var(--space-sm);
+  }
+}
+
+/* ============================================
+   ANIMATIONS & EFFECTS
+   ============================================ */
+
+.typewriter-cursor {
+  animation: blink 1s infinite;
+  color: var(--cursor-color);
+}
+
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.typing-indicator span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--matrix-green);
+  animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: 0s; }
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+  0%, 80%, 100% { 
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus styles */
+.terminal-input-field:focus,
+.send-btn:focus,
+.matrix-button:focus {
+  outline: 2px solid var(--matrix-green);
+  outline-offset: 2px;
+}

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bienvenido! Orquesto inteligencia artificial para que tu negocio sea más eficiente, escalable y rentable">
+    <title>Daniel Castiblanco - Consultor de IA</title>
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fuentes Matrix -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="styles/matrix-theme.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+    <!-- Matrix Rain Background -->
+    <canvas id="matrixRain"></canvas>
+    
+    <!-- Starfield Background -->
+    <canvas id="starfield"></canvas>
+    
+    <!-- AI Cat Mascot Flotante -->
+    <div id="floatingCat" class="floating-cat">
+        <svg id="aiCat" viewBox="0 0 400 400" class="ai-cat">
+            <defs>
+                <radialGradient id="catGradient" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#1a2b1a"/>
+                    <stop offset="100%" stop-color="#0f1f0f"/>
+                </radialGradient>
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge> 
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            
+            <!-- Cuerpo del gato -->
+            <g class="cat-body">
+                <!-- Cabeza principal -->
+                <circle cx="200" cy="200" r="120" fill="url(#catGradient)" stroke="#00ff41" stroke-width="3"/>
+                
+                <!-- Orejas -->
+                <g class="ears">
+                    <path class="ear left" d="M110,120 Q140,60 170,115 Q150,105 110,120 Z" fill="#1a2b1a" stroke="#00ff41" stroke-width="2"/>
+                    <path class="ear right" d="M290,120 Q260,60 230,115 Q250,105 290,120 Z" fill="#1a2b1a" stroke="#00ff41" stroke-width="2"/>
+                    <!-- Interior orejas -->
+                    <path d="M125,115 Q145,80 165,115 Z" fill="#00cc33" opacity="0.6"/>
+                    <path d="M275,115 Q255,80 235,115 Z" fill="#00cc33" opacity="0.6"/>
+                </g>
+                
+                <!-- Bigotes EXTERNOS -->
+                <g class="whiskers" stroke="#00ff41" stroke-width="2" opacity="0.9">
+                    <!-- Lado izquierdo -->
+                    <line x1="60" y1="180" x2="120" y2="185"/>
+                    <line x1="65" y1="200" x2="125" y2="200"/>
+                    <line x1="60" y1="220" x2="120" y2="215"/>
+                    <!-- Lado derecho -->
+                    <line x1="280" y1="185" x2="340" y2="180"/>
+                    <line x1="275" y1="200" x2="335" y2="200"/>
+                    <line x1="280" y1="215" x2="340" y2="220"/>
+                </g>
+                
+                <!-- Visor tecnológico -->
+                <ellipse cx="200" cy="200" rx="100" ry="70" fill="rgba(0, 20, 0, 0.8)" opacity="0.9"/>
+                
+                <!-- Ojos -->
+                <g class="eyes">
+                    <!-- Ojos normales -->
+                    <g class="eyes-normal">
+                        <g class="eye-left">
+                            <ellipse cx="160" cy="200" rx="20" ry="15" fill="#001a00"/>
+                            <circle class="pupil pupil-left" cx="160" cy="200" r="8" fill="#00ff41"/>
+                            <circle cx="156" cy="196" r="3" fill="#66ff66"/>
+                        </g>
+                        <g class="eye-right">
+                            <ellipse cx="240" cy="200" rx="20" ry="15" fill="#001a00"/>
+                            <circle class="pupil pupil-right" cx="240" cy="200" r="8" fill="#00ff41"/>
+                            <circle cx="236" cy="196" r="3" fill="#66ff66"/>
+                        </g>
+                    </g>
+                    
+                    <!-- Párpado para parpadeo - DEBE IR ENCIMA DE LOS OJOS -->
+                    <rect class="eyelid" x="130" y="185" width="140" height="30" fill="#0f1f0f" style="transform: scaleY(0); transform-origin: 50% 100%"/>
+                    
+                    <!-- Ojos felices -->
+                    <g class="eyes-happy" style="opacity: 0">
+                        <path d="M140 200 q20 15 40 0" stroke="#00ff41" stroke-width="4" fill="none"/>
+                        <path d="M220 200 q20 15 40 0" stroke="#00ff41" stroke-width="4" fill="none"/>
+                    </g>
+                </g>
+                
+                <!-- Nariz -->
+                <path d="M195 220 L200 210 L205 220 Z" fill="#00ff41"/>
+                
+                <!-- Boca -->
+                <g class="mouth">
+                    <path d="M180 240 Q200 260 220 240" stroke="#00ff41" stroke-width="2" fill="none"/>
+                    
+                    <!-- Indicador de habla -->
+                    <g class="speech-indicator" transform="translate(200,250)" style="opacity: 0">
+                        <rect x="-15" y="-6" width="8" height="12" rx="2" fill="#00ff41"/>
+                        <rect x="-4" y="-10" width="8" height="20" rx="2" fill="#66ff66"/>
+                        <rect x="7" y="-8" width="8" height="16" rx="2" fill="#00ff41"/>
+                    </g>
+                </g>
+                
+                <!-- Cola -->
+                <g class="tail">
+                    <path d="M310 260 Q360 240 350 290 Q340 320 300 315" fill="none" stroke="#00ff41" stroke-width="6" stroke-linecap="round"/>
+                </g>
+                
+                <!-- Detalles tech -->
+                <g class="tech-details" opacity="0.8">
+                    <circle cx="130" cy="140" r="3" fill="#00ff41"/>
+                    <circle cx="270" cy="140" r="3" fill="#00ff41"/>
+                    <rect x="190" y="120" width="20" height="4" rx="2" fill="#00cc33"/>
+                    <!-- Líneas de código simuladas -->
+                    <rect x="150" y="300" width="30" height="2" rx="1" fill="#00ff41" opacity="0.6"/>
+                    <rect x="200" y="305" width="40" height="2" rx="1" fill="#00ff41" opacity="0.4"/>
+                    <rect x="170" y="310" width="25" height="2" rx="1" fill="#00ff41" opacity="0.7"/>
+                </g>
+            </g>
+        </svg>
+        
+        <div class="cat-status">
+            <span class="status-dot active"></span>
+            <span class="status-text">AI Assistant</span>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <main class="main-container">
+        <div class="content">
+
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="greeting">
+                    <span class="matrix-text">BIENVENIDO</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    <span class="matrix-highlight">ORQUESTO IA</span>
+                    para que tu negocio sea más 
+                    <span class="matrix-highlight">EFICIENTE</span>, 
+                    <span class="matrix-highlight">ESCALABLE</span> y 
+                    <span class="matrix-highlight">RENTABLE</span>
+                </h1>
+                
+                <p class="hero-description">
+                    > Transformo procesos manuales en sistemas inteligentes<br>
+                    > Desde chatbots hasta orquestación completa de agentes<br>
+                    > <span class="accent-text">Sin reemplazar personas, potenciándolas con IA práctica</span>
+                </p>
+            </section>
+
+            <!-- Chat Section -->
+            <section class="chat-section">
+                <div class="terminal-container">
+                    <div class="terminal-header">
+                        <div class="terminal-controls">
+                            <span class="control close"></span>
+                            <span class="control minimize"></span>
+                            <span class="control maximize"></span>
+                        </div>
+                        <div class="terminal-title">
+                            <span class="terminal-icon">></span>
+                            <span>AI_CONSULTANT.exe</span>
+                        </div>
+                    </div>
+                    
+                    <div class="terminal-body">
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="message system">
+                                <span class="prompt">system@ai-consultant:~$</span>
+                                <div class="message-content">
+                                    <p>Conectando con consultor IA...</p>
+                                    <p>Conexión establecida ✓</p>
+                                    <p>En 60 segundos analizamos tu caso y coordinamos una reunión.</p>
+                                    <p><strong class="matrix-highlight">¿En qué industria está tu negocio?</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="terminal-input">
+                            <span class="prompt">user@session:~$</span>
+                            <input 
+                                type="text" 
+                                id="chatInput" 
+                                class="terminal-input-field" 
+                                placeholder="Escribe tu respuesta..."
+                                autofocus
+                            >
+                            <button id="sendMessage" class="send-btn">ENVIAR</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <div class="cta-terminal">
+                    <div class="cta-header">
+                        <span class="cta-prompt">></span>
+                        <span class="cta-command">schedule_consultation.exe</span>
+                    </div>
+                    <div class="cta-content">
+                        <h3 class="cta-title">RESERVAR CONSULTORÍA</h3>
+                        <p class="cta-description">
+                            > 30 minutos gratuitos<br>
+                            > Sin compromiso<br>
+                            > Plan claro garantizado
+                        </p>
+                        <a href="#" id="scheduleCall" class="matrix-button">
+                            <span>INICIAR PROCESO</span>
+                            <span class="button-cursor">_</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="completionModal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content terminal-style">
+            <div class="modal-header">
+                <span class="modal-prompt">></span>
+                <span>ANÁLISIS COMPLETADO</span>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">
+                    > Información recopilada exitosamente<br>
+                    > Resumen preparado para Daniel<br>
+                    > Listo para consultoría personalizada
+                </p>
+                <a href="#" id="modalSchedule" class="matrix-button">
+                    <span>RESERVAR CONSULTORÍA</span>
+                    <span class="button-cursor">_</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio para efectos -->
+    <audio id="purringSound" preload="auto">
+        <source src="../ronroneo.wav" type="audio/wav">
+    </audio>
+
+    <!-- Scripts -->
+    <script src="js/config-minimal.js"></script>
+    <script src="js/knowledge-base.js"></script>
+    <script src="js/floating-cat.js"></script>
+    <script src="js/matrix-chat.js"></script>
+</body>
+</html>
