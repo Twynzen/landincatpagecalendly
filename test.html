@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Unified Send-Cat System</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #0d1117;
+            color: #00d455;
+            font-family: 'Courier New', monospace;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #00d455;
+            text-shadow: 0 0 10px rgba(0, 212, 85, 0.5);
+        }
+        
+        .test-info {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(13, 17, 23, 0.95);
+            border: 1px solid #238636;
+            border-radius: 8px;
+        }
+        
+        .test-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .test-list li {
+            padding: 10px;
+            margin: 10px 0;
+            background: rgba(35, 134, 54, 0.1);
+            border-left: 3px solid #00d455;
+        }
+        
+        .status {
+            float: right;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .status.ok {
+            background: #238636;
+            color: #fff;
+        }
+        
+        .status.error {
+            background: #da3633;
+            color: #fff;
+        }
+        
+        .status.warning {
+            background: #d29922;
+            color: #000;
+        }
+        
+        #floatingCat {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            z-index: 1000;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>🤖 UNIFIED SEND-CAT TEST PAGE</h1>
+    
+    <div class="test-info">
+        <h2>Sistema de Pruebas</h2>
+        <p>Esta página verifica que el sistema unificado funciona correctamente.</p>
+        
+        <h3>Checklist de Funcionalidad:</h3>
+        <ul class="test-list">
+            <li>
+                <span id="cat-visible">❓</span> Gato flotante visible
+                <span class="status" id="cat-status">CHECKING</span>
+            </li>
+            <li>
+                <span id="boundary-test">❓</span> Boundary detection (no se sale de pantalla)
+                <span class="status" id="boundary-status">CHECKING</span>
+            </li>
+            <li>
+                <span id="click-test">❓</span> Click para iniciar chat
+                <span class="status" id="click-status">WAITING</span>
+            </li>
+            <li>
+                <span id="bubble-test">❓</span> Burbujas de diálogo funcionan
+                <span class="status" id="bubble-status">WAITING</span>
+            </li>
+            <li>
+                <span id="rate-limit">❓</span> Rate limiting (1 msg/seg)
+                <span class="status" id="rate-status">WAITING</span>
+            </li>
+            <li>
+                <span id="memory-test">❓</span> Memoria persistente
+                <span class="status" id="memory-status">CHECKING</span>
+            </li>
+            <li>
+                <span id="api-test">❓</span> Configuración API
+                <span class="status" id="api-status">CHECKING</span>
+            </li>
+        </ul>
+        
+        <h3>Logs en Tiempo Real:</h3>
+        <div id="logs" style="background: #000; padding: 10px; border-radius: 4px; max-height: 200px; overflow-y: auto; font-size: 12px;">
+            <div style="color: #00d455;">> Sistema iniciando...</div>
+        </div>
+        
+        <h3>Instrucciones de Prueba:</h3>
+        <ol style="color: #7ee787;">
+            <li>Verifica que el gato aparezca en pantalla ✓</li>
+            <li>Intenta arrastrar el gato fuera de los límites - debe rebotar</li>
+            <li>Haz click en el gato para iniciar conversación</li>
+            <li>Escribe mensajes de prueba</li>
+            <li>Verifica que las respuestas no sean instantáneas (rate limiting)</li>
+            <li>Recarga la página y verifica que la memoria persista</li>
+        </ol>
+    </div>
+    
+    <!-- Gato Flotante -->
+    <div id="floatingCat" style="display: none;">
+        <svg id="aiCat" viewBox="0 0 400 400" style="width: 100%; height: 100%;">
+            <defs>
+                <radialGradient id="catGradient">
+                    <stop offset="0%" stop-color="#1a2b1a"/>
+                    <stop offset="100%" stop-color="#0f1f0f"/>
+                </radialGradient>
+            </defs>
+            <!-- Cabeza del gato -->
+            <circle cx="200" cy="200" r="80" fill="url(#catGradient)" stroke="#00ff41" stroke-width="2"/>
+            <!-- Orejas -->
+            <polygon points="140,180 120,140 160,160" fill="url(#catGradient)" stroke="#00ff41" stroke-width="2"/>
+            <polygon points="240,160 280,140 260,180" fill="url(#catGradient)" stroke="#00ff41" stroke-width="2"/>
+            <!-- Ojos -->
+            <circle cx="170" cy="190" r="15" fill="#00ff41" opacity="0.9"/>
+            <circle cx="230" cy="190" r="15" fill="#00ff41" opacity="0.9"/>
+            <!-- Pupilas -->
+            <circle class="pupil-left" cx="170" cy="190" r="8" fill="#000"/>
+            <circle class="pupil-right" cx="230" cy="190" r="8" fill="#000"/>
+            <!-- Eyelid para parpadeo -->
+            <g class="eyelid" style="transform: scaleY(0); transform-origin: center;">
+                <rect x="155" y="175" width="30" height="30" fill="url(#catGradient)"/>
+                <rect x="215" y="175" width="30" height="30" fill="url(#catGradient)"/>
+            </g>
+            <!-- Nariz -->
+            <polygon points="200,210 195,220 205,220" fill="#00ff41" opacity="0.7"/>
+            <!-- Boca -->
+            <path d="M200,220 Q190,225 185,220" fill="none" stroke="#00ff41" stroke-width="1.5" opacity="0.7"/>
+            <path d="M200,220 Q210,225 215,220" fill="none" stroke="#00ff41" stroke-width="1.5" opacity="0.7"/>
+            <!-- Bigotes -->
+            <line x1="100" y1="190" x2="140" y2="185" stroke="#00ff41" stroke-width="1" opacity="0.6"/>
+            <line x1="100" y1="200" x2="140" y2="200" stroke="#00ff41" stroke-width="1" opacity="0.6"/>
+            <line x1="260" y1="185" x2="300" y2="190" stroke="#00ff41" stroke-width="1" opacity="0.6"/>
+            <line x1="260" y1="200" x2="300" y2="200" stroke="#00ff41" stroke-width="1" opacity="0.6"/>
+        </svg>
+    </div>
+    
+    <!-- Audio -->
+    <audio id="purringSound" preload="auto">
+        <source src="../ronroneo.wav" type="audio/wav">
+        <source src="ronroneo.wav" type="audio/wav">
+    </audio>
+    
+    <!-- Scripts -->
+    <script>
+        // Mock de env-config para testing
+        window.envConfig = {
+            get: function(key) {
+                const config = {
+                    IS_DEVELOPMENT: true,
+                    SUPABASE_URL: 'https://test.supabase.co',
+                    SUPABASE_ANON_KEY: 'test-key',
+                    API_ENDPOINT: '/functions/v1/chat'
+                };
+                return config[key];
+            }
+        };
+        
+        // Mock de knowledge-base
+        window.DANIEL_KNOWLEDGE = {
+            name: "Daniel Castiblanco",
+            title: "Consultor de IA",
+            industries: ["educación", "software", "retail", "gaming"]
+        };
+        
+        // Mock de CONFIG
+        window.CONFIG = {
+            CALENDLY_URL: 'https://calendly.com/daniel-castiblanco/30min'
+        };
+        
+        // Sistema de logging para testing
+        function addLog(message, type = 'info') {
+            const logs = document.getElementById('logs');
+            const logEntry = document.createElement('div');
+            const colors = {
+                info: '#00d455',
+                warning: '#d29922',
+                error: '#da3633',
+                success: '#238636'
+            };
+            logEntry.style.color = colors[type] || colors.info;
+            logEntry.textContent = `> ${new Date().toLocaleTimeString()}: ${message}`;
+            logs.appendChild(logEntry);
+            logs.scrollTop = logs.scrollHeight;
+        }
+        
+        // Tests automáticos
+        window.addEventListener('load', () => {
+            addLog('Página cargada, iniciando tests...', 'info');
+            
+            setTimeout(() => {
+                // Test 1: Verificar gato visible
+                const cat = document.getElementById('floatingCat');
+                if (cat) {
+                    cat.style.display = 'block';
+                    document.getElementById('cat-visible').textContent = '✅';
+                    document.getElementById('cat-status').textContent = 'OK';
+                    document.getElementById('cat-status').className = 'status ok';
+                    addLog('Gato flotante renderizado correctamente', 'success');
+                } else {
+                    document.getElementById('cat-visible').textContent = '❌';
+                    document.getElementById('cat-status').textContent = 'ERROR';
+                    document.getElementById('cat-status').className = 'status error';
+                    addLog('ERROR: Gato flotante no encontrado', 'error');
+                }
+                
+                // Test 2: Verificar memoria
+                const savedLead = localStorage.getItem('lead_unified_cat_test');
+                if (savedLead) {
+                    document.getElementById('memory-test').textContent = '✅';
+                    document.getElementById('memory-status').textContent = 'DATA FOUND';
+                    document.getElementById('memory-status').className = 'status ok';
+                    addLog('Memoria persistente detectada', 'success');
+                } else {
+                    document.getElementById('memory-test').textContent = '⚠️';
+                    document.getElementById('memory-status').textContent = 'NO DATA';
+                    document.getElementById('memory-status').className = 'status warning';
+                    addLog('No hay datos en memoria (normal en primera carga)', 'warning');
+                }
+                
+                // Test 3: Verificar configuración API
+                if (window.envConfig && window.envConfig.get('SUPABASE_URL')) {
+                    document.getElementById('api-test').textContent = '✅';
+                    document.getElementById('api-status').textContent = 'CONFIGURED';
+                    document.getElementById('api-status').className = 'status ok';
+                    addLog('Configuración API detectada', 'success');
+                } else {
+                    document.getElementById('api-test').textContent = '⚠️';
+                    document.getElementById('api-status').textContent = 'MOCK MODE';
+                    document.getElementById('api-status').className = 'status warning';
+                    addLog('Usando configuración mock (desarrollo)', 'warning');
+                }
+                
+                // Test 4: Boundary detection
+                setTimeout(() => {
+                    if (window.unifiedSendCat) {
+                        // Intentar mover fuera de límites
+                        window.unifiedSendCat.moveToPositionSafe(-100, -100);
+                        setTimeout(() => {
+                            const pos = window.unifiedSendCat.position;
+                            if (pos.x >= 50 && pos.y >= 50) {
+                                document.getElementById('boundary-test').textContent = '✅';
+                                document.getElementById('boundary-status').textContent = 'WORKING';
+                                document.getElementById('boundary-status').className = 'status ok';
+                                addLog('Boundary detection funcionando correctamente', 'success');
+                            }
+                        }, 1000);
+                    }
+                }, 2000);
+                
+            }, 1000);
+        });
+        
+        // Monitor de clicks
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#floatingCat')) {
+                document.getElementById('click-test').textContent = '✅';
+                document.getElementById('click-status').textContent = 'DETECTED';
+                document.getElementById('click-status').className = 'status ok';
+                addLog('Click en gato detectado - iniciando chat', 'success');
+                
+                // Verificar burbujas
+                setTimeout(() => {
+                    const bubble = document.querySelector('.send-cat-bubble');
+                    if (bubble) {
+                        document.getElementById('bubble-test').textContent = '✅';
+                        document.getElementById('bubble-status').textContent = 'WORKING';
+                        document.getElementById('bubble-status').className = 'status ok';
+                        addLog('Sistema de burbujas funcionando', 'success');
+                    }
+                }, 500);
+            }
+        });
+    </script>
+    
+    <!-- Cargar el sistema unificado -->
+    <script src="js/unified-send-cat.js"></script>
+    
+    <script>
+        // Inicialización adicional después de cargar el script
+        setTimeout(() => {
+            if (window.UnifiedSendCat && !window.unifiedSendCat) {
+                addLog('Inicializando sistema unificado manualmente...', 'warning');
+                window.unifiedSendCat = new UnifiedSendCat();
+                addLog('Sistema unificado inicializado', 'success');
+            }
+        }, 2000);
+    </script>
+</body>
+</html>

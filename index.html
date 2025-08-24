@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bienvenido! Orquesto inteligencia artificial para que tu negocio sea más eficiente, escalable y rentable">
+    <meta name="description" content="Daniel Castiblanco - Consultor de IA especializado en RAG, automatización y soluciones empresariales">
     <title>Daniel Castiblanco - Consultor de IA</title>
     
     <!-- Preconnect -->
@@ -26,7 +26,7 @@
     <!-- Starfield Background -->
     <canvas id="starfield"></canvas>
     
-    <!-- AI Cat Mascot Flotante -->
+    <!-- CatDC.ai Flotante -->
     <div id="floatingCat" class="floating-cat">
         <svg id="aiCat" viewBox="0 0 400 400" class="ai-cat">
             <defs>
@@ -49,92 +49,66 @@
                 <circle cx="200" cy="200" r="120" fill="url(#catGradient)" stroke="#00ff41" stroke-width="3"/>
                 
                 <!-- Orejas -->
-                <g class="ears">
-                    <path class="ear left" d="M110,120 Q140,60 170,115 Q150,105 110,120 Z" fill="#1a2b1a" stroke="#00ff41" stroke-width="2"/>
-                    <path class="ear right" d="M290,120 Q260,60 230,115 Q250,105 290,120 Z" fill="#1a2b1a" stroke="#00ff41" stroke-width="2"/>
-                    <!-- Interior orejas -->
-                    <path d="M125,115 Q145,80 165,115 Z" fill="#00cc33" opacity="0.6"/>
-                    <path d="M275,115 Q255,80 235,115 Z" fill="#00cc33" opacity="0.6"/>
-                </g>
+                <polygon points="140,140 120,100 160,120" fill="url(#catGradient)" stroke="#00ff41" stroke-width="2"/>
+                <polygon points="240,120 280,100 260,140" fill="url(#catGradient)" stroke="#00ff41" stroke-width="2"/>
                 
-                <!-- Bigotes EXTERNOS -->
-                <g class="whiskers" stroke="#00ff41" stroke-width="2" opacity="0.9">
-                    <!-- Lado izquierdo -->
-                    <line x1="60" y1="180" x2="120" y2="185"/>
-                    <line x1="65" y1="200" x2="125" y2="200"/>
-                    <line x1="60" y1="220" x2="120" y2="215"/>
-                    <!-- Lado derecho -->
-                    <line x1="280" y1="185" x2="340" y2="180"/>
-                    <line x1="275" y1="200" x2="335" y2="200"/>
-                    <line x1="280" y1="215" x2="340" y2="220"/>
-                </g>
-                
-                <!-- Visor tecnológico -->
-                <ellipse cx="200" cy="200" rx="100" ry="70" fill="rgba(0, 20, 0, 0.8)" opacity="0.9"/>
+                <!-- Orejas internas -->
+                <polygon points="145,125 135,110 155,115" fill="#00ff41" opacity="0.3"/>
+                <polygon points="255,115 275,110 265,125" fill="#00ff41" opacity="0.3"/>
                 
                 <!-- Ojos -->
-                <g class="eyes">
-                    <!-- Ojos normales -->
-                    <g class="eyes-normal">
-                        <g class="eye-left">
-                            <ellipse cx="160" cy="200" rx="20" ry="15" fill="#001a00"/>
-                            <circle class="pupil pupil-left" cx="160" cy="200" r="8" fill="#00ff41"/>
-                            <circle cx="156" cy="196" r="3" fill="#66ff66"/>
-                        </g>
-                        <g class="eye-right">
-                            <ellipse cx="240" cy="200" rx="20" ry="15" fill="#001a00"/>
-                            <circle class="pupil pupil-right" cx="240" cy="200" r="8" fill="#00ff41"/>
-                            <circle cx="236" cy="196" r="3" fill="#66ff66"/>
-                        </g>
-                    </g>
-                    
-                    <!-- Párpado para parpadeo - DEBE IR ENCIMA DE LOS OJOS -->
-                    <rect class="eyelid" x="130" y="185" width="140" height="30" fill="#0f1f0f" style="transform: scaleY(0); transform-origin: 50% 100%"/>
-                    
-                    <!-- Ojos felices -->
-                    <g class="eyes-happy" style="opacity: 0">
-                        <path d="M140 200 q20 15 40 0" stroke="#00ff41" stroke-width="4" fill="none"/>
-                        <path d="M220 200 q20 15 40 0" stroke="#00ff41" stroke-width="4" fill="none"/>
-                    </g>
+                <circle cx="170" cy="180" r="20" fill="#000" opacity="0.8"/>
+                <circle cx="230" cy="180" r="20" fill="#000" opacity="0.8"/>
+                
+                <!-- Pupilas que siguen el mouse -->
+                <circle class="pupil-left" cx="170" cy="180" r="12" fill="#00ff41" opacity="0.9"/>
+                <circle class="pupil-right" cx="230" cy="180" r="12" fill="#00ff41" opacity="0.9"/>
+                
+                <!-- Reflejos en los ojos -->
+                <circle cx="175" cy="175" r="4" fill="#26d467" opacity="0.8"/>
+                <circle cx="235" cy="175" r="4" fill="#26d467" opacity="0.8"/>
+                
+                <!-- Eyelid para parpadeo -->
+                <g class="eyelid" style="transform: scaleY(0); transform-origin: center;">
+                    <rect x="150" y="160" width="40" height="40" fill="url(#catGradient)" rx="20"/>
+                    <rect x="210" y="160" width="40" height="40" fill="url(#catGradient)" rx="20"/>
                 </g>
                 
                 <!-- Nariz -->
-                <path d="M195 220 L200 210 L205 220 Z" fill="#00ff41"/>
+                <polygon points="200,210 195,220 205,220" fill="#00ff41" opacity="0.7"/>
                 
                 <!-- Boca -->
-                <g class="mouth">
-                    <path d="M180 240 Q200 260 220 240" stroke="#00ff41" stroke-width="2" fill="none"/>
-                    
-                    <!-- Indicador de habla -->
-                    <g class="speech-indicator" transform="translate(200,250)" style="opacity: 0">
-                        <rect x="-15" y="-6" width="8" height="12" rx="2" fill="#00ff41"/>
-                        <rect x="-4" y="-10" width="8" height="20" rx="2" fill="#66ff66"/>
-                        <rect x="7" y="-8" width="8" height="16" rx="2" fill="#00ff41"/>
-                    </g>
-                </g>
+                <path d="M200,220 Q190,230 180,225" fill="none" stroke="#00ff41" stroke-width="2" opacity="0.7"/>
+                <path d="M200,220 Q210,230 220,225" fill="none" stroke="#00ff41" stroke-width="2" opacity="0.7"/>
                 
-                <!-- Cola -->
-                <g class="tail">
-                    <path d="M310 260 Q360 240 350 290 Q340 320 300 315" fill="none" stroke="#00ff41" stroke-width="6" stroke-linecap="round"/>
-                </g>
+                <!-- Bigotes (EXTERNOS a la cabeza) -->
+                <line x1="70" y1="190" x2="120" y2="185" stroke="#00ff41" stroke-width="2" opacity="0.6"/>
+                <line x1="70" y1="200" x2="120" y2="200" stroke="#00ff41" stroke-width="2" opacity="0.6"/>
+                <line x1="70" y1="210" x2="120" y2="215" stroke="#00ff41" stroke-width="2" opacity="0.6"/>
                 
-                <!-- Detalles tech -->
-                <g class="tech-details" opacity="0.8">
-                    <circle cx="130" cy="140" r="3" fill="#00ff41"/>
-                    <circle cx="270" cy="140" r="3" fill="#00ff41"/>
-                    <rect x="190" y="120" width="20" height="4" rx="2" fill="#00cc33"/>
-                    <!-- Líneas de código simuladas -->
-                    <rect x="150" y="300" width="30" height="2" rx="1" fill="#00ff41" opacity="0.6"/>
-                    <rect x="200" y="305" width="40" height="2" rx="1" fill="#00ff41" opacity="0.4"/>
-                    <rect x="170" y="310" width="25" height="2" rx="1" fill="#00ff41" opacity="0.7"/>
-                </g>
+                <line x1="280" y1="185" x2="330" y2="190" stroke="#00ff41" stroke-width="2" opacity="0.6"/>
+                <line x1="280" y1="200" x2="330" y2="200" stroke="#00ff41" stroke-width="2" opacity="0.6"/>
+                <line x1="280" y1="215" x2="330" y2="210" stroke="#00ff41" stroke-width="2" opacity="0.6"/>
+                
+                <!-- Detalles ciborg -->
+                <rect x="160" y="160" width="8" height="3" fill="#00ff41" opacity="0.8" rx="1"/>
+                <rect x="232" y="160" width="8" height="3" fill="#00ff41" opacity="0.8" rx="1"/>
+                
+                <!-- Antena pequeña -->
+                <line x1="200" y1="80" x2="200" y2="100" stroke="#00ff41" stroke-width="2"/>
+                <circle cx="200" cy="80" r="3" fill="#26d467"/>
+            </g>
+            
+            <!-- Efectos de actividad -->
+            <g class="activity-indicators" opacity="0.6">
+                <circle cx="150" cy="150" r="2" fill="#00ff41">
+                    <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="250" cy="150" r="2" fill="#00ff41">
+                    <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite"/>
+                </circle>
             </g>
         </svg>
-        
-        <div class="cat-status">
-            <span class="status-dot active"></span>
-            <span class="status-text">AI Assistant</span>
-        </div>
     </div>
 
     <!-- Contenido principal -->
@@ -163,108 +137,566 @@
                 </p>
             </section>
 
-            <!-- Chat Section -->
-            <section class="chat-section">
-                <div class="terminal-container">
-                    <div class="terminal-header">
-                        <div class="terminal-controls">
-                            <span class="control close"></span>
-                            <span class="control minimize"></span>
-                            <span class="control maximize"></span>
+            <!-- Servicios Section -->
+            <section class="services-section">
+                <h2 class="services-title">
+                    <span class="matrix-highlight">Especialidades</span> de Consultoría
+                </h2>
+                
+                <div class="services-grid">
+                    <!-- Fila 1 -->
+                    <div class="service-item" data-service="rag" data-cat-position="1">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 100 100" class="service-svg">
+                                <defs>
+                                    <linearGradient id="ragGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00d455"/>
+                                        <stop offset="100%" stop-color="#26d467"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Database stack -->
+                                <ellipse cx="50" cy="25" rx="35" ry="8" fill="url(#ragGradient)" opacity="0.8"/>
+                                <ellipse cx="50" cy="40" rx="35" ry="8" fill="url(#ragGradient)" opacity="0.6"/>
+                                <ellipse cx="50" cy="55" rx="35" ry="8" fill="url(#ragGradient)" opacity="0.4"/>
+                                <!-- Search rays -->
+                                <path d="M20 70 L35 55 M65 55 L80 70 M50 75 L50 90" stroke="#00d455" stroke-width="3" opacity="0.9"/>
+                                <!-- Brain connection -->
+                                <circle cx="50" cy="80" r="12" fill="none" stroke="#26d467" stroke-width="2"/>
+                                <circle cx="50" cy="80" r="6" fill="#00d455" opacity="0.7"/>
+                                <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+                            </svg>
                         </div>
-                        <div class="terminal-title">
-                            <span class="terminal-icon">></span>
-                            <span>AI_CONSULTANT.exe</span>
-                        </div>
+                        <h3>RAG Systems</h3>
+                        <p>Recuperación de información inteligente para respuestas precisas</p>
                     </div>
                     
-                    <div class="terminal-body">
-                        <div class="chat-messages" id="chatMessages">
-                            <div class="message system">
-                                <span class="prompt">send-cat@daniel-ai:~$</span>
-                                <div class="message-content">
-                                    <p>Iniciando asistente de Daniel Castiblanco...</p>
-                                    <p>Send-Cat activado ✓</p>
-                                    <p>Hola! Soy Send-Cat, te ayudo a conectar con Daniel.</p>
-                                    <p><strong class="matrix-highlight">¿En qué industria está tu negocio?</strong></p>
-                                </div>
-                            </div>
+                    <div class="service-item" data-service="agents" data-cat-position="2">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 100 100" class="service-svg">
+                                <defs>
+                                    <linearGradient id="agentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00d455"/>
+                                        <stop offset="100%" stop-color="#26d467"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Central orchestrator -->
+                                <circle cx="50" cy="50" r="15" fill="url(#agentGradient)"/>
+                                <!-- Agent nodes -->
+                                <circle cx="25" cy="25" r="8" fill="#00d455" opacity="0.8"/>
+                                <circle cx="75" cy="25" r="8" fill="#00d455" opacity="0.8"/>
+                                <circle cx="25" cy="75" r="8" fill="#00d455" opacity="0.8"/>
+                                <circle cx="75" cy="75" r="8" fill="#00d455" opacity="0.8"/>
+                                <!-- Connections -->
+                                <line x1="35" y1="35" x2="42" y2="42" stroke="#26d467" stroke-width="2"/>
+                                <line x1="65" y1="35" x2="58" y2="42" stroke="#26d467" stroke-width="2"/>
+                                <line x1="35" y1="65" x2="42" y2="58" stroke="#26d467" stroke-width="2"/>
+                                <line x1="65" y1="65" x2="58" y2="58" stroke="#26d467" stroke-width="2"/>
+                                <!-- Pulse animation -->
+                                <circle cx="50" cy="50" r="20" fill="none" stroke="#00d455" stroke-width="1" opacity="0">
+                                    <animate attributeName="r" values="15;30;15" dur="3s" repeatCount="indefinite"/>
+                                    <animate attributeName="opacity" values="0.8;0;0.8" dur="3s" repeatCount="indefinite"/>
+                                </circle>
+                            </svg>
                         </div>
-                        
-                        <div class="terminal-input">
-                            <span class="prompt">user@session:~$</span>
-                            <input 
-                                type="text" 
-                                id="chatInput" 
-                                class="terminal-input-field" 
-                                placeholder="Escribe tu respuesta..."
-                                autofocus
-                            >
-                            <button id="sendMessage" class="send-btn">ENVIAR</button>
+                        <h3>Agent Orchestration</h3>
+                        <p>Coordinación inteligente de múltiples agentes IA especializados</p>
+                    </div>
+                    
+                    <div class="service-item" data-service="automation" data-cat-position="3">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 100 100" class="service-svg">
+                                <defs>
+                                    <linearGradient id="autoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00d455"/>
+                                        <stop offset="100%" stop-color="#26d467"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Gears -->
+                                <g transform="translate(35,35)">
+                                    <circle cx="15" cy="15" r="12" fill="none" stroke="url(#autoGradient)" stroke-width="3"/>
+                                    <polygon points="15,3 18,8 23,8 19,12 21,17 15,14 9,17 11,12 7,8 12,8" fill="url(#autoGradient)"/>
+                                    <animateTransform attributeName="transform" attributeType="XML" type="rotate" values="0 50 50;360 50 50" dur="4s" repeatCount="indefinite"/>
+                                </g>
+                                <g transform="translate(50,50)">
+                                    <circle cx="15" cy="15" r="10" fill="none" stroke="url(#autoGradient)" stroke-width="3"/>
+                                    <polygon points="15,5 17,9 21,9 18,12 19,16 15,14 11,16 12,12 9,9 13,9" fill="url(#autoGradient)"/>
+                                    <animateTransform attributeName="transform" attributeType="XML" type="rotate" values="360 65 65;0 65 65" dur="3s" repeatCount="indefinite"/>
+                                </g>
+                                <!-- Flow arrows -->
+                                <path d="M20 80 L40 80 L35 75 M35 85 L40 80 L60 80 L55 75 M55 85 L60 80 L80 80 L75 75 M75 85 L80 80" 
+                                      stroke="#26d467" stroke-width="2" fill="none" opacity="0.8"/>
+                            </svg>
                         </div>
+                        <h3>Process Automation</h3>
+                        <p>Automatización inteligente de procesos empresariales complejos</p>
+                    </div>
+                    
+                    <!-- Fila 2 -->
+                    <div class="service-item" data-service="local-llm" data-cat-position="4">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 100 100" class="service-svg">
+                                <defs>
+                                    <linearGradient id="localGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00d455"/>
+                                        <stop offset="100%" stop-color="#26d467"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Server/Computer -->
+                                <rect x="25" y="40" width="50" height="30" rx="5" fill="none" stroke="url(#localGradient)" stroke-width="3"/>
+                                <rect x="30" y="45" width="40" height="20" fill="url(#localGradient)" opacity="0.3"/>
+                                <!-- CPU/Brain -->
+                                <circle cx="50" cy="55" r="8" fill="url(#localGradient)" opacity="0.8"/>
+                                <path d="M45 50 Q50 45 55 50 Q50 60 45 55 Q50 50 55 55" fill="#26d467"/>
+                                <!-- Shield (privacy) -->
+                                <path d="M50 20 L40 25 Q40 35 50 40 Q60 35 60 25 Z" fill="none" stroke="#00d455" stroke-width="2"/>
+                                <path d="M45 30 L48 33 L55 26" stroke="#26d467" stroke-width="2" fill="none"/>
+                                <!-- Data flow -->
+                                <circle cx="35" cy="80" r="2" fill="#00d455">
+                                    <animate attributeName="cy" values="80;45;80" dur="2s" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="65" cy="80" r="2" fill="#00d455">
+                                    <animate attributeName="cy" values="80;45;80" dur="2.5s" repeatCount="indefinite"/>
+                                </circle>
+                            </svg>
+                        </div>
+                        <h3>Local LLMs</h3>
+                        <p>Modelos de IA privados y seguros en tu infraestructura</p>
+                    </div>
+                    
+                    <div class="service-item" data-service="finops" data-cat-position="5">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 100 100" class="service-svg">
+                                <defs>
+                                    <linearGradient id="finGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00d455"/>
+                                        <stop offset="100%" stop-color="#26d467"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Dollar sign -->
+                                <text x="30" y="45" font-family="Orbitron" font-size="20" fill="url(#finGradient)" font-weight="bold">$</text>
+                                <!-- Chart/Graph -->
+                                <polyline points="20,70 30,60 40,65 50,50 60,55 70,40 80,45" 
+                                         fill="none" stroke="url(#finGradient)" stroke-width="3"/>
+                                <!-- Chart points -->
+                                <circle cx="30" cy="60" r="2" fill="#26d467"/>
+                                <circle cx="50" cy="50" r="2" fill="#26d467"/>
+                                <circle cx="70" cy="40" r="2" fill="#26d467"/>
+                                <!-- Optimization arrows -->
+                                <path d="M55 25 L65 25 L60 20 M60 30 L65 25 L70 25" stroke="#00d455" stroke-width="2" fill="none"/>
+                                <!-- AI chip -->
+                                <rect x="60" y="60" width="15" height="15" rx="2" fill="none" stroke="#26d467" stroke-width="1"/>
+                                <circle cx="67.5" cy="67.5" r="3" fill="#00d455" opacity="0.7">
+                                    <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+                                </circle>
+                            </svg>
+                        </div>
+                        <h3>FinOps AI</h3>
+                        <p>Optimización inteligente de costos en implementaciones de IA</p>
+                    </div>
+                    
+                    <div class="service-item" data-service="integrations" data-cat-position="6">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 100 100" class="service-svg">
+                                <defs>
+                                    <linearGradient id="intGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00d455"/>
+                                        <stop offset="100%" stop-color="#26d467"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Central hub -->
+                                <circle cx="50" cy="50" r="12" fill="url(#intGradient)"/>
+                                <!-- Connected systems -->
+                                <rect x="10" y="10" width="15" height="15" rx="3" fill="none" stroke="#00d455" stroke-width="2"/>
+                                <rect x="75" y="10" width="15" height="15" rx="3" fill="none" stroke="#00d455" stroke-width="2"/>
+                                <rect x="10" y="75" width="15" height="15" rx="3" fill="none" stroke="#00d455" stroke-width="2"/>
+                                <rect x="75" y="75" width="15" height="15" rx="3" fill="none" stroke="#00d455" stroke-width="2"/>
+                                <!-- Connection lines -->
+                                <line x1="25" y1="18" x2="42" y2="42" stroke="#26d467" stroke-width="2"/>
+                                <line x1="75" y1="18" x2="58" y2="42" stroke="#26d467" stroke-width="2"/>
+                                <line x1="25" y1="82" x2="42" y2="58" stroke="#26d467" stroke-width="2"/>
+                                <line x1="75" y1="82" x2="58" y2="58" stroke="#26d467" stroke-width="2"/>
+                                <!-- Data packets -->
+                                <circle cx="35" cy="30" r="2" fill="#26d467">
+                                    <animateMotion dur="3s" repeatCount="indefinite">
+                                        <path d="M0,0 L7,12"/>
+                                    </animateMotion>
+                                </circle>
+                                <circle cx="65" cy="30" r="2" fill="#26d467">
+                                    <animateMotion dur="3s" repeatCount="indefinite">
+                                        <path d="M0,0 L-7,12"/>
+                                    </animateMotion>
+                                </circle>
+                            </svg>
+                        </div>
+                        <h3>Custom Integrations</h3>
+                        <p>Integraciones personalizadas con tus sistemas existentes</p>
                     </div>
                 </div>
             </section>
 
-            <!-- CTA Section -->
-            <section class="cta-section">
-                <div class="cta-terminal">
-                    <div class="cta-header">
-                        <span class="cta-prompt">></span>
-                        <span class="cta-command">schedule_consultation.exe</span>
-                    </div>
-                    <div class="cta-content">
-                        <h3 class="cta-title">RESERVAR CONSULTORÍA</h3>
-                        <p class="cta-description">
-                            > 30 minutos gratuitos<br>
-                            > Sin compromiso<br>
-                            > Plan claro garantizado
-                        </p>
-                        <a href="#" id="scheduleCall" class="matrix-button">
-                            <span>INICIAR PROCESO</span>
-                            <span class="button-cursor">_</span>
-                        </a>
+            <!-- CTA Final Section -->
+            <section class="final-cta-section">
+                <div class="cta-container">
+                    <h2 class="cta-title">
+                        ¿Listo para <span class="matrix-highlight">automatizar</span> tu negocio?
+                    </h2>
+                    <p class="cta-subtitle">
+                        Daniel te ayudará a implementar IA práctica y medible
+                    </p>
+                    <a href="https://calendly.com/darmcastiblanco/30min?month=2025-08" target="_blank" class="cta-main-button">
+                        <span class="button-text">📅 RESERVAR CONSULTORÍA GRATUITA</span>
+                        <span class="button-subtext">30 min • Sin compromiso • Agosto 2025</span>
+                    </a>
+                    <div class="cta-features">
+                        <div class="feature-item">✓ Análisis de tu caso específico</div>
+                        <div class="feature-item">✓ Roadmap de implementación</div>
+                        <div class="feature-item">✓ Estimación de ROI</div>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 
-    <!-- Modal -->
-    <div id="completionModal" class="modal hidden">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content terminal-style">
-            <div class="modal-header">
-                <span class="modal-prompt">></span>
-                <span>ANÁLISIS COMPLETADO</span>
+    <!-- Chat Modal -->
+    <div id="chatModal" class="chat-modal hidden">
+        <div class="chat-backdrop"></div>
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <span class="chat-icon">🤖</span>
+                    <span>CatDC.ai - Asistente Inteligente</span>
+                </div>
+                <button class="chat-close" onclick="closeCatChat()">&times;</button>
             </div>
-            <div class="modal-body">
-                <p class="modal-description">
-                    > Información recopilada exitosamente<br>
-                    > Resumen preparado para Daniel<br>
-                    > Listo para consultoría personalizada
-                </p>
-                <a href="#" id="modalSchedule" class="matrix-button">
-                    <span>RESERVAR CONSULTORÍA</span>
-                    <span class="button-cursor">_</span>
-                </a>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message cat-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>¡Hola! Soy CatDC.ai, el asistente inteligente de Daniel Castiblanco.</p>
+                        <p><strong>¿Tienes alguna duda sobre consultoría en IA?</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" class="chat-input" placeholder="Escribe tu pregunta..." maxlength="500">
+                <button id="sendMessage" class="chat-send-btn" onclick="sendChatMessage()">Enviar</button>
             </div>
         </div>
     </div>
 
     <!-- Audio para efectos -->
     <audio id="purringSound" preload="auto">
-        <source src="../ronroneo.wav" type="audio/wav">
-        <source src="ronroneo.wav" type="audio/wav">
+        <source src="assets/ronroneo.wav" type="audio/wav">
     </audio>
 
     <!-- Scripts -->
     <script src="js/env-config.js"></script>
     <script src="js/knowledge-base.js"></script>
     <script src="js/floating-cat.js"></script>
-    <script src="js/contextual-rag.js"></script>
-    <script src="js/send-cat-autonomous.js"></script>
-    <script src="js/send-cat-intelligence.js"></script>
-    <script src="js/matrix-chat.js"></script>
+    <script>
+        // CatDC.ai Sistema Inteligente
+        class CatDCAI {
+            constructor() {
+                this.catElement = document.getElementById('floatingCat');
+                this.isMoving = false;
+                this.currentService = null;
+                this.chatOpen = false;
+                this.messages = [];
+                
+                this.init();
+            }
+            
+            init() {
+                console.log('🤖 CatDC.ai iniciado');
+                this.setupEventListeners();
+                this.setupServiceInteractions();
+                this.positionCat();
+            }
+            
+            positionCat() {
+                // Posición inicial
+                this.catElement.style.display = 'block';
+                this.catElement.style.position = 'fixed';
+                this.catElement.style.right = '30px';
+                this.catElement.style.bottom = '30px';
+                this.catElement.style.zIndex = '1000';
+                this.catElement.style.transition = 'all 0.5s ease-in-out';
+            }
+            
+            setupEventListeners() {
+                // Click en el gato para chat
+                this.catElement.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.handleCatClick();
+                });
+                
+                // Ronroneo con mousedown
+                this.catElement.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    this.startPurring();
+                });
+                
+                this.catElement.addEventListener('mouseup', () => {
+                    this.stopPurring();
+                });
+                
+                this.catElement.addEventListener('mouseleave', () => {
+                    this.stopPurring();
+                });
+            }
+            
+            setupServiceInteractions() {
+                const serviceItems = document.querySelectorAll('.service-item');
+                
+                serviceItems.forEach(item => {
+                    item.addEventListener('mouseenter', () => {
+                        const service = item.dataset.service;
+                        const position = item.dataset.catPosition;
+                        this.moveToService(item, service, position);
+                    });
+                    
+                    item.addEventListener('click', () => {
+                        const service = item.dataset.service;
+                        this.explainService(service);
+                    });
+                });
+                
+                // Volver a posición original cuando no hay hover
+                document.addEventListener('mousemove', (e) => {
+                    const hoveredService = e.target.closest('.service-item');
+                    if (!hoveredService && !this.isMoving) {
+                        setTimeout(() => {
+                            if (!document.querySelector('.service-item:hover')) {
+                                this.returnHome();
+                            }
+                        }, 2000);
+                    }
+                });
+            }
+            
+            moveToService(serviceElement, service, position) {
+                if (this.isMoving) return;
+                
+                this.isMoving = true;
+                this.currentService = service;
+                
+                const rect = serviceElement.getBoundingClientRect();
+                const catRect = this.catElement.getBoundingClientRect();
+                
+                // Calcular nueva posición cerca del servicio
+                const newRight = window.innerWidth - (rect.right + 20);
+                const newBottom = window.innerHeight - (rect.top + rect.height/2 + catRect.height/2);
+                
+                this.catElement.style.right = `${Math.max(20, newRight)}px`;
+                this.catElement.style.bottom = `${Math.max(20, newBottom)}px`;
+                
+                setTimeout(() => {
+                    this.isMoving = false;
+                    this.showServiceHint(service);
+                }, 500);
+            }
+            
+            showServiceHint(service) {
+                const hints = {
+                    'rag': '💡 RAG: ¡Haz que tu IA recuerde todo!',
+                    'agents': '🤖 Agentes: Múltiples IAs trabajando juntas',
+                    'automation': '⚡ Automatización: Procesos que se ejecutan solos',
+                    'local-llm': '🔒 LLMs Locales: Tu IA privada y segura',
+                    'finops': '💰 FinOps: Optimiza costos de IA inteligentemente',
+                    'integrations': '🔗 Integraciones: Conecta todo tu ecosistema'
+                };
+                
+                this.showMessage(hints[service] || '¡Click para saber más!');
+            }
+            
+            explainService(service) {
+                const explanations = {
+                    'rag': 'RAG Systems permite que tus chatbots accedan a documentos específicos de tu empresa en tiempo real. Daniel puede implementar RAG que busque en PDFs, bases de datos y documentos para dar respuestas precisas y actualizadas.',
+                    
+                    'agents': 'Agent Orchestration es coordinación de múltiples IAs especializadas. Un agente busca información, otro la procesa, otro toma decisiones. Daniel diseña sistemas donde cada agente tiene una función específica.',
+                    
+                    'automation': 'Process Automation con IA va más allá de scripts simples. Daniel crea workflows que entienden contexto, toman decisiones y se adaptan. Automatización inteligente que realmente piensa.',
+                    
+                    'local-llm': 'Local LLMs son modelos de IA que funcionan en tus servidores, sin enviar datos a terceros. Daniel implementa Ollama, LocalAI y otros para máxima privacidad y control de costos.',
+                    
+                    'finops': 'FinOps AI optimiza los costos de implementaciones de IA. Daniel analiza uso de tokens, optimiza prompts y implementa caching inteligente para reducir gastos hasta 80%.',
+                    
+                    'integrations': 'Custom Integrations conecta IA con tus sistemas existentes: CRMs, ERPs, APIs. Daniel crea puentes inteligentes que permiten a la IA interactuar con toda tu infraestructura.'
+                };
+                
+                this.showMessage(explanations[service] || 'Contacta a Daniel para más detalles sobre este servicio.');
+            }
+            
+            returnHome() {
+                if (this.isMoving) return;
+                
+                this.isMoving = true;
+                this.currentService = null;
+                
+                this.catElement.style.right = '30px';
+                this.catElement.style.bottom = '30px';
+                
+                setTimeout(() => {
+                    this.isMoving = false;
+                }, 500);
+            }
+            
+            handleCatClick() {
+                // Abrir chat modal
+                document.getElementById('chatModal').classList.remove('hidden');
+                document.getElementById('chatInput').focus();
+                this.chatOpen = true;
+            }
+            
+            startPurring() {
+                const purringSound = document.getElementById('purringSound');
+                if (purringSound) {
+                    purringSound.volume = 0.3;
+                    purringSound.play().catch(e => console.log('No se pudo reproducir ronroneo'));
+                }
+                
+                // Añadir clase de ronroneo
+                document.getElementById('aiCat').classList.add('purring');
+            }
+            
+            stopPurring() {
+                const purringSound = document.getElementById('purringSound');
+                if (purringSound) {
+                    purringSound.pause();
+                    purringSound.currentTime = 0;
+                }
+                
+                document.getElementById('aiCat').classList.remove('purring');
+            }
+            
+            showMessage(message) {
+                // Remover mensaje anterior
+                const existingMessage = document.querySelector('.cat-floating-message');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+                
+                // Crear nuevo mensaje flotante
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'cat-floating-message';
+                messageDiv.innerHTML = `
+                    <div class="floating-message-content">
+                        <p>${message}</p>
+                    </div>
+                    <div class="floating-message-tail"></div>
+                `;
+                
+                // Posicionar cerca del gato
+                const catRect = this.catElement.getBoundingClientRect();
+                messageDiv.style.position = 'fixed';
+                messageDiv.style.right = `${window.innerWidth - catRect.left + 20}px`;
+                messageDiv.style.bottom = `${window.innerHeight - catRect.top - 20}px`;
+                messageDiv.style.zIndex = '1001';
+                
+                document.body.appendChild(messageDiv);
+                
+                // Auto-remover
+                setTimeout(() => {
+                    if (messageDiv.parentNode) {
+                        messageDiv.remove();
+                    }
+                }, 4000);
+            }
+        }
+        
+        // Chat Functions
+        function closeCatChat() {
+            document.getElementById('chatModal').classList.add('hidden');
+            window.catDCAI.chatOpen = false;
+        }
+        
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Añadir mensaje del usuario
+            addChatMessage(message, 'user');
+            input.value = '';
+            
+            // Simular respuesta del bot
+            setTimeout(() => {
+                const response = generateCatResponse(message);
+                addChatMessage(response, 'cat');
+            }, 1000 + Math.random() * 2000);
+        }
+        
+        function addChatMessage(message, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            if (sender === 'cat') {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>${message}</p>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+                        <p>${message}</p>
+                    </div>
+                    <div class="message-avatar">👤</div>
+                `;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        function generateCatResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            
+            // Respuestas contextuales básicas
+            if (lowerMessage.includes('precio') || lowerMessage.includes('costo') || lowerMessage.includes('cuanto')) {
+                return 'Los precios de consultoría varían según el proyecto. La primera consulta de 30 minutos es completamente gratuita. Daniel evaluará tu caso y te dará una propuesta específica. ¿Te gustaría agendar?';
+            }
+            
+            if (lowerMessage.includes('rag') || lowerMessage.includes('documento')) {
+                return 'RAG es perfecta para empresas que necesitan que su IA acceda a documentos específicos. Daniel ha implementado RAG para universidades, empresas de software y consultorías. ¿Qué tipo de documentos manejas?';
+            }
+            
+            if (lowerMessage.includes('agente') || lowerMessage.includes('automatizacion')) {
+                return 'Daniel especializa en crear sistemas de agentes que trabajan coordinadamente. Puede automatizar desde respuestas de email hasta procesos completos de ventas. ¿Qué proceso te consume más tiempo?';
+            }
+            
+            if (lowerMessage.includes('local') || lowerMessage.includes('privado')) {
+                return 'Los LLMs locales son ideales para empresas que manejan data sensible. Daniel implementa Ollama y otras soluciones que funcionan 100% en tus servidores. ¿Tu empresa maneja información confidencial?';
+            }
+            
+            if (lowerMessage.includes('tiempo') || lowerMessage.includes('rapido')) {
+                return 'Dependiendo de la complejidad, Daniel puede tener prototipos funcionando en 1-2 semanas. Proyectos completos toman 1-3 meses. La consultoría inicial te dará un timeline específico.';
+            }
+            
+            // Respuesta por defecto
+            const responses = [
+                'Interesante pregunta. Daniel ha trabajado con casos similares en +50 empresas. ¿Te gustaría agendar una consultoría gratuita para discutir tu caso específico?',
+                'Esa es exactamente el tipo de consulta que Daniel resuelve regularmente. La mejor forma es que platiques directamente con él en una sesión de 30 minutos gratuita.',
+                'Daniel tiene experiencia en múltiples industrias con esa problemática. ¿Por qué no agendas una consultoría? Los primeros 30 minutos son gratis y sin compromiso.'
+            ];
+            
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+        
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            window.catDCAI = new CatDCAI();
+            
+            // Enter para enviar mensajes
+            document.getElementById('chatInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendChatMessage();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
