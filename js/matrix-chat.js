@@ -9,6 +9,7 @@ class MatrixChat {
         this.maxQuestions = 10;
         this.isProcessing = false;
         this.sessionId = this.generateSessionId();
+        this.sessionStartTime = Date.now();
         
         this.elements = {
             chatMessages: document.getElementById('chatMessages'),
@@ -128,24 +129,37 @@ class MatrixChat {
     }
     
     generateResponse(userInput) {
+        // Usar el sistema RAG contextual si está disponible
+        if (window.contextualRAG) {
+            const navigationContext = {
+                currentSection: window.sendCat?.awareness?.currentSection || null,
+                timeOnPage: Date.now() - this.sessionStartTime,
+                questionsAsked: this.questionCount,
+                userBehavior: window.sendCat?.awareness?.userActivity || []
+            };
+            
+            return window.contextualRAG.ask(userInput, navigationContext);
+        }
+        
+        // Fallback: sistema anterior
         const responses = [
-            "¿Qué procesos manuales te quitan más tiempo en tu negocio?",
-            "¿Cuántas personas tiene tu equipo y cuál es su mayor dolor de trabajo?",
-            "¿Qué presupuesto aproximado manejas para automatización/IA?",
-            "¿Tienes experiencia previa con chatbots o sistemas de IA?",
-            "¿Qué resultados específicos esperas ver en los primeros 30 días?",
-            "¿Prefieres soluciones en la nube o sistemas locales por privacidad?",
-            "¿Cuál es el volumen de consultas/tickets que manejas mensualmente?",
-            "¿Qué tan técnico es tu equipo? ¿Necesitan capacitación?",
-            "¿Tienes alguna urgencia o fecha límite para implementar?",
-            "Perfecto. ¿Cuándo podríamos agendar 30 minutos para diseñar tu plan específico?"
+            "¿En qué industria o sector trabajas?",
+            "¿Cuál es el proceso más tedioso que consumes más tiempo?",
+            "¿Qué tan urgente es automatizar esto? ¿Hay alguna fecha límite?",
+            "¿Tu equipo es más técnico o de negocio?",
+            "¿Has probado alguna solución de IA antes?",
+            "¿Cuál sería el resultado ideal en los primeros 30 días?",
+            "¿Prefieres soluciones cloud o locales por privacidad?",
+            "¿Aproximadamente qué volumen de trabajo/consultas manejas?",
+            "¿Hay presupuesto asignado o necesitas justificar la inversión?",
+            "Perfecto. Daniel puede ayudarte. ¿Coordinamos 30 minutos esta semana?"
         ];
         
         if (this.questionCount < responses.length) {
             return responses[this.questionCount];
         }
         
-        return "Excelente información. Vamos a agendar tu consultoría gratuita.";
+        return "¡Excelente! Tengo toda la info para que Daniel prepare una propuesta específica.";
     }
     
     async completeChat() {
