@@ -119,6 +119,36 @@ body {
   gap: var(--space-xl);
 }
 
+
+.tip-content span {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.tip-arrow {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 6px 0 6px;
+  border-color: var(--matrix-green) transparent transparent transparent;
+}
+
+.tip-arrow::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -4px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 4px 0 4px;
+  border-color: rgba(13, 17, 23, 0.95) transparent transparent transparent;
+}
+
 /* ============================================
    CAT HOME/BASE
    ============================================ */
@@ -851,6 +881,43 @@ body {
   outline-offset: 2px;
 }
 
+/* ============================================
+   SISTEMA RATONCITOS MATRIX
+   ============================================ */
+
+.matrix-mouse {
+  user-select: none;
+  pointer-events: none;
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.8);
+}
+
+@keyframes mouseGlow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 6px rgba(0, 255, 65, 0.6));
+    opacity: 0.9;
+  }
+  50% { 
+    filter: drop-shadow(0 0 12px rgba(0, 255, 65, 0.9));
+    opacity: 1;
+  }
+}
+
+.cat-score {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--matrix-green-text);
+  background: rgba(13, 17, 23, 0.9);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--matrix-green-dim);
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
 /* ========== FINAL CTA SECTION ========== */
 .final-cta-section {
   padding: 60px 20px;
@@ -879,7 +946,7 @@ body {
   font-family: var(--font-primary);
   font-weight: 700;
   font-size: 1.1rem;
-  transition: all var(--transition-base);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: 
     0 8px 32px rgba(0, 212, 85, 0.3),
     inset 0 2px 0 rgba(255, 255, 255, 0.2),
@@ -888,21 +955,27 @@ body {
   overflow: hidden;
   letter-spacing: 0.5px;
   border: 2px solid transparent;
+  animation: ctaPulse 3s ease-in-out infinite;
 }
 
 .cta-main-button:hover {
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(-6px) scale(1.05);
   box-shadow: 
-    0 16px 48px rgba(0, 212, 85, 0.4),
-    inset 0 2px 0 rgba(255, 255, 255, 0.3),
-    0 0 0 3px rgba(0, 212, 85, 0.2);
+    0 20px 60px rgba(0, 212, 85, 0.6),
+    inset 0 2px 0 rgba(255, 255, 255, 0.4),
+    0 0 0 4px rgba(0, 212, 85, 0.3),
+    0 0 40px rgba(0, 255, 65, 0.8);
   background: linear-gradient(135deg, var(--matrix-green-bright), #32d673);
+  animation: ctaHover 0.6s ease-out;
+  filter: brightness(1.2) drop-shadow(0 0 20px rgba(0, 255, 65, 0.8));
 }
 
 .cta-main-button:active {
-  transform: translateY(-2px) scale(1.01);
+  transform: translateY(-3px) scale(1.03);
+  animation: ctaClick 0.2s ease-out;
 }
 
+/* Efecto Matrix digital rain en el botón */
 .cta-main-button::before {
   content: '';
   position: absolute;
@@ -910,12 +983,70 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.6s;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(0, 255, 65, 0.4),
+    rgba(38, 212, 103, 0.6),
+    rgba(0, 255, 65, 0.4),
+    transparent
+  );
+  transition: left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .cta-main-button:hover::before {
   left: 100%;
+}
+
+/* Matrix scan line effect */
+.cta-main-button::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(0, 255, 65, 0.8);
+  opacity: 0;
+  animation: scanLine 2s ease-in-out infinite;
+}
+
+@keyframes ctaPulse {
+  0%, 100% {
+    box-shadow: 
+      0 8px 32px rgba(0, 212, 85, 0.3),
+      inset 0 2px 0 rgba(255, 255, 255, 0.2),
+      0 0 0 2px rgba(0, 212, 85, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 12px 40px rgba(0, 212, 85, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.25),
+      0 0 0 3px rgba(0, 212, 85, 0.2),
+      0 0 20px rgba(0, 255, 65, 0.3);
+  }
+}
+
+@keyframes ctaHover {
+  0% { transform: translateY(-6px) scale(1.05); }
+  50% { transform: translateY(-8px) scale(1.08); }
+  100% { transform: translateY(-6px) scale(1.05); }
+}
+
+@keyframes ctaClick {
+  0% { transform: translateY(-3px) scale(1.03); }
+  50% { transform: translateY(-1px) scale(1.01); }
+  100% { transform: translateY(-3px) scale(1.03); }
+}
+
+@keyframes scanLine {
+  0%, 90%, 100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  10%, 80% {
+    opacity: 1;
+    transform: translateY(60px);
+  }
 }
 
 .cta-main-button svg {

@@ -1,0 +1,232 @@
+<!-- Guarda este archivo como index.html y ábrelo en tu navegador (Vanilla JS) -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Send‑Cat NPC — Vanilla JS</title>
+  <style>
+    :root{--bg:#05070b;--cyan:#0ea5a4;--panel:#0b0f17;--txt:#e5e7eb;--mut:#94a3b8;--white:#eef2f7;--visor:#0b1220;--neon:#9ef7f7}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 system-ui,Segoe UI,Roboto}
+    canvas#starfield{position:fixed;inset:0;z-index:0}
+    .wrap{position:relative;z-index:1;display:grid;place-items:center;min-height:100vh;padding:26px}
+    .card{border:1px solid rgba(14,165,164,.25);background:linear-gradient(180deg,rgba(0,0,0,.38),rgba(0,0,0,.18));backdrop-filter:blur(6px);border-radius:22px;padding:18px}
+    .flex{display:flex;flex-direction:column;align-items:center}
+    .hint{color:var(--mut);font-size:12px;margin-top:6px}
+
+    /* Chat */
+    .chat{margin-top:16px;border:1px solid #1f2937;background:rgba(0,0,0,.35);border-radius:16px;width:min(360px,90vw);display:flex;flex-direction:column;height:240px}
+    .feed{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+    .bubble{max-width:80%;padding:8px 10px;border-radius:12px;border:1px solid #263241}
+    .bubble.cat{align-self:flex-start;background:#0b0f17}
+    .bubble.user{align-self:flex-end;background:#0f172a;border-color:#1d2a3f}
+    .composer{display:flex;gap:8px;padding:10px;border-top:1px solid #1f2937}
+    .composer input{flex:1;border:1px solid #3f3f46;background:#0b0f17;color:var(--txt);border-radius:10px;padding:10px 12px;outline:none}
+    .composer input:focus{border-color:#22d3ee;box-shadow:0 0 0 3px rgba(34,211,238,.15)}
+    .composer button{padding:10px 14px;border-radius:10px;border:1px solid rgba(34,211,238,.45);background:rgba(34,211,238,.15);color:#aef;cursor:pointer}
+    .composer button:hover{background:rgba(34,211,238,.25)}
+
+    /* CAT SVG ================= */
+    svg#cat{width:320px;height:320px;filter:drop-shadow(0 0 18px rgba(0,255,255,.18))}
+    .float{animation:float 6s ease-in-out infinite}
+    @keyframes float{0%{transform:translateY(0)}25%{transform:translateY(-6px)}50%{transform:translateY(0)}75%{transform:translateY(6px)}100%{transform:translateY(0)}}
+
+    .head{transform-origin:150px 160px;transition:transform .28s ease}
+    .ears{transform-origin:150px 115px;transition:transform .28s ease}
+    .ear{transform-box:fill-box;transform-origin:50% 90%;}
+    .ear.left,.ear.right{transition:transform .28s ease}
+
+    .tail{transform-origin:235px 215px;animation:swish 2.6s ease-in-out infinite}
+    @keyframes swish{0%{transform:rotate(6deg)}50%{transform:rotate(-12deg)}100%{transform:rotate(6deg)}}
+
+    /* Eyes */
+    .eyeG{transition:transform .12s ease}
+    .pupil{transition:transform .1s ease}
+    .eyes .open{opacity:1;transition:opacity .15s ease}
+    .eyes .smile,.eyes .narrow{opacity:0;transition:opacity .15s ease}
+
+    /* States */
+    .state-happy .ears{transform:rotate(6deg)}
+    .state-listen .ears{transform:rotate(-6deg)}
+    .state-thinking .head{transform:rotate(-5deg)}
+
+    /* Blink */
+    .lid{transform-origin:0 0}
+  </style>
+</head>
+<body>
+<canvas id="starfield"></canvas>
+<div class="wrap">
+  <div class="card flex">
+    <svg id="cat" viewBox="0 0 300 300" class="float state-idle">
+      <defs>
+        <radialGradient id="visorG" cx="50%" cy="40%" r="70%"><stop offset="0%" stop-color="#0f1a2b"/><stop offset="100%" stop-color="#0b1220"/></radialGradient>
+      </defs>
+      <g class="head">
+        <circle cx="150" cy="150" r="100" fill="var(--white)" stroke="var(--cyan)" stroke-width="2"/>
+        <g class="ears">
+          <!-- orejas suavizadas con curvas -->
+          <path class="ear left" d="M72,98 Q100,30 120,96 Q100,86 72,98 Z" fill="var(--white)" stroke="var(--cyan)" stroke-width="2"/>
+          <path class="ear right" d="M228,98 Q200,30 180,96 Q200,86 228,98 Z" fill="var(--white)" stroke="var(--cyan)" stroke-width="2"/>
+          <path d="M84,94 Q102,56 116,94 Z" fill="#d7deea" opacity=".7"/>
+          <path d="M216,94 Q198,56 184,94 Z" fill="#d7deea" opacity=".7"/>
+        </g>
+        <ellipse cx="150" cy="160" rx="88" ry="58" fill="url(#visorG)"/>
+        <!-- bigotes -->
+        <g stroke="var(--cyan)" stroke-width="2" opacity=".9">
+          <line x1="55" y1="158" x2="110" y2="154"/>
+          <line x1="55" y1="166" x2="110" y2="163"/>
+          <line x1="55" y1="174" x2="110" y2="172"/>
+          <line x1="190" y1="154" x2="245" y2="158"/>
+          <line x1="190" y1="163" x2="245" y2="166"/>
+          <line x1="190" y1="172" x2="245" y2="174"/>
+        </g>
+        <!-- OJOS -->
+        <g class="eyes">
+          <!-- tapa para parpadeo -->
+          <rect class="lid" x="90" y="132" width="120" height="56" fill="#0c1322" style="transform:scaleY(0)"></rect>
+
+          <!-- abiertos -->
+          <g class="open">
+            <g class="eyeG eyeL" transform="translate(0,0)">
+              <ellipse cx="120" cy="160" rx="16" ry="10" fill="#162335"/>
+              <circle class="pupil pl" cx="120" cy="160" r="5" fill="var(--neon)"/>
+              <circle cx="117" cy="158" r="2" fill="#c9f3ff"/>
+            </g>
+            <g class="eyeG eyeR" transform="translate(0,0)">
+              <ellipse cx="180" cy="160" rx="16" ry="10" fill="#162335"/>
+              <circle class="pupil pr" cx="180" cy="160" r="5" fill="var(--neon)"/>
+              <circle cx="177" cy="158" r="2" fill="#c9f3ff"/>
+            </g>
+          </g>
+          <!-- sonrisa -->
+          <g class="smile" stroke="#aee" stroke-width="3" fill="none">
+            <path d="M105 160 q15 12 30 0" />
+            <path d="M165 160 q15 12 30 0" />
+          </g>
+          <!-- entrecerrados -->
+          <g class="narrow" stroke="#aee" stroke-width="6" stroke-linecap="round" fill="none">
+            <line x1="108" y1="160" x2="132" y2="160"/>
+            <line x1="168" y1="160" x2="192" y2="160"/>
+          </g>
+        </g>
+        <!-- boca -->
+        <g class="mouth" stroke="var(--cyan)">
+          <path class="line" d="M135 188 q15 12 30 0" stroke-width="2" fill="none"/>
+          <g class="bars" transform="translate(150,188)" opacity="0">
+            <rect x="-12" y="-4" width="6" height="8" rx="2" fill="#00ffd5"/>
+            <rect x="-3" y="-8" width="6" height="16" rx="2" fill="#5ff"/>
+            <rect x="6" y="-6" width="6" height="12" rx="2" fill="#00ffd5"/>
+          </g>
+        </g>
+        <!-- cola -->
+        <g class="tail">
+          <path d="M235 215 q40 -22 35 22 q-4 30 -32 28" fill="none" stroke="var(--cyan)" stroke-width="5" stroke-linecap="round"/>
+        </g>
+      </g>
+    </svg>
+    <div class="hint">Pasa el mouse · Escribe para que te siga la mirada · Observa el parpadeo</div>
+
+    <div class="chat">
+      <div id="feed" class="feed"></div>
+      <form id="composer" class="composer">
+        <input id="input" placeholder="Háblale al gato… (hola, agenda, demo, ia)" autocomplete="off" />
+        <button>Enviar</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== Starfield =====
+(() => {const c=document.getElementById('starfield');const x=c.getContext('2d');function rz(){c.width=innerWidth;c.height=innerHeight}rz();addEventListener('resize',rz);const S=[...Array(90)].map(()=>({x:Math.random()*c.width,y:Math.random()*c.height,z:Math.random()*.7+.3,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25}));(function t(){x.clearRect(0,0,c.width,c.height);for(const s of S){s.x+=s.vx;s.y+=s.vy;if(s.x<0)s.x=c.width;if(s.x>c.width)s.x=0;if(s.y<0)s.y=c.height;if(s.y>c.height)s.y=0;x.globalAlpha=.25+.7*s.z;x.beginPath();x.arc(s.x,s.y,.9*s.z,0,Math.PI*2);x.fillStyle='#6ee7e7';x.fill()}requestAnimationFrame(t)})()})();
+
+// ===== NPC Logic =====
+const cat = document.getElementById('cat');
+const head = cat.querySelector('.head');
+const ears = cat.querySelector('.ears');
+const eyeL = cat.querySelector('.eyeL');
+const eyeR = cat.querySelector('.eyeR');
+const pupilL = cat.querySelector('.pl');
+const pupilR = cat.querySelector('.pr');
+const lid = cat.querySelector('.lid');
+const eyesOpen = cat.querySelector('.open');
+const eyesSmile = cat.querySelector('.smile');
+const eyesNarrow = cat.querySelector('.narrow');
+const mouthBars = cat.querySelector('.bars');
+
+function setState(s){cat.classList.remove('state-idle','state-listen','state-talk','state-happy','state-thinking');cat.classList.add('state-'+s)}
+
+// GAZE: move eyes to look at a target point (px coords)
+function lookAt(px, py){
+  const svgRect = cat.getBoundingClientRect();
+  const cx = svgRect.left + svgRect.width/2; const cy = svgRect.top + svgRect.height/2;
+  const dx = ((px - cx)/svgRect.width)*2, dy=((py - cy)/svgRect.height)*2;
+  const tx = Math.max(-1,Math.min(1,dx))*8; const ty=Math.max(-1,Math.min(1,dy))*5;
+  eyeL.setAttribute('transform',`translate(${tx},${ty})`);
+  eyeR.setAttribute('transform',`translate(${tx},${ty})`);
+}
+function centerLook(){ // reset
+  eyeL.setAttribute('transform','translate(0,0)');
+  eyeR.setAttribute('transform','translate(0,0)');
+}
+
+// Follow mouse when over card
+const card = document.querySelector('.card');
+card.addEventListener('mousemove', (e)=>{lookAt(e.clientX,e.clientY)});
+card.addEventListener('mouseleave', ()=>{centerLook()});
+
+// Blink every few seconds with randomness
+let blinkId = 0; function scheduleBlink(){clearTimeout(blinkId);blinkId = setTimeout(()=>{lid.style.transform='scaleY(1)'; setTimeout(()=>{lid.style.transform='scaleY(0)'; scheduleBlink()}, 120);}, 2400 + Math.random()*1600)} scheduleBlink();
+
+// Chat
+const feed = document.getElementById('feed');
+const form = document.getElementById('composer');
+const input = document.getElementById('input');
+
+function bubble(text, who='cat'){
+  const d=document.createElement('div'); d.className='bubble '+(who==='cat'?'cat':'user'); d.textContent=''; feed.appendChild(d); feed.scrollTop=feed.scrollHeight; let i=0; (function type(){d.textContent=text.slice(0,++i); if(i<text.length){setTimeout(type,14)} else {feed.scrollTop=feed.scrollHeight}})() }
+
+const OPENERS=['Bienvenido humano… ¿agenda o curiosidad?','Miau. Soy el concierge cibernético. Escribe abajo.','He indexado 9 vidas de conocimiento. ¿Qué necesitas?'];
+const REPL={hola:'Hola! Soy SEND‑CAT v0.4.',agenda:'Deja tu correo/WhatsApp y coordino un espacio.',precio:'La primera consultoría es gratis, luego según tu caso.',ia:'Integro IA a tu flujo: RAG, agentes, MLOps (sin humo).',demo:'¿Qué problema quieres resolver? Te hago un prototipo.'}
+
+bubble(OPENERS[0],'cat');
+
+// While typing: follow the input caret and go to listen state
+input.addEventListener('input', ()=>{
+  const r = input.getBoundingClientRect();
+  lookAt(r.left + r.width*0.9, r.top + r.height/2); // mira hacia el input
+  setState('listen');
+  eyesOpen.style.opacity=1; eyesSmile.style.opacity=0; eyesNarrow.style.opacity=.35; mouthBars.setAttribute('opacity','0');
+  ears.style.transform='rotate(-6deg)'; head.style.transform='rotate(-2deg)';
+});
+input.addEventListener('focus', ()=>{
+  const r = input.getBoundingClientRect(); lookAt(r.left + r.width*0.8, r.top + r.height/2); setState('listen');
+});
+input.addEventListener('blur', ()=>{centerLook(); setState('idle'); eyesNarrow.style.opacity=0; ears.style.transform='rotate(0)'; head.style.transform='rotate(0)'});
+
+form.addEventListener('submit', (e)=>{
+  e.preventDefault(); const val = input.value.trim(); if(!val) return; bubble(val,'user'); input.value='';
+  // Thinking phase: look to the side for a moment
+  setState('thinking'); eyesOpen.style.opacity=1; eyesSmile.style.opacity=0; eyesNarrow.style.opacity=.2; mouthBars.setAttribute('opacity','0');
+  const svgRect = cat.getBoundingClientRect(); lookAt(svgRect.right, svgRect.top + svgRect.height*0.35); // mira al costado derecho-superior
+  ears.style.transform='rotate(-4deg)'; head.style.transform='rotate(-5deg)';
+
+  const reply = (()=>{const t=val.toLowerCase(); for(const k in REPL){ if(t.includes(k)) return REPL[k]; } return OPENERS[Math.floor(Math.random()*OPENERS.length)];})();
+
+  setTimeout(()=>{
+    // Talk state
+    setState('talk'); eyesNarrow.style.opacity=.5; mouthBars.setAttribute('opacity','1');
+    const r = form.getBoundingClientRect(); lookAt(r.left + r.width*0.5, r.top - 20); // mira al mensaje saliente
+    bubble(reply,'cat');
+    setTimeout(()=>{ // Happy finish
+      setState('happy'); eyesOpen.style.opacity=0; eyesSmile.style.opacity=1; eyesNarrow.style.opacity=0; mouthBars.setAttribute('opacity','0');
+      centerLook(); ears.style.transform='rotate(6deg)'; head.style.transform='rotate(3deg)';
+      setTimeout(()=>{ setState('idle'); eyesOpen.style.opacity=1; eyesSmile.style.opacity=0; eyesNarrow.style.opacity=0; ears.style.transform='rotate(0)'; head.style.transform='rotate(0)' }, 1500);
+    }, 350);
+  }, 420 + Math.random()*380);
+});
+</script>
+</body>
+</html>

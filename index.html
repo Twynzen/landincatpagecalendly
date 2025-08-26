@@ -26,10 +26,12 @@
     <!-- Starfield Background -->
     <canvas id="starfield"></canvas>
     
-    <!-- Caja base del gato -->
+
+    <!-- Caja base del gato con puntuación -->
     <div id="catHome" class="cat-home">
         <div class="cat-home-border"></div>
-        <div class="cat-home-text">🏠 Cat Base</div>
+        <div class="cat-home-text">Cat Base</div>
+        <div id="catScore" class="cat-score">Score: 0</div>
     </div>
     
     <!-- CatDC.ai Flotante -->
@@ -163,8 +165,9 @@
                                 <path d="M20 70 L35 55 M65 55 L80 70 M50 75 L50 90" stroke="#00d455" stroke-width="3" opacity="0.9"/>
                                 <!-- Brain connection -->
                                 <circle cx="50" cy="80" r="12" fill="none" stroke="#26d467" stroke-width="2"/>
-                                <circle cx="50" cy="80" r="6" fill="#00d455" opacity="0.7"/>
-                                <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+                                <circle cx="50" cy="80" r="6" fill="#00d455" opacity="0.7">
+                                    <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+                                </circle>
                             </svg>
                         </div>
                         <h3>RAG Systems</h3>
@@ -333,12 +336,7 @@
             <section class="final-cta-section">
                 <div class="cta-container">
                     <a href="https://calendly.com/darmcastiblanco/30min?month=2025-08" target="_blank" class="cta-main-button">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px; vertical-align: -2px;">
-    <path d="M19 3h-1V1a1 1 0 0 0-2 0v2H8V1a1 1 0 0 0-2 0v2H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 19V8h14v11H5z"/>
-    <rect x="7" y="10" width="2" height="2" rx="0.5"/>
-    <rect x="11" y="10" width="2" height="2" rx="0.5"/>
-    <rect x="15" y="10" width="2" height="2" rx="0.5"/>
-</svg>AGENDAR SESIÓN GRATUITA
+AGENDAR SESIÓN GRATUITA
                     </a>
                 </div>
             </section>
@@ -356,11 +354,12 @@
     <script src="js/knowledge-base.js"></script>
     <script src="js/floating-cat.js"></script>
     <script>
-        // CatDC.ai Sistema Inteligente - Con Base/Caja
+        // CatDC.ai Sistema Inteligente v3.0 - Base/Caja con Control Total
         class CatDCAI {
             constructor() {
                 this.catElement = document.getElementById('floatingCat');
                 this.catHome = document.getElementById('catHome');
+                this.catScore = document.getElementById('catScore');
                 this.mouseX = 0;
                 this.mouseY = 0;
                 this.catX = window.innerWidth - 130;
@@ -370,15 +369,25 @@
                 this.dragTimer = null;
                 this.homeTimer = null;
                 
+                // Sistema de ratoncitos Matrix
+                this.score = 0;
+                this.matrixMice = [];
+                this.mouseSpawnTimer = null;
+                this.catchRadius = 50;
+                
+                // Timers para delays de hover
+                this.hoverTimer = null;
+                
                 this.init();
             }
             
             init() {
-                console.log('🤖 CatDC.ai iniciado - Modo Base');
+                console.log('[SYSTEM] CatDC.ai v3.0 iniciado - Sistema Base/Caja + Ratoncitos Matrix');
                 this.setupMouseTracking();
                 this.setupDragToFollow();
                 this.setupHomeZone();
                 this.setupClickInteractions();
+                this.setupMatrixMiceSystem();
                 this.positionCat();
                 this.goHome();
                 this.animateCat();
@@ -400,39 +409,38 @@
             }
             
             setupDragToFollow() {
-                let holdTime = 0;
-                let isHolding = false;
-                
-                // Mouse down - empezar a contar
+                // Sistema de activación por hold 0.8s - Control total del usuario
                 this.catElement.addEventListener('mousedown', (e) => {
                     e.preventDefault();
-                    isHolding = true;
-                    holdTime = 0;
-                    this.catElement.style.cursor = 'grabbing';
                     
-                    // Mostrar indicador de activación
-                    this.showMessage('🔄 <strong>Mantén presionado</strong><br>para activar seguimiento...', 'activation');
-                    
-                    this.dragTimer = setInterval(() => {
-                        holdTime += 100;
-                        if (holdTime >= 800 && !this.isFollowing) { // 0.8 segundos
+                    if (!this.isFollowing && this.isAtHome) {
+                        // Cambiar cursor para indicar que está siendo presionado
+                        this.catElement.style.cursor = 'grabbing';
+                        
+                        // Iniciar timer de 0.8s para activación
+                        this.dragTimer = setTimeout(() => {
                             this.activateFollowing();
-                            clearInterval(this.dragTimer);
-                        }
-                    }, 100);
+                        }, 800);
+                    }
                 });
                 
-                // Mouse up - parar contador
-                document.addEventListener('mouseup', () => {
-                    if (isHolding) {
-                        isHolding = false;
+                this.catElement.addEventListener('mouseup', (e) => {
+                    e.preventDefault();
+                    
+                    // Cancelar timer si se suelta antes de 0.8s
+                    clearTimeout(this.dragTimer);
+                    
+                    if (!this.isFollowing) {
                         this.catElement.style.cursor = 'grab';
-                        clearInterval(this.dragTimer);
-                        
-                        // Limpiar mensaje de activación si no se completó
-                        if (holdTime < 800) {
-                            this.clearMessages();
-                        }
+                        this.showMessage('<strong>Mantén presionado 0.8s</strong><br>para activar mi modo seguimiento', 'hint');
+                    }
+                });
+                
+                // Cancelar si el cursor sale del gato
+                this.catElement.addEventListener('mouseleave', () => {
+                    clearTimeout(this.dragTimer);
+                    if (!this.isFollowing) {
+                        this.catElement.style.cursor = 'grab';
                     }
                 });
             }
@@ -441,7 +449,7 @@
                 // Detectar cuando el mouse está en la zona home
                 this.catHome.addEventListener('mouseenter', () => {
                     if (this.isFollowing) {
-                        this.showMessage('🏠 <strong>Zona de descanso</strong><br>Mantén el cursor aquí 2s para desactivar', 'hint');
+                        this.showMessage('<strong>Zona de descanso</strong><br>Mantén el cursor aquí 2s para desactivar', 'hint');
                         
                         this.homeTimer = setTimeout(() => {
                             this.deactivateFollowing();
@@ -460,7 +468,7 @@
                 this.isFollowing = true;
                 this.isAtHome = false;
                 this.catElement.style.pointerEvents = 'none';
-                this.showMessage('✅ <strong>Modo activo</strong><br>¡Ahora puedo ayudarte con información!', 'thought');
+                this.showMessage('<strong>Modo activo</strong><br>Ahora puedo ayudarte con información', 'thought');
                 
                 // Añadir clase de estado activo
                 this.catElement.classList.add('following');
@@ -478,10 +486,9 @@
                 this.catElement.style.pointerEvents = 'auto';
                 this.catElement.classList.remove('following');
                 this.catHome.classList.remove('active');
-                this.showMessage('💤 <strong>Modo descanso</strong><br>Mantén click en mí para activarme', 'thought');
+                this.showMessage('<strong>Modo descanso</strong><br>Mantén presionado 0.8s para activarme', 'thought');
                 
                 // Restaurar cursors
-                document.body.style.cursor = 'auto';
                 document.querySelectorAll('.service-item').forEach(item => {
                     item.style.cursor = 'pointer';
                 });
@@ -553,11 +560,14 @@
                     heroTitle.addEventListener('mouseenter', () => {
                         if (!this.isFollowing) return; // Solo funciona si está activo
                         
-                        this.showMessage('🎯 <strong>Daniel Castiblanco</strong><br>Experto en IA con +10 años de experiencia implementando soluciones prácticas para empresas y startups.', 'thought');
+                        this.hoverTimer = setTimeout(() => {
+                            this.showMessage('<strong>Daniel Castiblanco</strong><br>Experto en IA con +10 años de experiencia implementando soluciones prácticas para empresas y startups.', 'thought');
+                        }, 1000);
                     });
                     
                     heroTitle.addEventListener('mouseleave', () => {
                         if (!this.isFollowing) return;
+                        clearTimeout(this.hoverTimer);
                         this.clearThoughtMessages();
                     });
                 }
@@ -566,11 +576,14 @@
                     greeting.addEventListener('mouseenter', () => {
                         if (!this.isFollowing) return; // Solo funciona si está activo
                         
-                        this.showMessage('💡 <strong>Implementación de IA</strong><br>Desde chatbots simples hasta sistemas complejos de orquestación de agentes. Soluciones adaptadas a cada necesidad.', 'thought');
+                        this.hoverTimer = setTimeout(() => {
+                            this.showMessage('<strong>Implementación de IA</strong><br>Desde chatbots simples hasta sistemas complejos de orquestación de agentes. Soluciones adaptadas a cada necesidad.', 'thought');
+                        }, 1000);
                     });
                     
                     greeting.addEventListener('mouseleave', () => {
                         if (!this.isFollowing) return;
+                        clearTimeout(this.hoverTimer);
                         this.clearThoughtMessages();
                     });
                 }
@@ -581,11 +594,14 @@
                     ctaButton.addEventListener('mouseenter', () => {
                         if (!this.isFollowing) return; // Solo funciona si está activo
                         
-                        this.showMessage('📅 <strong>Primera sesión gratuita</strong><br>30 minutos para entender tu proyecto y proponer soluciones específicas. Sin compromiso.', 'thought');
+                        this.hoverTimer = setTimeout(() => {
+                            this.showMessage('<strong>Primera sesión gratuita</strong><br>30 minutos para entender tu proyecto y proponer soluciones específicas. Sin compromiso.', 'thought');
+                        }, 1000);
                     });
                     
                     ctaButton.addEventListener('mouseleave', () => {
                         if (!this.isFollowing) return;
+                        clearTimeout(this.hoverTimer);
                         this.clearThoughtMessages();
                     });
                 }
@@ -624,17 +640,17 @@
                 this.clearMessages();
                 
                 const detailedInfo = {
-                    'rag': '🔍 <strong>RAG Systems</strong><br>Implementación de sistemas de recuperación de información que permiten a la IA acceder y consultar documentos específicos en tiempo real.',
+                    'rag': '<strong>RAG Systems</strong><br>Implementación de sistemas de recuperación de información que permiten a la IA acceder y consultar documentos específicos en tiempo real.',
                     
-                    'agents': '🤖 <strong>Agent Orchestration</strong><br>Coordinación de múltiples agentes IA especializados que trabajan de forma colaborativa para resolver problemas complejos.',
+                    'agents': '<strong>Agent Orchestration</strong><br>Coordinación de múltiples agentes IA especializados que trabajan de forma colaborativa para resolver problemas complejos.',
                     
-                    'automation': '⚙️ <strong>Process Automation</strong><br>Automatización inteligente de flujos de trabajo empresariales que comprende contexto y toma decisiones adaptativas.',
+                    'automation': '<strong>Process Automation</strong><br>Automatización inteligente de flujos de trabajo empresariales que comprende contexto y toma decisiones adaptativas.',
                     
-                    'local-llm': '🏠 <strong>Local LLMs</strong><br>Implementación de modelos de IA que funcionan completamente en tu infraestructura para máxima privacidad y control.',
+                    'local-llm': '<strong>Local LLMs</strong><br>Implementación de modelos de IA que funcionan completamente en tu infraestructura para máxima privacidad y control.',
                     
-                    'finops': '💰 <strong>FinOps AI</strong><br>Estrategias de optimización de costos para implementaciones de IA, incluyendo análisis de ROI y eficiencia operacional.',
+                    'finops': '<strong>FinOps AI</strong><br>Estrategias de optimización de costos para implementaciones de IA, incluyendo análisis de ROI y eficiencia operacional.',
                     
-                    'integrations': '🔗 <strong>Custom Integrations</strong><br>Desarrollo de conexiones personalizadas entre sistemas de IA y la infraestructura tecnológica existente.'
+                    'integrations': '<strong>Custom Integrations</strong><br>Desarrollo de conexiones personalizadas entre sistemas de IA y la infraestructura tecnológica existente.'
                 };
                 
                 // Esperar un poco antes de mostrar el nuevo mensaje
@@ -753,6 +769,208 @@
                         setTimeout(() => messageDiv.remove(), 300);
                     }
                 }, duration);
+            }
+            
+            // ========================
+            // SISTEMA RATONCITOS MATRIX
+            // ========================
+            
+            setupMatrixMiceSystem() {
+                // Iniciar spawn de ratoncitos cada 3-8 segundos
+                this.startMouseSpawning();
+            }
+            
+            startMouseSpawning() {
+                const spawnMouse = () => {
+                    if (this.matrixMice.length < 5) { // Máximo 5 ratoncitos en pantalla
+                        this.spawnMatrixMouse();
+                    }
+                    
+                    // Programar siguiente spawn (entre 3 y 8 segundos)
+                    const nextSpawnDelay = Math.random() * 5000 + 3000;
+                    this.mouseSpawnTimer = setTimeout(spawnMouse, nextSpawnDelay);
+                };
+                
+                spawnMouse();
+            }
+            
+            spawnMatrixMouse() {
+                // Crear ratoncito de números binarios
+                const mouse = this.createBinaryMouse();
+                this.matrixMice.push(mouse);
+                document.body.appendChild(mouse.element);
+                
+                // Animar el ratoncito
+                this.animateMatrixMouse(mouse);
+            }
+            
+            createBinaryMouse() {
+                const mouse = document.createElement('div');
+                mouse.className = 'matrix-mouse';
+                
+                // Posición inicial aleatoria en el borde superior
+                const startX = Math.random() * (window.innerWidth - 60);
+                const endX = Math.random() * (window.innerWidth - 60);
+                
+                // Crear ratoncito con números binarios
+                const binaryBody = this.generateBinaryMouseShape();
+                mouse.innerHTML = binaryBody;
+                
+                // Estilos
+                mouse.style.position = 'fixed';
+                mouse.style.left = startX + 'px';
+                mouse.style.top = '-40px';
+                mouse.style.zIndex = '999';
+                mouse.style.pointerEvents = 'none';
+                mouse.style.color = '#00ff41';
+                mouse.style.fontFamily = 'var(--font-mono)';
+                mouse.style.fontSize = '8px';
+                mouse.style.lineHeight = '0.8';
+                mouse.style.fontWeight = 'bold';
+                mouse.style.filter = 'drop-shadow(0 0 6px rgba(0, 255, 65, 0.6))';
+                mouse.style.animation = 'mouseGlow 2s ease-in-out infinite';
+                
+                return {
+                    element: mouse,
+                    x: startX,
+                    y: -40,
+                    targetX: endX,
+                    targetY: window.innerHeight + 40,
+                    speed: Math.random() * 2 + 1, // Velocidad entre 1-3
+                    id: Date.now() + Math.random()
+                };
+            }
+            
+            generateBinaryMouseShape() {
+                // Generar forma de ratón con números binarios
+                const chars = ['0', '1'];
+                const getRandomChar = () => chars[Math.floor(Math.random() * chars.length)];
+                
+                return `
+                    <div style="text-align: center;">
+                        <div>${getRandomChar()}${getRandomChar()}</div>
+                        <div>${getRandomChar()}${getRandomChar()}${getRandomChar()}${getRandomChar()}</div>
+                        <div>${getRandomChar()}${getRandomChar()}${getRandomChar()}</div>
+                        <div style="margin-left: 15px;">${getRandomChar()}</div>
+                    </div>
+                `;
+            }
+            
+            animateMatrixMouse(mouse) {
+                const animate = () => {
+                    // Movimiento diagonal hacia abajo
+                    const progress = (mouse.y + 40) / (window.innerHeight + 80);
+                    
+                    mouse.x = mouse.x + (mouse.targetX - mouse.x) * 0.01;
+                    mouse.y += mouse.speed;
+                    
+                    mouse.element.style.left = mouse.x + 'px';
+                    mouse.element.style.top = mouse.y + 'px';
+                    
+                    // Verificar captura por el gato
+                    if (this.isFollowing) {
+                        const distance = Math.sqrt(
+                            Math.pow(mouse.x + 20 - (this.catX + 60), 2) + 
+                            Math.pow(mouse.y + 15 - (this.catY + 60), 2)
+                        );
+                        
+                        if (distance < this.catchRadius) {
+                            this.catchMatrixMouse(mouse);
+                            return;
+                        }
+                    }
+                    
+                    // Continuar animación si no ha salido de pantalla
+                    if (mouse.y < window.innerHeight + 40) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        // Remover ratoncito que salió de pantalla
+                        this.removeMatrixMouse(mouse);
+                    }
+                };
+                
+                animate();
+            }
+            
+            catchMatrixMouse(mouse) {
+                // Incrementar puntuación
+                this.score++;
+                this.updateScore();
+                
+                // Crear animación de captura Matrix
+                this.createMatrixCatchEffect(mouse.x + 20, mouse.y + 15);
+                
+                // Remover ratoncito
+                this.removeMatrixMouse(mouse);
+                
+                // Mensaje de captura
+                this.showMessage(`<strong>Capturado</strong><br>+1 punto - Score: ${this.score}`, 'activation');
+            }
+            
+            createMatrixCatchEffect(x, y) {
+                // Efecto de disolución Matrix cuando el gato atrapa el ratón
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        const digit = document.createElement('div');
+                        digit.textContent = Math.random() < 0.5 ? '0' : '1';
+                        digit.style.position = 'fixed';
+                        digit.style.left = `${x + (Math.random() - 0.5) * 30}px`;
+                        digit.style.top = `${y}px`;
+                        digit.style.color = '#00ff41';
+                        digit.style.fontSize = '12px';
+                        digit.style.fontFamily = 'var(--font-mono)';
+                        digit.style.fontWeight = 'bold';
+                        digit.style.zIndex = '9998';
+                        digit.style.pointerEvents = 'none';
+                        digit.style.opacity = '1';
+                        
+                        document.body.appendChild(digit);
+                        
+                        // Animar disolución
+                        let startTime = Date.now();
+                        const animate = () => {
+                            const elapsed = Date.now() - startTime;
+                            const progress = elapsed / 1500;
+                            
+                            if (progress < 1) {
+                                digit.style.top = `${y + progress * 150}px`;
+                                digit.style.opacity = `${1 - progress}`;
+                                digit.style.transform = `scale(${1 - progress * 0.5})`;
+                                requestAnimationFrame(animate);
+                            } else {
+                                digit.remove();
+                            }
+                        };
+                        animate();
+                    }, i * 30);
+                }
+            }
+            
+            removeMatrixMouse(mouse) {
+                // Remover del array
+                const index = this.matrixMice.findIndex(m => m.id === mouse.id);
+                if (index > -1) {
+                    this.matrixMice.splice(index, 1);
+                }
+                
+                // Remover elemento del DOM
+                if (mouse.element.parentNode) {
+                    mouse.element.remove();
+                }
+            }
+            
+            updateScore() {
+                if (this.catScore) {
+                    this.catScore.textContent = `Score: ${this.score}`;
+                    
+                    // Animación de puntuación
+                    this.catScore.style.transform = 'scale(1.2)';
+                    this.catScore.style.color = '#00ff41';
+                    setTimeout(() => {
+                        this.catScore.style.transform = 'scale(1)';
+                        this.catScore.style.color = '';
+                    }, 300);
+                }
             }
         }
         
