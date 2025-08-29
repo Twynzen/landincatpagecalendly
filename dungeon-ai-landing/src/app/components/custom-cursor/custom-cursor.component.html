@@ -1,0 +1,97 @@
+<div class="custom-cursor" 
+     [class.cursor-fire]="currentCursor === 'fire'"
+     [class.cursor-torch]="currentCursor === 'torch'"
+     [class.cursor-net]="currentCursor === 'net'"
+     [class.visible]="isVisible"
+     [style.left.px]="cursorX"
+     [style.top.px]="cursorY">
+  
+  <!-- Fire cursor (fueguito Matrix) -->
+  <div *ngIf="currentCursor === 'fire'" class="cursor-inner cursor-fire-svg">
+    <svg width="20" height="20" viewBox="0 0 20 20">
+      <defs>
+        <radialGradient id="fireGradient" cx="50%" cy="80%" r="60%">
+          <stop offset="0%" stop-color="#00ff44"/>
+          <stop offset="40%" stop-color="#00cc33"/>
+          <stop offset="80%" stop-color="#00aa22"/>
+          <stop offset="100%" stop-color="#008811"/>
+        </radialGradient>
+      </defs>
+      <path d="M10 18 Q6 12 10 4 Q14 12 10 18" fill="url(#fireGradient)">
+        <animateTransform attributeName="transform" type="scale" values="1;1.1;1" dur="0.8s" repeatCount="indefinite"/>
+      </path>
+      <circle cx="10" cy="10" r="2" fill="#00ff44" opacity="0.7">
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="0.6s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+  </div>
+  
+  <!-- Torch cursor (antorcha tomada Tech Matrix) -->
+  <div *ngIf="currentCursor === 'torch'" class="cursor-inner cursor-torch-svg">
+    <svg width="32" height="32" viewBox="0 0 32 32">
+      <defs>
+        <linearGradient id="miniMetalHandle" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#e0e0e0"/>
+          <stop offset="25%" stop-color="#c0c0c0"/>
+          <stop offset="50%" stop-color="#888"/>
+          <stop offset="75%" stop-color="#666"/>
+          <stop offset="100%" stop-color="#444"/>
+        </linearGradient>
+        <linearGradient id="miniMetalCup" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f0f0f0"/>
+          <stop offset="30%" stop-color="#c8c8c8"/>
+          <stop offset="70%" stop-color="#999"/>
+          <stop offset="100%" stop-color="#777"/>
+        </linearGradient>
+        <linearGradient id="torchFlame" x1="0%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%" stop-color="#00ff44"/>
+          <stop offset="30%" stop-color="#00cc33"/>
+          <stop offset="60%" stop-color="#00aa22"/>
+          <stop offset="100%" stop-color="#008811"/>
+        </linearGradient>
+      </defs>
+      
+      <!-- Mango metálico mini -->
+      <rect x="14" y="18" width="4" height="12" fill="url(#miniMetalHandle)" stroke="#00ff44" stroke-width="0.3" rx="1"/>
+      
+      <!-- Hexágono tech mini -->
+      <polygon points="12,22 20,22 19,26 13,26" fill="url(#miniMetalHandle)" stroke="#00ff44" stroke-width="0.3"/>
+      
+      <!-- LED mini -->
+      <circle cx="16" cy="24" r="0.8" fill="#00ff44" opacity="0.9"/>
+      
+      <!-- Copa metálica mini -->
+      <ellipse cx="16" cy="16" rx="6" ry="2" fill="url(#miniMetalCup)" stroke="#00ff44" stroke-width="0.5"/>
+      <rect x="10" y="14" width="12" height="4" fill="url(#miniMetalCup)" stroke="#00ff44" stroke-width="0.5" rx="1"/>
+      <ellipse cx="16" cy="14" rx="6" ry="2" fill="#ddd" stroke="#00ff44" stroke-width="0.5"/>
+      
+      <!-- Llama Matrix mini -->
+      <path d="M12 14 Q16 6 20 14 Q18 18 16 16 Q14 18 12 14" fill="url(#torchFlame)">
+        <animateTransform attributeName="transform" type="scale" values="1;1.08;0.92;1" dur="0.6s" repeatCount="indefinite"/>
+      </path>
+      
+      <!-- Partículas Matrix mini -->
+      <text x="11" y="10" fill="#00ff44" font-size="2" font-family="monospace" opacity="0.9">1</text>
+      <text x="21" y="8" fill="#00cc33" font-size="1.5" font-family="monospace" opacity="0.8">0</text>
+      <text x="16" y="6" fill="#00aa22" font-size="2" font-family="monospace" opacity="0.7">1</text>
+    </svg>
+  </div>
+  
+  <!-- Net cursor -->
+  <div *ngIf="currentCursor === 'net'" class="cursor-inner cursor-net-svg">
+    <svg width="24" height="24" viewBox="0 0 24 24">
+      <defs>
+        <linearGradient id="netGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#00ff44"/>
+          <stop offset="50%" stop-color="#00cc33"/>
+          <stop offset="100%" stop-color="#008811"/>
+        </linearGradient>
+      </defs>
+      <circle cx="12" cy="12" r="8" fill="none" stroke="url(#netGrad)" stroke-width="1.5" opacity="0.8"/>
+      <circle cx="12" cy="12" r="5" fill="none" stroke="url(#netGrad)" stroke-width="1" opacity="0.7"/>
+      <circle cx="12" cy="12" r="2" fill="none" stroke="url(#netGrad)" stroke-width="0.8" opacity="0.9"/>
+      <line x1="4" y1="12" x2="20" y2="12" stroke="url(#netGrad)" stroke-width="0.5" opacity="0.7"/>
+      <line x1="12" y1="4" x2="12" y2="20" stroke="url(#netGrad)" stroke-width="0.5" opacity="0.7"/>
+    </svg>
+  </div>
+</div>

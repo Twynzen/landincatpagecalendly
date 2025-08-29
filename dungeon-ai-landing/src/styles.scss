@@ -1,0 +1,91 @@
+/* Global Styles - Dungeon AI Landing */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  background: #0a0a0a;
+  color: #00ff44;
+  font-family: 'Share Tech Mono', monospace;
+  cursor: none; // Will be replaced by custom cursor
+}
+
+// Matrix color variables
+:root {
+  --matrix-green: #00ff44;
+  --matrix-green-dark: #00aa22;
+  --matrix-green-glow: #00ff4480;
+  --matrix-black: #0a0a0a;
+  --matrix-dark: #001100;
+  --matrix-medium: #003300;
+  --matrix-light: #00550f;
+}
+
+// Hide scrollbar but keep functionality
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--matrix-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--matrix-green-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--matrix-green);
+}
+
+// Selection colors
+::selection {
+  background: var(--matrix-green-glow);
+  color: var(--matrix-black);
+}
+
+// Animations
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes glow {
+  0%, 100% { 
+    box-shadow: 0 0 10px var(--matrix-green-glow);
+  }
+  50% { 
+    box-shadow: 0 0 20px var(--matrix-green), 0 0 30px var(--matrix-green-glow);
+  }
+}
+
+// Utility classes
+.hidden {
+  display: none !important;
+}
+
+.illuminated {
+  opacity: 1 !important;
+  filter: brightness(1.2);
+  transition: all 0.5s ease;
+}
+
+.matrix-text {
+  color: var(--matrix-green);
+  text-shadow: 0 0 10px var(--matrix-green-glow);
+}
+
+// Mobile adjustments
+@media (max-width: 768px) {
+  body {
+    cursor: auto; // Show default cursor on mobile
+  }
+}

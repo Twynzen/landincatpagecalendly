@@ -1,0 +1,262 @@
+.cursor-inventory {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(20, 40, 20, 0.8));
+  border: 2px solid #00ff44;
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 255, 68, 0.2);
+  transform: translateX(320px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+  z-index: 1000;
+
+  &.visible {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.inventory-header {
+  margin-bottom: 16px;
+  text-align: center;
+
+  h3 {
+    color: #00ff44;
+    font-size: 18px;
+    margin: 0 0 4px 0;
+    text-shadow: 0 0 10px rgba(0, 255, 68, 0.5);
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+  }
+
+  p {
+    color: #00cc33;
+    font-size: 12px;
+    margin: 0;
+    opacity: 0.8;
+  }
+}
+
+.cursor-slots {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.cursor-slot {
+  position: relative;
+  width: 80px;
+  height: 100px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover:not(.locked) {
+    transform: scale(1.05);
+  }
+
+  &.locked {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &.available {
+    .slot-frame {
+      border-color: #00cc33;
+      box-shadow: 0 0 15px rgba(0, 204, 51, 0.3);
+    }
+
+    &:hover {
+      .slot-frame {
+        box-shadow: 0 0 25px rgba(0, 204, 51, 0.5);
+      }
+    }
+  }
+
+  &.active {
+    .slot-frame {
+      border-color: #00ff44;
+      box-shadow: 0 0 20px rgba(0, 255, 68, 0.6);
+      background: linear-gradient(145deg, rgba(0, 255, 68, 0.1), rgba(0, 204, 51, 0.05));
+    }
+
+    .active-indicator {
+      opacity: 1;
+    }
+  }
+}
+
+.slot-frame {
+  width: 100%;
+  height: 70px;
+  position: relative;
+  border: 2px solid #333;
+  border-radius: 8px;
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.8), rgba(40, 40, 40, 0.6));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.slot-border {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  border: 1px solid rgba(0, 255, 68, 0.2);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.slot-content {
+  position: relative;
+  z-index: 2;
+}
+
+.cursor-icon {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: filter 0.3s ease;
+}
+
+.lock-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+  padding: 4px;
+  z-index: 3;
+}
+
+.active-indicator {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  background: #00ff44;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 4;
+}
+
+.active-dot {
+  width: 100%;
+  height: 100%;
+  background: #00ff44;
+  border-radius: 50%;
+  animation: activePulse 2s infinite;
+}
+
+.slot-info {
+  margin-top: 8px;
+  text-align: center;
+
+  h4 {
+    color: #00ff44;
+    font-size: 11px;
+    margin: 0 0 2px 0;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(0, 255, 68, 0.3);
+  }
+
+  p {
+    color: #00aa22;
+    font-size: 9px;
+    margin: 0;
+    opacity: 0.8;
+    line-height: 1.2;
+  }
+}
+
+// Animaciones
+@keyframes activePulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .cursor-inventory {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    width: auto;
+    transform: translateY(-320px);
+
+    &.visible {
+      transform: translateY(0);
+    }
+  }
+
+  .cursor-slots {
+    justify-content: space-around;
+  }
+
+  .cursor-slot {
+    width: 70px;
+    height: 90px;
+
+    .slot-frame {
+      height: 60px;
+    }
+  }
+
+  .cursor-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .inventory-header h3 {
+    font-size: 16px;
+  }
+
+  .slot-info h4 {
+    font-size: 10px;
+  }
+
+  .slot-info p {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cursor-inventory {
+    padding: 12px;
+  }
+
+  .cursor-slots {
+    gap: 8px;
+  }
+
+  .cursor-slot {
+    width: 60px;
+    height: 80px;
+
+    .slot-frame {
+      height: 50px;
+    }
+  }
+
+  .cursor-icon {
+    width: 24px;
+    height: 24px;
+  }
+}

@@ -1,0 +1,43 @@
+.custom-cursor {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  transition: none;
+  opacity: 0;
+  
+  &.visible {
+    opacity: 1;
+  }
+}
+
+.cursor-inner {
+  transition: transform 0.1s ease;
+  transform: translate(-50%, -50%);
+}
+
+// Fire cursor SVG
+.cursor-fire-svg {
+  filter: drop-shadow(0 0 8px rgba(0, 255, 68, 0.8));
+  
+  svg {
+    transform: translate(-10px, -10px);
+  }
+}
+
+// Torch cursor SVG (antorcha tomada Tech Matrix)
+.cursor-torch-svg {
+  filter: drop-shadow(0 0 12px rgba(0, 255, 68, 0.9));
+  
+  svg {
+    transform: translate(-16px, -16px);
+  }
+}
+
+// Net cursor SVG
+.cursor-net-svg {
+  filter: drop-shadow(0 0 10px rgba(0, 255, 68, 0.7));
+  
+  svg {
+    transform: translate(-12px, -12px);
+  }
+}

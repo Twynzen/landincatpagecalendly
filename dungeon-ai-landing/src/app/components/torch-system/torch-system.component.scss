@@ -1,0 +1,268 @@
+.torch-system {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.torch-container {
+  position: absolute;
+  pointer-events: all;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &.hint-visible {
+    .hint-pulse {
+      opacity: 1;
+      animation: subtlePulse 4s infinite;
+    }
+  }
+
+  &.hover:not(.lit) {
+    transform: translate(-50%, -50%) scale(1.1) !important;
+    
+    .torch-svg {
+      filter: drop-shadow(0 0 8px rgba(0, 255, 68, 0.3));
+    }
+  }
+
+  &.lit {
+    .torch-svg {
+      filter: drop-shadow(0 0 15px rgba(0, 255, 68, 0.6));
+    }
+
+    .matrix-particles {
+      text {
+        animation: matrixParticleFloat 2s infinite ease-in-out;
+        
+        &:nth-child(2) { animation-delay: 0.3s; }
+        &:nth-child(3) { animation-delay: 0.6s; }
+        &:nth-child(4) { animation-delay: 0.9s; }
+        &:nth-child(5) { animation-delay: 1.2s; }
+        &:nth-child(6) { animation-delay: 1.5s; }
+      }
+    }
+  }
+
+  &.igniting {
+    .torch-svg {
+      animation: ignitionEffect 0.5s ease-out;
+    }
+  }
+
+  &.taken {
+    animation: torchTaken 0.3s ease-out;
+  }
+}
+
+.torch-svg {
+  width: 60px;
+  height: 90px;
+  transition: filter 0.3s ease;
+
+  .glow-effect {
+    animation: glowPulse 2s infinite ease-in-out;
+  }
+
+  .flame-main {
+    filter: drop-shadow(0 0 5px rgba(0, 255, 68, 0.8));
+  }
+}
+
+.hint-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border: 1px solid rgba(0, 255, 68, 0.2);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+// Animations
+@keyframes subtlePulse {
+  0%, 100% {
+    opacity: 0.1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes matrixParticleFloat {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(-3px);
+    opacity: 0.5;
+  }
+}
+
+@keyframes ignitionEffect {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(0, 255, 68, 0.3));
+  }
+  50% {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 20px rgba(0, 255, 68, 0.8));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 15px rgba(0, 255, 68, 0.6));
+  }
+}
+
+@keyframes torchTaken {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+// Custom cursor classes (applied to body)
+:global(body.cursor-fire) {
+  cursor: none;
+
+  &::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle, #00ff44 20%, #00cc33 50%, transparent 70%);
+    border-radius: 50% 0 50% 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-2px, -2px);
+    animation: fireCursorFlicker 0.8s infinite;
+  }
+}
+
+:global(body.cursor-torch) {
+  cursor: none;
+
+  &::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    background: radial-gradient(circle, #00ff44 30%, #00cc33 60%, transparent 80%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-12px, -12px);
+    animation: torchCursorGlow 1s infinite;
+  }
+}
+
+:global(body.cursor-net) {
+  cursor: none;
+
+  &::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #00ff44;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-10px, -10px);
+    animation: netCursorPulse 1.2s infinite;
+  }
+
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #00cc33;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-6px, -6px);
+    opacity: 0.6;
+  }
+}
+
+@keyframes fireCursorFlicker {
+  0%, 100% {
+    opacity: 0.8;
+    transform: translate(-2px, -2px) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-2px, -2px) scale(1.1);
+  }
+}
+
+@keyframes torchCursorGlow {
+  0%, 100% {
+    opacity: 0.7;
+    box-shadow: 0 0 10px rgba(0, 255, 68, 0.5);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(0, 255, 68, 0.8);
+  }
+}
+
+@keyframes netCursorPulse {
+  0%, 100% {
+    opacity: 0.8;
+    transform: translate(-10px, -10px) scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: translate(-10px, -10px) scale(1.2);
+  }
+}
+
+// Mobile responsive adjustments
+@media (max-width: 768px) {
+  .torch-container {
+    .torch-svg {
+      width: 45px;
+      height: 68px;
+    }
+  }
+
+  .hint-pulse {
+    width: 60px;
+    height: 60px;
+  }
+}

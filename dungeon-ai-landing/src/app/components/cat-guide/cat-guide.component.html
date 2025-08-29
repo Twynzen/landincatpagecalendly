@@ -1,0 +1,44 @@
+<div [ngClass]="getCatClass()"
+     (mouseenter)="onCatHover()"
+     (mouseleave)="onCatLeave()"
+     (click)="onCatClick()">
+  
+  <!-- Cat SVG -->
+  <svg class="cat-svg" width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+    <!-- Cat body -->
+    <ellipse cx="40" cy="50" rx="25" ry="20" fill="#333" opacity="0.8"/>
+    
+    <!-- Cat head -->
+    <circle cx="40" cy="30" r="18" fill="#333"/>
+    
+    <!-- Ears -->
+    <polygon points="25,25 20,15 30,20" fill="#333"/>
+    <polygon points="55,25 60,15 50,20" fill="#333"/>
+    
+    <!-- Eyes (following cursor) -->
+    <g class="cat-eyes" [ngStyle]="getEyeStyle()">
+      <circle cx="33" cy="28" r="3" fill="#00ff44" class="eye-left"/>
+      <circle cx="47" cy="28" r="3" fill="#00ff44" class="eye-right"/>
+    </g>
+    
+    <!-- Pupils -->
+    <circle cx="33" cy="28" r="1" fill="#000"/>
+    <circle cx="47" cy="28" r="1" fill="#000"/>
+    
+    <!-- Nose -->
+    <polygon points="40,35 38,37 42,37" fill="#ff69b4"/>
+    
+    <!-- Tail -->
+    <path d="M 15 50 Q 5 40 10 25" stroke="#333" stroke-width="8" fill="none" stroke-linecap="round"/>
+  </svg>
+  
+  <!-- Heart effect when caressed -->
+  <div class="heart-effect" *ngIf="showHeartEffect">
+    <span class="heart">💚</span>
+  </div>
+  
+  <!-- Tooltip -->
+  <div class="cat-tooltip" *ngIf="showTooltip" [ngStyle]="getTooltipStyle()">
+    {{ tooltipMessage }}
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="mouse-hunter-container">
+  <div 
+    *ngFor="let mouse of mice"
+    class="matrix-mouse"
+    [ngStyle]="getMouseStyle(mouse)"
+    (click)="onMouseClick(mouse, $event)"
+  >
+    🐭
+  </div>
+</div>

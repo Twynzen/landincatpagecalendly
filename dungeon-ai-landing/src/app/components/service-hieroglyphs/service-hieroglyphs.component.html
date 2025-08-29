@@ -1,0 +1,29 @@
+<div class="services-container">
+  <!-- Título principal -->
+  <div class="services-header" [class.illuminated]="headerIlluminated">
+    <h2>ESPECIALIDADES DE CONSULTORÍA</h2>
+  </div>
+  
+  <!-- Grid 3x2 de servicios como cards rectangulares -->
+  <div class="services-grid">
+    <div 
+      *ngFor="let service of services"
+      [id]="'service-' + service.id"
+      class="service-card"
+      [class.illuminated]="service.illuminated"
+      (click)="onServiceClick(service)"
+    >
+      <!-- Ícono del servicio -->
+      <div class="service-icon">
+        <svg width="40" height="40" viewBox="0 0 32 32">
+          <g [innerHTML]="service.iconSVG"></g>
+        </svg>
+      </div>
+      
+      <!-- Título del servicio -->
+      <div class="service-title">
+        <h3>{{ service.title }}</h3>
+      </div>
+    </div>
+  </div>
+</div>

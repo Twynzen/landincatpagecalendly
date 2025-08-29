@@ -1,0 +1,174 @@
+.dungeon-app {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  font-family: 'Arial', 'Helvetica', sans-serif; // Sans-serif limpio como landinpreview.png
+}
+
+.main-content {
+  position: relative;
+  z-index: 20;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 3rem;
+  opacity: 0.2; // Inicial muy sutil
+  transition: opacity 0.5s ease;
+  
+  &.illuminated {
+    opacity: 1;
+  }
+  
+  // "DANIEL CASTIBLANCO" - pequeño sutil arriba como landinpreview.png
+  .author-name {
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin: 0 0 1.5rem 0;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #00ff44;
+    text-shadow: 0 0 3px rgba(0, 255, 68, 0.3);
+    opacity: 0.8;
+    font-family: 'Courier New', monospace; // Typography robótica como pide Daniel
+    filter: blur(0.3px); // Efecto borroso sutil como landinpreview.png
+  }
+  
+  // "CONSULTOR DE IA" - MUY grande brillante principal como landinpreview.png
+  .main-title {
+    font-size: 5.5rem; // Más grande que antes para match exacto
+    font-weight: 900;
+    margin: 0 0 1.5rem 0;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #00ff44;
+    text-shadow: 
+      0 0 25px rgba(0, 255, 68, 1),
+      0 0 50px rgba(0, 255, 68, 0.8),
+      0 0 75px rgba(0, 255, 68, 0.6);
+    filter: drop-shadow(0 0 40px rgba(0, 255, 68, 0.9));
+    font-family: 'Courier New', monospace; // Typography robótica
+    animation: heroGlow 3s infinite alternate ease-in-out;
+  }
+  
+  // "Para PERSONAS y NEGOCIOS" - con efecto borroso especial como landinpreview.png
+  .blur-subtitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin: 0;
+    color: #00cc33;
+    text-shadow: 0 0 15px rgba(0, 255, 68, 0.6);
+    opacity: 0.7;
+    font-family: 'Courier New', monospace; // Typography robótica
+    letter-spacing: 0.15em;
+    filter: blur(0.8px); // Efecto borroso como en landinpreview.png
+    text-transform: uppercase;
+  }
+}
+
+.net-selector {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  
+  .net-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #00ff44;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 255, 68, 0.5);
+    
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(0, 255, 68, 0.8);
+      background: rgba(0, 255, 68, 0.1);
+    }
+    
+    &.active {
+      background: rgba(0, 255, 68, 0.2);
+      animation: pulse 1s infinite;
+    }
+  }
+}
+
+@keyframes heroGlow {
+  0% {
+    text-shadow: 
+      0 0 20px rgba(0, 255, 68, 0.8),
+      0 0 40px rgba(0, 255, 68, 0.6),
+      0 0 60px rgba(0, 255, 68, 0.4);
+    filter: drop-shadow(0 0 30px rgba(0, 255, 68, 0.8));
+  }
+  100% {
+    text-shadow: 
+      0 0 30px rgba(0, 255, 68, 1),
+      0 0 50px rgba(0, 255, 68, 0.8),
+      0 0 80px rgba(0, 255, 68, 0.6);
+    filter: drop-shadow(0 0 50px rgba(0, 255, 68, 1));
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    .author-name {
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    
+    .main-title {
+      font-size: 3.5rem; // Mantener proporcionalidad en móvil
+    }
+    
+    .blur-subtitle {
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+    }
+  }
+  
+  .main-content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    .author-name {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+    }
+    
+    .main-title {
+      font-size: 2.8rem; // Compacto para móvil pequeño
+    }
+    
+    .blur-subtitle {
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+    }
+  }
+}

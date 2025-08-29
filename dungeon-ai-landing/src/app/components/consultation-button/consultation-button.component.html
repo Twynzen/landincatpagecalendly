@@ -1,0 +1,26 @@
+<div class="consultation-container">
+  <button 
+    class="consultation-btn"
+    [class.illuminated]="isIlluminated"
+    (click)="onButtonClick()"
+  >
+    <span class="btn-text">AGENDAR SESIÓN GRATUITA</span>
+    
+    <!-- Aura mágica externa (solo cuando iluminado) -->
+    <div class="magic-aura" *ngIf="isIlluminated"></div>
+    
+    <!-- Resplandor mágico (solo cuando iluminado) -->
+    <div class="magic-glow" *ngIf="isIlluminated"></div>
+  </button>
+  
+  <!-- Binary particle system (solo cuando iluminado) -->
+  <div class="particles-container" *ngIf="showParticles">
+    <div 
+      *ngFor="let particle of binaryParticles" 
+      class="binary-particle"
+      [ngStyle]="getParticleStyle(particle)"
+    >
+      {{ particle.value }}
+    </div>
+  </div>
+</div>

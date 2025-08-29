@@ -1,0 +1,31 @@
+.mouse-hunter-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 30;
+}
+
+.matrix-mouse {
+  position: absolute;
+  font-size: 24px;
+  cursor: pointer;
+  pointer-events: all;
+  filter: drop-shadow(0 0 10px var(--matrix-green));
+  animation: mouse-glow 2s infinite;
+  
+  &:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+@keyframes mouse-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px var(--matrix-green));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px var(--matrix-green)) brightness(1.2);
+  }
+}

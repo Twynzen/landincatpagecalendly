@@ -1,0 +1,217 @@
+.consultation-container {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  text-align: center;
+}
+
+.consultation-btn {
+  position: relative;
+  padding: 20px 40px; // Más grande como landinpreview.png
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #555;
+  font-family: 'Arial', sans-serif; // Sans-serif profesional como landinpreview.png
+  font-size: 16px; // Más grande y prominente
+  font-weight: 600; // Semi-bold profesional
+  cursor: pointer;
+  border-radius: 6px; // Más rectangular como landinpreview.png
+  transition: all 0.4s ease;
+  overflow: hidden;
+  letter-spacing: 0.1em; // Spacing profesional
+  text-transform: uppercase;
+  
+  // Estado inicial apagado más visible
+  opacity: 0.4;
+  
+  // Palpitaciones sutiles profesionales
+  animation: subtlePulse 3s infinite ease-in-out;
+  
+  &.illuminated {
+    // Estado iluminado profesional Matrix
+    opacity: 1;
+    background: #00ff44; // Verde sólido profesional como landinpreview.png
+    border: 2px solid #00ff44;
+    color: #000; // Texto negro sobre verde
+    font-weight: 700; // Bold para contraste
+    box-shadow: 
+      0 0 20px rgba(0, 255, 68, 0.6),
+      0 0 40px rgba(0, 255, 68, 0.3);
+    
+    // Sin animaciones molestas - solo glow sutil
+    animation: none;
+    
+    &:hover {
+      transform: translateY(-2px); // Lift sutil profesional
+      box-shadow: 
+        0 4px 25px rgba(0, 255, 68, 0.5),
+        0 0 30px rgba(0, 255, 68, 0.4);
+      background: #66ff66; // Verde más claro en hover
+    }
+  }
+  
+  &.disintegrating {
+    animation: buttonShake 0.6s ease-in-out;
+  }
+}
+
+.btn-text {
+  position: relative;
+  z-index: 2;
+  font-size: 16px; // Match button font size
+  font-weight: 600; // Semi-bold profesional
+  letter-spacing: 0.1em; // Match button spacing
+  transition: all 0.4s ease;
+  
+  // Estado apagado - texto más visible que antes
+  color: #555;
+  animation: textPulse 4s infinite ease-in-out;
+  
+  .consultation-btn.illuminated & {
+    // Estado iluminado - texto negro contrastante sobre verde
+    color: #000;
+    font-weight: 700; // Bold para máximo contraste
+    text-shadow: none;
+    animation: none;
+  }
+}
+
+// Aura profesional sutil (solo cuando iluminado)
+.magic-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140px;
+  height: 50px;
+  background: radial-gradient(ellipse, rgba(0, 255, 68, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: none; // Sin animaciones molestas - efecto estático profesional
+  pointer-events: none;
+  z-index: 0;
+}
+
+// Resplandor profesional simplificado
+.magic-glow {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: rgba(0, 255, 68, 0.1);
+  border-radius: 8px; // Match button border-radius
+  animation: none; // Sin animaciones - glow estático profesional
+  pointer-events: none;
+  z-index: 1;
+}
+
+.particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.binary-particle {
+  position: absolute;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: #00ff44;
+  text-shadow: 0 0 5px rgba(0, 255, 68, 0.8);
+  pointer-events: none;
+  user-select: none;
+}
+
+// Animations
+
+// Palpitaciones profesionales estado apagado
+@keyframes subtlePulse {
+  0%, 100% {
+    opacity: 0.4;
+    border-color: #333;
+  }
+  50% {
+    opacity: 0.6;
+    border-color: #555;
+  }
+}
+
+// Palpitaciones de texto profesionales estado apagado
+@keyframes textPulse {
+  0%, 100% {
+    color: #555;
+  }
+  50% {
+    color: #777;
+  }
+}
+
+// Pulso mágico estado iluminado
+@keyframes magicPulse {
+  0%, 100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.01);
+  }
+}
+
+// Aura mágica externa
+@keyframes magicAuraPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+// Resplandor mágico
+@keyframes magicGlowPulse {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes buttonShake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .consultation-btn {
+    font-size: 11px;
+    padding: 14px 28px;
+  }
+  
+  .btn-text {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .consultation-btn {
+    padding: 12px 24px;
+  }
+  
+  .btn-text {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+}
