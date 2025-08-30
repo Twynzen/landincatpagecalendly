@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DungeonBackgroundComponent } from './components/dungeon-background/dungeon-background.component';
+import { CircuitsBackgroundComponent } from './components/circuits-background/circuits-background.component';
 import { TorchSystemComponent } from './components/torch-system/torch-system.component';
 import { ServiceHieroglyphsComponent } from './components/service-hieroglyphs/service-hieroglyphs.component';
 import { CatGuideComponent } from './components/cat-guide/cat-guide.component';
@@ -13,7 +13,7 @@ import { CustomCursorComponent } from './components/custom-cursor/custom-cursor.
   standalone: true,
   imports: [
     CommonModule,
-    DungeonBackgroundComponent,
+    CircuitsBackgroundComponent,
     TorchSystemComponent,
     ServiceHieroglyphsComponent,
     CatGuideComponent,
