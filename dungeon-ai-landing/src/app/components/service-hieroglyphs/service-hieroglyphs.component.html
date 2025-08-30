@@ -1,7 +1,12 @@
 <div class="services-container">
-  <!-- Título principal -->
-  <div class="services-header" [class.illuminated]="headerIlluminated">
-    <h2>ESPECIALIDADES DE CONSULTORÍA</h2>
+  <!-- Título principal con typing animation -->
+  <div class="services-header" 
+       [class.illuminated]="headerIlluminated"
+       [class.typing]="headerIlluminated"
+       [attr.data-text]="'ESPECIALIDADES DE CONSULTORÍA'">
+    <h2>
+      <span class="typing-text">ESPECIALIDADES DE CONSULTORÍA</span>
+    </h2>
   </div>
   
   <!-- Grid 3x2 de servicios como cards rectangulares -->
@@ -20,9 +25,13 @@
         </svg>
       </div>
       
-      <!-- Título del servicio -->
-      <div class="service-title">
-        <h3>{{ service.title }}</h3>
+      <!-- Título del servicio con Matrix revelation -->
+      <div class="service-title"
+           [class.illuminated]="service.illuminated"
+           [class.typing]="service.illuminated">
+        <h3>
+          <span class="typing-text">{{ service.title }}</span>
+        </h3>
       </div>
     </div>
   </div>

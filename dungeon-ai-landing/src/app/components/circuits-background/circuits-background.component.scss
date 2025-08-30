@@ -6,7 +6,7 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  z-index: 1; // Detrás del contenido principal
+  z-index: 1; // Detrï¿½s del contenido principal
   pointer-events: none;
 }
 
@@ -53,7 +53,7 @@
   }
   
   .circuit-symbol {
-    font-family: 'Courier New', monospace;
+    font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
     font-size: 20px;
     font-weight: bold;
     color: #00aa22;
@@ -62,7 +62,7 @@
     transition: all 0.3s ease;
   }
   
-  // Animación Matrix rain para circuitos iluminados
+  // Animaciï¿½n Matrix rain para circuitos iluminados
   .matrix-rain {
     position: absolute;
     top: 100%;
@@ -74,7 +74,7 @@
     
     .matrix-char {
       position: absolute;
-      font-family: 'Courier New', monospace;
+      font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
       font-size: 12px;
       color: #00ff44;
       opacity: 0;
@@ -84,7 +84,7 @@
   }
 }
 
-// SVG para conexiones dinámicas (reemplaza Canvas dynamicConnections)
+// SVG para conexiones dinï¿½micas (reemplaza Canvas dynamicConnections)
 .connections-svg {
   position: absolute;
   top: 0;

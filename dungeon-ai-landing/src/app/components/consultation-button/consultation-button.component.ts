@@ -51,9 +51,12 @@ export class ConsultationButtonComponent implements OnInit, OnDestroy {
         const wasIlluminated = this.isIlluminated;
         this.isIlluminated = buttonElement?.isVisible || false;
         
-        // Trigger particles when becoming illuminated
+        // Trigger particles and Matrix animation when becoming illuminated
         if (!wasIlluminated && this.isIlluminated) {
           this.triggerIlluminationParticles();
+          setTimeout(() => {
+            this.triggerButtonTyping();
+          }, 200);
         }
       });
   }
@@ -78,6 +81,81 @@ export class ConsultationButtonComponent implements OnInit, OnDestroy {
     this.createBinaryParticles(30);
     this.showParticles = true;
     this.animateParticles();
+  }
+
+  private triggerButtonTyping(): void {
+    const buttonElement = this.elementRef.nativeElement.querySelector('.consultation-btn.typing') as HTMLElement;
+    if (buttonElement) {
+      const text = buttonElement.getAttribute('data-text') || '';
+      const typingSpan = buttonElement.querySelector('.typing-text') as HTMLElement;
+      
+      if (typingSpan && text) {
+        this.createMatrixRevelation(typingSpan, text);
+      }
+    }
+  }
+
+  private createMatrixRevelation(element: HTMLElement, finalText: string): void {
+    const chars = finalText.split('');
+    const totalChars = chars.length;
+    const revealedChars: boolean[] = new Array(totalChars).fill(false);
+    const matrixChars = 'ABCDEFABCDEFABCDEFABCDEFABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Solo letras limpias para Glitchy Demo Italic
+    
+    // Crear estructura inicial con caracteres Matrix aleatorios
+    element.innerHTML = chars.map(() => 
+      matrixChars[Math.floor(Math.random() * matrixChars.length)]
+    ).join('');
+    
+    element.style.borderRight = 'none';
+    element.style.color = '#000'; // NEGRO para legibilidad sobre botón verde
+    element.style.textShadow = '0 0 2px rgba(0, 0, 0, 0.3)'; // Sombra negra para contraste
+    element.style.fontFamily = "'Glitchy Demo Italic', 'Share Tech Mono', monospace"; // MANTENER fuente durante animación
+    
+    let revealedCount = 0;
+    const revealInterval = setInterval(() => {
+      if (revealedCount >= totalChars) {
+        clearInterval(revealInterval);
+        return;
+      }
+      
+      // Elegir posición aleatoria no revelada
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * totalChars);
+      } while (revealedChars[randomIndex]);
+      
+      // Revelar el carácter correcto
+      revealedChars[randomIndex] = true;
+      revealedCount++;
+      
+      // Actualizar display con caracteres revelados
+      const displayChars = chars.map((char, index) => {
+        if (revealedChars[index]) {
+          return char; // Carácter final correcto
+        } else if (char === ' ') {
+          return ' '; // Mantener espacios
+        } else {
+          // Carácter Matrix aleatorio que sigue cambiando
+          return matrixChars[Math.floor(Math.random() * matrixChars.length)];
+        }
+      });
+      
+      element.innerHTML = displayChars.join('');
+      
+      // Efecto adicional: cambiar caracteres no revelados más rápido
+      if (revealedCount < totalChars) {
+        setTimeout(() => {
+          const currentDisplay = element.innerHTML.split('');
+          for (let i = 0; i < currentDisplay.length; i++) {
+            if (!revealedChars[i] && chars[i] !== ' ') {
+              currentDisplay[i] = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+            }
+          }
+          element.innerHTML = currentDisplay.join('');
+        }, 30);
+      }
+      
+    }, 70); // Revelar una letra cada 70ms - más rápido para botón
   }
 
   private createBinaryParticles(count: number): void {

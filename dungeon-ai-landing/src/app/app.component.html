@@ -13,19 +13,31 @@
   
   <!-- Main content area -->
   <div class="main-content">
-    <!-- Hero section with title -->
-    <header class="hero-section">
+    <!-- Hero section - Solo títulos principales como landinpreview.png -->
+    <header class="hero-section" [class.illuminated]="heroIlluminated">
       <!-- Nombre pequeño sutil arriba como landinpreview.png -->
-      <div class="author-name">DANIEL CASTIBLANCO</div>
+      <div class="author-name" 
+           [class.typing]="heroIlluminated"
+           [attr.data-text]="'DANIEL CASTIBLANCO'">
+        <span class="typing-text">DANIEL CASTIBLANCO</span>
+      </div>
       
       <!-- Título principal MUY grande como landinpreview.png -->
-      <h1 class="main-title">CONSULTOR DE IA</h1>
+      <h1 class="main-title" 
+          [class.typing]="heroIlluminated"
+          [attr.data-text]="'CONSULTOR DE IA'">
+        <span class="typing-text">CONSULTOR DE IA</span>
+      </h1>
       
       <!-- Subtítulo con efecto borroso especial como landinpreview.png -->
-      <p class="blur-subtitle">Para PERSONAS y NEGOCIOS</p>
+      <p class="blur-subtitle" 
+         [class.typing]="heroIlluminated"
+         [attr.data-text]="'Para PERSONAS y NEGOCIOS'">
+        <span class="typing-text">Para PERSONAS y NEGOCIOS</span>
+      </p>
     </header>
     
-    <!-- Service hieroglyphs -->
+    <!-- Service hieroglyphs con título separado -->
     <app-service-hieroglyphs></app-service-hieroglyphs>
     
     <!-- CTA Button -->

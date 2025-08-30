@@ -83,14 +83,121 @@ export class ServiceHieroglyphsComponent implements OnInit, OnDestroy {
       .subscribe(elements => {
         // Update header illumination
         const headerElement = elements.find(el => el.id === 'services-header');
+        const wasHeaderIlluminated = this.headerIlluminated;
         this.headerIlluminated = headerElement?.isVisible || false;
         
-        // Update services illumination
+        // Trigger typing animation cuando el header se ilumina por primera vez
+        if (!wasHeaderIlluminated && this.headerIlluminated) {
+          setTimeout(() => {
+            this.triggerHeaderTyping();
+          }, 300);
+        }
+        
+        // Update services illumination and trigger Matrix animations
         this.services.forEach(service => {
           const illuminatedElement = elements.find(el => el.id === `service-${service.id}`);
+          const wasIlluminated = service.illuminated;
           service.illuminated = illuminatedElement?.isVisible || false;
+          
+          // Trigger Matrix revelation animation when service gets illuminated for first time
+          if (!wasIlluminated && service.illuminated) {
+            setTimeout(() => {
+              this.triggerServiceTyping(service.id);
+            }, 150); // Shorter delay for services
+          }
         });
       });
+  }
+
+  private triggerHeaderTyping(): void {
+    const headerElement = document.querySelector('.services-header.typing') as HTMLElement;
+    if (headerElement) {
+      this.typeText(headerElement);
+    }
+  }
+
+  private triggerServiceTyping(serviceId: string): void {
+    const serviceElement = document.querySelector(`#service-${serviceId} .service-title.typing`) as HTMLElement;
+    if (serviceElement) {
+      const service = this.services.find(s => s.id === serviceId);
+      if (service) {
+        serviceElement.setAttribute('data-text', service.title);
+        this.typeText(serviceElement);
+      }
+    }
+  }
+
+  private typeText(element: HTMLElement): void {
+    const text = element.getAttribute('data-text') || '';
+    const typingSpan = element.querySelector('.typing-text') as HTMLElement;
+    
+    if (!typingSpan) return;
+
+    // Matrix magical revelation effect - letras aparecen desordenadas
+    this.createMatrixRevelation(typingSpan, text);
+  }
+
+  private createMatrixRevelation(element: HTMLElement, finalText: string): void {
+    const chars = finalText.split('');
+    const totalChars = chars.length;
+    const revealedChars: boolean[] = new Array(totalChars).fill(false);
+    const matrixChars = 'ABCDEFABCDEFABCDEFABCDEFABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Solo letras limpias para Glitchy Demo Italic
+    
+    // Crear estructura inicial con caracteres Matrix aleatorios
+    element.innerHTML = chars.map(() => 
+      matrixChars[Math.floor(Math.random() * matrixChars.length)]
+    ).join('');
+    
+    element.style.borderRight = 'none';
+    element.style.color = '#00ff44';
+    element.style.textShadow = '0 0 10px #00ff44, 0 0 20px #00ff44, 0 0 30px rgba(0, 255, 68, 0.8)';
+    element.style.fontFamily = "'Glitchy Demo Italic', 'Share Tech Mono', monospace"; // MANTENER fuente durante animación
+    
+    let revealedCount = 0;
+    const revealInterval = setInterval(() => {
+      if (revealedCount >= totalChars) {
+        clearInterval(revealInterval);
+        return;
+      }
+      
+      // Elegir posición aleatoria no revelada
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * totalChars);
+      } while (revealedChars[randomIndex]);
+      
+      // Revelar el carácter correcto
+      revealedChars[randomIndex] = true;
+      revealedCount++;
+      
+      // Actualizar display con caracteres revelados
+      const displayChars = chars.map((char, index) => {
+        if (revealedChars[index]) {
+          return char; // Carácter final correcto
+        } else if (char === ' ') {
+          return ' '; // Mantener espacios
+        } else {
+          // Carácter Matrix aleatorio que sigue cambiando
+          return matrixChars[Math.floor(Math.random() * matrixChars.length)];
+        }
+      });
+      
+      element.innerHTML = displayChars.join('');
+      
+      // Efecto adicional: cambiar caracteres no revelados más rápido
+      if (revealedCount < totalChars) {
+        setTimeout(() => {
+          const currentDisplay = element.innerHTML.split('');
+          for (let i = 0; i < currentDisplay.length; i++) {
+            if (!revealedChars[i] && chars[i] !== ' ') {
+              currentDisplay[i] = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+            }
+          }
+          element.innerHTML = currentDisplay.join('');
+        }, 30);
+      }
+      
+    }, 80); // Revelar una letra cada 80ms - más rápido para servicios
   }
 
   private registerIlluminatedElements(): void {
@@ -98,7 +205,7 @@ export class ServiceHieroglyphsComponent implements OnInit, OnDestroy {
     const headerElement = {
       id: 'services-header',
       x: window.innerWidth / 2,
-      y: window.innerHeight * 0.35,
+      y: 500, // Más abajo porque hero ahora está arriba (no centrado)
       width: 600, // Mayor área de detección
       height: 80,  // Mayor área de detección
       requiredIntensity: 0.2, // Más fácil de iluminar
@@ -110,20 +217,20 @@ export class ServiceHieroglyphsComponent implements OnInit, OnDestroy {
     
     // Register each service card in grid positions
     const gridPositions = [
-      { x: 0.25, y: 0.55 }, // RAG Systems
-      { x: 0.5, y: 0.55 },  // Agent Orchestration  
-      { x: 0.75, y: 0.55 }, // Process Automation
-      { x: 0.25, y: 0.75 }, // Local LLMs
-      { x: 0.5, y: 0.75 },  // FinOps AI
-      { x: 0.75, y: 0.75 }  // Custom Integrations
+      { x: 0.25, y: 600 }, // RAG Systems - posición fija, no porcentaje
+      { x: 0.5, y: 600 },  // Agent Orchestration  
+      { x: 0.75, y: 600 }, // Process Automation
+      { x: 0.25, y: 800 }, // Local LLMs
+      { x: 0.5, y: 800 },  // FinOps AI
+      { x: 0.75, y: 800 }  // Custom Integrations
     ];
     
     this.services.forEach((service, index) => {
       const pos = gridPositions[index];
       const element = {
         id: `service-${service.id}`,
-        x: window.innerWidth * pos.x,
-        y: window.innerHeight * pos.y,
+        x: window.innerWidth * pos.x, // x sigue siendo porcentaje
+        y: pos.y, // y ahora es posición fija (ya no porcentaje)
         width: 300, // Mayor área de detección
         height: 180, // Mayor área de detección  
         requiredIntensity: 0.2, // Más fácil de iluminar

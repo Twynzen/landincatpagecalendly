@@ -2,9 +2,13 @@
   <button 
     class="consultation-btn"
     [class.illuminated]="isIlluminated"
+    [class.typing]="isIlluminated"
+    [attr.data-text]="'AGENDAR SESIÓN GRATUITA'"
     (click)="onButtonClick()"
   >
-    <span class="btn-text">AGENDAR SESIÓN GRATUITA</span>
+    <span class="btn-text">
+      <span class="typing-text">AGENDAR SESIÓN GRATUITA</span>
+    </span>
     
     <!-- Aura mágica externa (solo cuando iluminado) -->
     <div class="magic-aura" *ngIf="isIlluminated"></div>

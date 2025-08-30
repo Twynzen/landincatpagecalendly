@@ -143,16 +143,29 @@ export class LightingService {
   }
 
   private updateCursorLight(x: number, y: number): void {
-    const cursorLightId = 'cursor-torch';
+    const inventory = this.cursorInventory.value;
+    const cursorLightId = 'cursor-light';
     const currentLights = this.lightSources.value;
     const existingIndex = currentLights.findIndex(light => light.id === cursorLightId);
+
+    // Configurar luz según tipo de cursor activo
+    let radius = 100;
+    let intensity = 0.6;
+    
+    if (inventory.fire.active) {
+      radius = 150; // Fire cursor tiene más alcance para hero section
+      intensity = 0.8; // Más intensidad para iluminar hero fácilmente
+    } else if (inventory.torch.active) {
+      radius = 120;
+      intensity = 0.8;
+    }
 
     const cursorLight: LightSource = {
       id: cursorLightId,
       x,
       y,
-      radius: 120, // Torch has wider illumination
-      intensity: 0.8,
+      radius,
+      intensity,
       type: 'cursor',
       permanent: false
     };
@@ -219,9 +232,9 @@ export class LightingService {
     this.cursorInventory.next(newInventory);
     this.currentCursor.next(type);
 
-    // Remove cursor light if switching away from torch
-    if (type !== 'torch') {
-      this.removeLightSource('cursor-torch');
+    // Remove cursor light if switching to net (net doesn't give light)
+    if (type === 'net') {
+      this.removeLightSource('cursor-light');
     }
   }
 

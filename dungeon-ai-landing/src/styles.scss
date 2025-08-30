@@ -1,5 +1,11 @@
 /* Global Styles - Dungeon AI Landing */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+@font-face {
+  font-family: 'Glitchy Demo Italic';
+  src: url('/assets/fonts/GlitchyDemoItalic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
 
 * {
   margin: 0;
@@ -12,7 +18,7 @@ html, body {
   overflow-x: hidden;
   background: #0a0a0a;
   color: #00ff44;
-  font-family: 'Share Tech Mono', monospace;
+  font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
   cursor: none; // Will be replaced by custom cursor
 }
 

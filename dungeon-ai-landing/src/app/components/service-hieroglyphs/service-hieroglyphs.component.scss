@@ -15,6 +15,7 @@
 .services-header {
   text-align: center;
   margin-bottom: 3rem;
+  margin-top: 6rem; // MÁS espacio desde hero como en landinpreview.png
   opacity: 0.2; // Estado inicial gris sutil
   transition: all 0.4s ease;
   
@@ -27,13 +28,31 @@
     }
   }
   
+  // Typing animation para services header
+  &.typing {
+    .typing-text {
+      display: inline-block;
+      font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
+      border-right: none;
+      padding-right: 2px;
+      
+      // Efecto de glow cuando está typing
+      &[style*="border-right"] {
+        text-shadow: 
+          0 0 5px #00ff44,
+          0 0 10px #00ff44,
+          0 0 15px rgba(0, 255, 68, 0.4);
+      }
+    }
+  }
+  
   h2 {
-    font-size: 1.8rem;
+    font-size: 1.5rem; // Más pequeño que CONSULTOR DE IA como en landinpreview.png
     font-weight: 600;
     color: #444; // Gris sutil inicial
     margin: 0;
-    font-family: 'Courier New', monospace; // Typography robótica como Daniel pidió
-    letter-spacing: 0.1em;
+    font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace; // Typography robótica como Daniel pidió
+    letter-spacing: 0.08em; // Spacing más sutil
     transition: all 0.4s ease;
     text-transform: uppercase;
   }
@@ -118,12 +137,30 @@
   text-align: center;
   flex-shrink: 0; // No se comprime
   
+  // Typing animation para service titles
+  &.typing {
+    .typing-text {
+      display: inline-block;
+      font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
+      border-right: none;
+      padding-right: 2px;
+      
+      // Efecto de glow cuando está typing
+      &[style*="border-right"] {
+        text-shadow: 
+          0 0 5px #00ff44,
+          0 0 10px #00ff44,
+          0 0 15px rgba(0, 255, 68, 0.4);
+      }
+    }
+  }
+  
   h3 {
     font-size: 13px;   // Tamaño como landinpreview.png
     font-weight: 600;  // Semi-bold
     color: #555;       // Gris inicial más visible
     margin: 0;
-    font-family: 'Courier New', monospace; // Typography robótica como Daniel pidió
+    font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace; // Typography robótica como Daniel pidió
     letter-spacing: 0.05em; // Más sutil
     transition: all 0.4s ease;
     line-height: 1.3;

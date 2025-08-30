@@ -205,7 +205,7 @@ export class CircuitsBackgroundComponent implements OnInit, OnDestroy {
     if (!this.matrixCharsCache.has(circuitIndex)) {
       const chars: MatrixChar[] = [];
       const charCount = 3 + Math.floor(Math.random() * 3);
-      const symbols = ['0', '1', '◊', '▪', '□', '○', '+', '-', '|'];
+      const symbols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']; // Solo letras limpias para Glitchy Demo Italic
       
       for (let i = 0; i < charCount; i++) {
         chars.push({

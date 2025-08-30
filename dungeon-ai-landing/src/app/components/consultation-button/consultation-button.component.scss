@@ -55,6 +55,24 @@
   &.disintegrating {
     animation: buttonShake 0.6s ease-in-out;
   }
+  
+  // Typing animation para button text
+  &.typing {
+    .typing-text {
+      display: inline-block;
+      font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
+      border-right: none;
+      padding-right: 2px;
+      color: #000 !important; // NEGRO para contraste sobre botón verde
+      
+      // Efecto de glow cuando está typing - pero mantener texto negro
+      &[style*="border-right"] {
+        color: #000 !important; // Forzar negro para legibilidad
+        text-shadow: 
+          0 0 3px rgba(0, 0, 0, 0.5); // Sombra negra sutil para mayor contraste
+      }
+    }
+  }
 }
 
 .btn-text {
@@ -119,7 +137,7 @@
 
 .binary-particle {
   position: absolute;
-  font-family: 'Courier New', monospace;
+  font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
   font-weight: bold;
   color: #00ff44;
   text-shadow: 0 0 5px rgba(0, 255, 68, 0.8);

@@ -3,7 +3,7 @@
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
-  font-family: 'Arial', 'Helvetica', sans-serif; // Sans-serif limpio como landinpreview.png
+  font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace; // Fuente principal
 }
 
 .main-content {
@@ -14,62 +14,109 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; // Textos ARRIBA como landinpreview.png, no centrados
+  padding-top: 4rem; // Espacio desde arriba para header natural
 }
 
 .hero-section {
   text-align: center;
-  margin-bottom: 3rem;
-  opacity: 0.2; // Inicial muy sutil
-  transition: opacity 0.5s ease;
+  margin-bottom: 4rem; // Más espacio para separar de servicios
+  opacity: 0.2; // Oscuro pero NO tan extremo para no perder tamaños visuales
+  transition: all 0.6s ease;
+  filter: blur(0.5px); // Blur MUY sutil para no afectar tamaños
+  // QUITÉ transform: scale que cambiaba tamaños
   
   &.illuminated {
-    opacity: 1;
+    opacity: 1 !important; // Forzar iluminación completa
+    filter: blur(0px) !important; // Sin blur, SIN brightness que cambia tamaños
+    // QUITÉ transform: scale para mantener tamaños originales
+    // QUITÉ background para visual limpio
+  }
+  // Animación typing mágica para todos los elementos
+  .typing {
+    .typing-text {
+      display: inline-block;
+      font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace; // Mantener fuente Glitchy
+      border-right: none;
+      padding-right: 2px; // Espacio para cursor
+      
+      // Efecto de glow cuando está typing
+      &[style*="border-right"] {
+        text-shadow: 
+          0 0 5px currentColor,
+          0 0 10px currentColor,
+          0 0 15px rgba(0, 255, 68, 0.4);
+      }
+    }
   }
   
   // "DANIEL CASTIBLANCO" - pequeño sutil arriba como landinpreview.png
   .author-name {
-    font-size: 0.9rem;
-    font-weight: 300;
-    margin: 0 0 1.5rem 0;
-    letter-spacing: 0.2em;
+    font-size: 0.9rem; // Un poco más grande pero no tanto
+    font-weight: 400;
+    margin: 0 0 1rem 0;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #00ff44;
-    text-shadow: 0 0 3px rgba(0, 255, 68, 0.3);
-    opacity: 0.8;
-    font-family: 'Courier New', monospace; // Typography robótica como pide Daniel
-    filter: blur(0.3px); // Efecto borroso sutil como landinpreview.png
+    color: #333; // Gris oscuro inicial
+    text-shadow: none;
+    opacity: 0.5;
+    font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
+    filter: blur(0.5px); // Efecto blur sutil
+    transition: all 0.4s ease;
+  }
+  
+  &.illuminated .author-name {
+    color: #00ff44 !important;
+    text-shadow: 0 0 5px rgba(0, 255, 68, 0.5);
+    opacity: 0.9;
+    filter: blur(0.3px); // Mantener algo de blur como landinpreview
   }
   
   // "CONSULTOR DE IA" - MUY grande brillante principal como landinpreview.png
   .main-title {
-    font-size: 5.5rem; // Más grande que antes para match exacto
+    font-size: 4.2rem; // Ajustado para proporción perfecta con landinpreview.png
     font-weight: 900;
-    margin: 0 0 1.5rem 0;
-    letter-spacing: 0.03em;
+    margin: 0 0 0.8rem 0; // Menos margin
+    letter-spacing: 0.05em; // Más spacing para match
     text-transform: uppercase;
-    color: #00ff44;
+    color: #222; // Casi invisible inicialmente
+    text-shadow: none;
+    font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
+    filter: blur(1px); // Efecto blur inicial
+    animation: none;
+    transition: all 0.4s ease;
+  }
+  
+  &.illuminated .main-title {
+    color: #00ff44 !important;
     text-shadow: 
-      0 0 25px rgba(0, 255, 68, 1),
-      0 0 50px rgba(0, 255, 68, 0.8),
-      0 0 75px rgba(0, 255, 68, 0.6);
-    filter: drop-shadow(0 0 40px rgba(0, 255, 68, 0.9));
-    font-family: 'Courier New', monospace; // Typography robótica
+      0 0 30px rgba(0, 255, 68, 1),
+      0 0 60px rgba(0, 255, 68, 0.8),
+      0 0 90px rgba(0, 255, 68, 0.6);
+    filter: blur(0.2px) drop-shadow(0 0 45px rgba(0, 255, 68, 0.9)); // Mantener blur sutil
     animation: heroGlow 3s infinite alternate ease-in-out;
   }
   
-  // "Para PERSONAS y NEGOCIOS" - con efecto borroso especial como landinpreview.png
+  // "Para PERSONAS y NEGOCIOS" - con efecto borroso especial como landinpreview.png  
   .blur-subtitle {
-    font-size: 1.2rem;
-    font-weight: 300;
-    margin: 0;
-    color: #00cc33;
-    text-shadow: 0 0 15px rgba(0, 255, 68, 0.6);
-    opacity: 0.7;
-    font-family: 'Courier New', monospace; // Typography robótica
-    letter-spacing: 0.15em;
-    filter: blur(0.8px); // Efecto borroso como en landinpreview.png
+    font-size: 1.5rem; // Un poco más grande pero controlado
+    font-weight: 400;
+    margin: 0 0 2rem 0; // Más margin bottom para separar de servicios
+    color: #222; // Oscuro inicial
+    text-shadow: none;
+    opacity: 0.3;
+    font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
+    letter-spacing: 0.12em;
+    filter: blur(1.2px); // Efecto borroso inicial fuerte
     text-transform: uppercase;
+    transition: all 0.4s ease;
+  }
+  
+  &.illuminated .blur-subtitle {
+    color: #00cc33 !important;
+    text-shadow: 0 0 12px rgba(0, 255, 68, 0.7);
+    opacity: 0.8;
+    filter: blur(0.8px); // Mantener blur como landinpreview
   }
 }
 
@@ -170,5 +217,39 @@
       font-size: 0.9rem;
       letter-spacing: 0.08em;
     }
+  }
+}
+
+// Animaciones mágicas de typing
+@keyframes typingMagic {
+  0% {
+    opacity: 0;
+    width: 0;
+    border-right: 2px solid #00ff44;
+  }
+  1% {
+    opacity: 1;
+    border-right: 2px solid #00ff44;
+  }
+  50% {
+    opacity: 1;
+    border-right: 2px solid #00ff44;
+  }
+  99% {
+    opacity: 1;
+    border-right: 2px solid #00ff44;
+  }
+  100% {
+    opacity: 1;
+    border-right: none;
+  }
+}
+
+@keyframes cursorBlink {
+  0%, 50% {
+    border-right: 2px solid #00ff44;
+  }
+  51%, 100% {
+    border-right: 2px solid transparent;
   }
 }
