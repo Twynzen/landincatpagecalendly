@@ -10,9 +10,6 @@
 .consultation-btn {
   position: relative;
   padding: 20px 40px; // Más grande como landinpreview.png
-  background: #1a1a1a;
-  border: 1px solid #333;
-  color: #555;
   font-family: 'Arial', sans-serif; // Sans-serif profesional como landinpreview.png
   font-size: 16px; // Más grande y prominente
   font-weight: 600; // Semi-bold profesional
@@ -26,7 +23,7 @@
   // OCULTO: Completamente invisible inicialmente
   opacity: 0;
   background: #0a0a0a; // Mismo color del fondo
-  border-color: #0a0a0a; // Border mismo color del fondo
+  border: 1px solid #0a0a0a; // Border mismo color del fondo
   color: #0a0a0a; // Texto mismo color del fondo
   
   // Palpitaciones sutiles profesionales

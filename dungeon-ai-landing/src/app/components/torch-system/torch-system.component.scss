@@ -6,6 +6,7 @@
   height: 100vh;
   pointer-events: none;
   z-index: 20;
+  overflow: visible; // Asegurar que efectos de glow no se corten
 }
 
 .torch-container {
@@ -36,6 +37,8 @@
   }
 
   &.lit {
+    opacity: 1 !important; // Antorchas encendidas SIEMPRE completamente visibles
+    
     .torch-svg {
       filter: drop-shadow(0 0 15px rgba(0, 255, 68, 0.6));
     }

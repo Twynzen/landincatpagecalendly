@@ -114,11 +114,11 @@ export class TorchSystemComponent implements OnInit, OnDestroy {
       const proximityRadius = 150; // Área más amplia para revelar antorcha
       const hoverRadius = 80; // Área más pequeña para encenderla
 
-      if (distance < proximityRadius) {
-        // Mostrar antorcha con proximidad
+      if (distance < proximityRadius || torch.isLit) {
+        // Mostrar antorcha con proximidad O si ya está encendida permanentemente
         this.showTorchProximity(torch.id, true);
       } else {
-        // Ocultar antorcha si cursor está lejos
+        // Ocultar antorcha solo si cursor está lejos Y no está encendida
         this.showTorchProximity(torch.id, false);
       }
 
