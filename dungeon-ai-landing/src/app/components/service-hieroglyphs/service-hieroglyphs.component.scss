@@ -16,7 +16,7 @@
   text-align: center;
   margin-bottom: 3rem;
   margin-top: 6rem; // MÁS espacio desde hero como en landinpreview.png
-  opacity: 0.2; // Estado inicial gris sutil
+  opacity: 0; // OCULTO: Completamente invisible inicialmente
   transition: all 0.4s ease;
   
   &.illuminated {
@@ -82,10 +82,10 @@
   pointer-events: all;
   transition: all 0.4s ease;
   
-  // Estado inicial: fondo negro sólido para tapar circuitos
-  opacity: 0.4;
-  background: #000000; // Fondo NEGRO SÓLIDO para que circuitos no se vean
-  border-color: #444;
+  // OCULTO: Completamente invisible inicialmente
+  opacity: 0;
+  background: #0a0a0a; // Mismo color del fondo
+  border-color: #0a0a0a; // Border mismo color del fondo
   z-index: 15; // Más alto que circuitos para estar adelante
   position: relative; // Para que z-index funcione
   

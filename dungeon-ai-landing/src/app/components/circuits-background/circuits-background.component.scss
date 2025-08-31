@@ -56,10 +56,11 @@
     font-family: 'Share Tech Mono', 'Courier New', monospace; // Font normal para circuitos (NO Glitchy)
     font-size: 12px; // Reducido de 20px a 12px
     font-weight: bold;
-    color: #00aa22;
+    color: #0a0a0a; // OCULTO: Mismo color del fondo inicial
     display: block;
     text-align: center;
     transition: all 0.3s ease;
+    opacity: 0.1; // Casi invisible inicialmente
   }
   
   // Animaci�n Matrix rain para circuitos iluminados

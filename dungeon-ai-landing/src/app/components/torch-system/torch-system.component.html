@@ -2,6 +2,7 @@
   <div 
     *ngFor="let torch of torches" 
     [id]="torch.id"
+    [attr.data-torch-id]="torch.id"
     class="torch-container"
     [ngClass]="getTorchClass(torch)"
     [ngStyle]="getTorchStyle(torch)"

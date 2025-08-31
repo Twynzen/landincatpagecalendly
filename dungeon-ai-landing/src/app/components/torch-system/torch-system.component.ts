@@ -110,8 +110,20 @@ export class TorchSystemComponent implements OnInit, OnDestroy {
         Math.pow(mouseX - torchX, 2) + Math.pow(mouseY - torchY, 2)
       );
 
-      // Hover detection radius
-      if (distance < 80 && !torch.isLit) {
+      // Proximity detection - Mostrar antorcha cuando cursor está cerca
+      const proximityRadius = 150; // Área más amplia para revelar antorcha
+      const hoverRadius = 80; // Área más pequeña para encenderla
+
+      if (distance < proximityRadius) {
+        // Mostrar antorcha con proximidad
+        this.showTorchProximity(torch.id, true);
+      } else {
+        // Ocultar antorcha si cursor está lejos
+        this.showTorchProximity(torch.id, false);
+      }
+
+      // Hover detection para encender
+      if (distance < hoverRadius && !torch.isLit) {
         if (this.hoveredTorch !== torch.id) {
           this.hoveredTorch = torch.id;
           foundHover = true;
@@ -124,6 +136,17 @@ export class TorchSystemComponent implements OnInit, OnDestroy {
 
     if (!foundHover) {
       this.hoveredTorch = null;
+    }
+  }
+
+  private showTorchProximity(torchId: string, show: boolean): void {
+    const torchElement = document.querySelector(`[data-torch-id="${torchId}"]`);
+    if (torchElement) {
+      if (show) {
+        this.renderer.addClass(torchElement, 'proximity-detected');
+      } else {
+        this.renderer.removeClass(torchElement, 'proximity-detected');
+      }
     }
   }
 

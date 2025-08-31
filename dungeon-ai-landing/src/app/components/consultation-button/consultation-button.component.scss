@@ -23,8 +23,11 @@
   letter-spacing: 0.1em; // Spacing profesional
   text-transform: uppercase;
   
-  // Estado inicial apagado más visible
-  opacity: 0.4;
+  // OCULTO: Completamente invisible inicialmente
+  opacity: 0;
+  background: #0a0a0a; // Mismo color del fondo
+  border-color: #0a0a0a; // Border mismo color del fondo
+  color: #0a0a0a; // Texto mismo color del fondo
   
   // Palpitaciones sutiles profesionales
   animation: subtlePulse 3s infinite ease-in-out;

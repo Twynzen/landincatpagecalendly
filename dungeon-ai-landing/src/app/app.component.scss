@@ -21,7 +21,7 @@
 .hero-section {
   text-align: center;
   margin-bottom: 4rem; // Más espacio para separar de servicios
-  opacity: 0.2; // Oscuro pero NO tan extremo para no perder tamaños visuales
+  opacity: 0; // OCULTO: Completamente invisible inicialmente
   transition: all 0.6s ease;
   filter: blur(0.5px); // Blur MUY sutil para no afectar tamaños
   // QUITÉ transform: scale que cambiaba tamaños

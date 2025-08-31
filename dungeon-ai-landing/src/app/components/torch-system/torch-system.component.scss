@@ -13,6 +13,12 @@
   pointer-events: all;
   cursor: pointer;
   transition: all 0.3s ease;
+  opacity: 0; // OCULTO: Completamente invisible inicialmente
+  
+  // Solo visible cuando hay proximidad de cursor
+  &.proximity-detected {
+    opacity: 0.3; // Aparece sutilmente
+  }
 
   &.hint-visible {
     .hint-pulse {
