@@ -54,7 +54,7 @@
   
   .circuit-symbol {
     font-family: 'Share Tech Mono', 'Courier New', monospace; // Font normal para circuitos (NO Glitchy)
-    font-size: 20px;
+    font-size: 12px; // Reducido de 20px a 12px
     font-weight: bold;
     color: #00aa22;
     display: block;
@@ -168,7 +168,7 @@
 // Responsive adjustments
 @media (max-width: 768px) {
   .circuit-symbol {
-    font-size: 16px;
+    font-size: 10px; // Reducido de 16px a 10px para móvil
   }
   
   .matrix-rain {
@@ -184,7 +184,7 @@
     .circuit-symbol {
       color: #00ff44 !important;
       opacity: 1 !important;
-      font-size: 24px !important;
+      font-size: 16px !important; // Reducido de 24px a 16px
     }
   }
 }
