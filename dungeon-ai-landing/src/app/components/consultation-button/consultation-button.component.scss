@@ -81,10 +81,7 @@
   z-index: 2;
   font-size: 16px; // Match button font size
   
-  // Animación solo en el texto cuando botón está apagado
-  .consultation-btn:not(.illuminated) & {
-    animation: textOnlyPulse 3s infinite ease-in-out;
-  }
+  // Las animaciones individuales están en las letras
   font-weight: 600; // Semi-bold profesional
   letter-spacing: 0.1em; // Match button spacing
   transition: all 0.4s ease;
@@ -206,21 +203,38 @@
 
 // Animations
 
-// Pulso sutil solo en el texto (no en el botón)
-@keyframes textOnlyPulse {
-  0%, 85% {
+// Onda que recorre las letras de principio a fin
+.wave-pulse .letter {
+  display: inline-block;
+  animation: letterWavePulse 3s infinite ease-in-out;
+  
+  // Espacios no se animan pero mantienen anchura
+  &.space {
+    animation: none;
+    width: 0.3em;
+    display: inline-block;
+  }
+}
+
+@keyframes letterWavePulse {
+  0%, 80% {
     color: #444;
     text-shadow: none;
   }
   
+  85% {
+    color: #00aa33;
+    text-shadow: 0 0 8px rgba(0, 255, 68, 0.6);
+  }
+  
   90% {
-    color: #666;
-    text-shadow: 0 0 5px rgba(0, 255, 68, 0.3);
+    color: #00ff44;
+    text-shadow: 0 0 12px rgba(0, 255, 68, 0.8);
   }
   
   95% {
-    color: #888;
-    text-shadow: 0 0 8px rgba(0, 255, 68, 0.5);
+    color: #00aa33;
+    text-shadow: 0 0 8px rgba(0, 255, 68, 0.6);
   }
   
   100% {

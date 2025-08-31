@@ -16,7 +16,11 @@
     </div>
     
     <span class="btn-text">
-      <span class="typing-text">AGENDAR SESIÓN GRATUITA</span>
+      <span class="typing-text" [class.wave-pulse]="!isIlluminated">
+        <span class="letter" *ngFor="let letter of buttonLetters; let i = index" 
+              [class.space]="letter === ' '"
+              [style.animation-delay.ms]="i * 100">{{ letter === ' ' ? '\u00A0' : letter }}</span>
+      </span>
     </span>
     
     <!-- Aura mágica externa (solo cuando iluminado) -->

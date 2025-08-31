@@ -53,72 +53,85 @@
         class="glow-effect"
       />
       
-      <!-- Metallic handle with tech details -->
+      <!-- Handle silueta verde - solo contorno -->
       <rect x="26" y="35" width="8" height="50" 
-            [attr.fill]="'url(#metalHandle-' + torch.id + ')'" 
+            fill="transparent" 
             stroke="#00ff44" 
-            stroke-width="0.5" 
+            stroke-width="1.5" 
             rx="1"
-            [attr.opacity]="torch.isLit ? 1 : 0.4"/>
+            [attr.opacity]="torch.isLit ? 1 : 0.6"/>
       
-      <!-- Tech hexagons on handle -->
+      <!-- Tech details en mango - solo contornos -->
       <polygon points="22,42 38,42 36,50 24,50" 
-               [attr.fill]="'url(#metalHandle-' + torch.id + ')'" 
+               fill="transparent" 
                stroke="#00ff44" 
-               stroke-width="0.5"
-               [attr.opacity]="torch.isLit ? 0.8 : 0.3"/>
+               stroke-width="1"
+               [attr.opacity]="torch.isLit ? 0.8 : 0.4"/>
       <polygon points="23,58 37,58 35,65 25,65" 
-               [attr.fill]="'url(#metalHandle-' + torch.id + ')'" 
+               fill="transparent" 
                stroke="#00ff44" 
-               stroke-width="0.5"
-               [attr.opacity]="torch.isLit ? 0.8 : 0.3"/>
+               stroke-width="1"
+               [attr.opacity]="torch.isLit ? 0.8 : 0.4"/>
       
-      <!-- LEDs on handle (only visible when lit) -->
-      <circle *ngIf="torch.isLit" cx="30" cy="46" r="1.2" fill="#00ff44" opacity="0.9">
-        <animate attributeName="opacity" values="0.9;1;0.9" dur="1.2s" repeatCount="indefinite"/>
+      <!-- LEDs en mango - más brillantes -->
+      <circle *ngIf="torch.isLit" cx="30" cy="46" r="1.5" fill="#00ff44" opacity="1">
+        <animate attributeName="opacity" values="1;0.5;1" dur="1.2s" repeatCount="indefinite"/>
       </circle>
-      <circle *ngIf="torch.isLit" cx="30" cy="61" r="1.2" fill="#00cc33" opacity="0.7">
-        <animate attributeName="opacity" values="0.7;1;0.7" dur="1.5s" repeatCount="indefinite"/>
+      <circle *ngIf="torch.isLit" cx="30" cy="61" r="1.5" fill="#00cc33" opacity="0.9">
+        <animate attributeName="opacity" values="0.9;0.4;0.9" dur="1.5s" repeatCount="indefinite"/>
       </circle>
       
-      <!-- Metallic cup -->
+      <!-- Copa - solo contorno verde -->
       <ellipse cx="30" cy="32" rx="16" ry="5" 
-               [attr.fill]="'url(#metalCup-' + torch.id + ')'" 
+               fill="transparent" 
                stroke="#00ff44" 
-               stroke-width="1"
-               [attr.opacity]="torch.isLit ? 1 : 0.4"/>
+               stroke-width="1.5"
+               [attr.opacity]="torch.isLit ? 1 : 0.6"/>
       <rect x="14" y="25" width="32" height="12" 
-            [attr.fill]="'url(#metalCup-' + torch.id + ')'" 
+            fill="transparent" 
             stroke="#00ff44" 
-            stroke-width="1" 
+            stroke-width="1.5" 
             rx="2"
-            [attr.opacity]="torch.isLit ? 1 : 0.4"/>
+            [attr.opacity]="torch.isLit ? 1 : 0.6"/>
       <ellipse cx="30" cy="25" rx="16" ry="5" 
-               fill="#ddd" 
+               fill="transparent" 
                stroke="#00ff44" 
-               stroke-width="1"
-               [attr.opacity]="torch.isLit ? 1 : 0.4"/>
+               stroke-width="1.5"
+               [attr.opacity]="torch.isLit ? 1 : 0.6"/>
       
-      <!-- Matrix flame (only when lit) -->
+      <!-- Matrix flame MÁS BRILLANTE (only when lit) -->
       <g *ngIf="torch.isLit">
-        <path d="M16 25 Q30 3 44 25 Q40 38 34 32 Q30 35 26 32 Q20 38 16 25" 
+        <!-- Outer flame más grande -->
+        <path d="M14 25 Q30 1 46 25 Q42 40 36 34 Q30 37 24 34 Q18 40 14 25" 
               [attr.fill]="'url(#matrixFlame-' + torch.id + ')'" 
-              class="flame-main">
+              class="flame-main"
+              opacity="0.9">
           <animateTransform attributeName="transform" 
                             type="scale" 
-                            values="1;1.05;0.95;1" 
-                            dur="0.8s" 
+                            values="1;1.08;0.92;1" 
+                            dur="0.7s" 
                             repeatCount="indefinite"/>
         </path>
         
-        <!-- Inner flame -->
-        <path d="M20 25 Q30 8 40 25 Q36 32 32 28 Q30 30 28 28 Q24 32 20 25" 
+        <!-- Inner flame más brillante -->
+        <path d="M18 25 Q30 5 42 25 Q38 34 34 30 Q30 32 26 30 Q22 34 18 25" 
               fill="#00ff44" 
+              opacity="1">
+          <animateTransform attributeName="transform" 
+                            type="scale" 
+                            values="1;1.12;0.88;1" 
+                            dur="0.9s" 
+                            repeatCount="indefinite"/>
+        </path>
+        
+        <!-- Core flame súper brillante -->
+        <path d="M22 25 Q30 10 38 25 Q35 30 32 27 Q30 29 28 27 Q25 30 22 25" 
+              fill="#66ff66" 
               opacity="0.8">
           <animateTransform attributeName="transform" 
                             type="scale" 
-                            values="1;1.1;0.9;1" 
-                            dur="1s" 
+                            values="1;1.15;0.85;1" 
+                            dur="0.6s" 
                             repeatCount="indefinite"/>
         </path>
       </g>
