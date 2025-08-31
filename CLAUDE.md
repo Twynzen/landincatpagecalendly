@@ -20,7 +20,7 @@ Landing page profesional Matrix para **Daniel Castiblanco - Consultor de IA** co
 - **`circuits-background`** - Fondo con circuitos CSS animados
 - **`torch-system`** - 6 antorchas que se encienden permanentemente
 - **`service-hieroglyphs`** - 6 servicios de consultoría en grid 3x2
-- **`consultation-button`** - Botón CTA "AGENDAR SESIÓN GRATUITA"
+- **`consultation-button`** - Botón CTA con pulso sutil verde y ondas de carga
 - **`custom-cursor`** - Cursor personalizado fire/torch/net
 
 ### Servicios:
@@ -47,7 +47,8 @@ Animación Matrix revelation → Permanece iluminado
    - 6 cards individuales con títulos
 
 3. **Consultation Button**:
-   - "AGENDAR SESIÓN GRATUITA" con partículas
+   - Estado apagado: Pulso sutil verde cada 3s (texto + contorno)
+   - Estado iluminado: 4 ondas de carga concéntricas + verde brillante
 
 4. **Antorchas**:
    - Se encienden permanentemente al hover/click
@@ -70,6 +71,7 @@ Animación Matrix revelation → Permanece iluminado
 - **Font**: Courier New (monospace robótico)
 - **Sizes**: Según `landinpreview.png` exactos
 - **Effects**: Text-shadow brillante verde
+- **Botón CTA**: Glitchy Demo Italic (apagado) → Arial (iluminado) con pulso sutil
 
 ## 🔧 **COMANDOS ÚTILES**
 

@@ -29,6 +29,9 @@ export class ConsultationButtonComponent implements OnInit, OnDestroy {
   binaryParticles: BinaryParticle[] = [];
   showParticles = false;
   particleIdCounter = 0;
+  buttonLetters: string[] = [];
+  originalText = 'AGENDAR SESIÓN GRATUITA';
+  matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Solo letras simples para Matrix
   
   consultationUrl = 'https://calendly.com/daniel-castiblanco'; // Update with real URL
 
@@ -41,6 +44,11 @@ export class ConsultationButtonComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setupLightingSubscription();
     this.registerIlluminatedElement();
+    this.initializeButtonText();
+  }
+
+  private initializeButtonText(): void {
+    this.buttonLetters = this.originalText.split('');
   }
 
   private setupLightingSubscription(): void {

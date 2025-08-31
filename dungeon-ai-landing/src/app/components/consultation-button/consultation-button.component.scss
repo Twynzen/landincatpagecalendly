@@ -9,10 +9,11 @@
 
 .consultation-btn {
   position: relative;
-  padding: 20px 40px; // Más grande como landinpreview.png
-  font-family: 'Arial', sans-serif; // Sans-serif profesional como landinpreview.png
-  font-size: 16px; // Más grande y prominente
-  font-weight: 600; // Semi-bold profesional
+  padding: 20px 40px; // Mantener padding original
+  // Estado apagado - fuente principal Glitchy Demo
+  font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
   border-radius: 6px; // Más rectangular como landinpreview.png
   transition: all 0.4s ease;
@@ -20,27 +21,27 @@
   letter-spacing: 0.1em; // Spacing profesional
   text-transform: uppercase;
   
-  // OCULTO: Completamente invisible inicialmente
-  opacity: 0;
-  background: #0a0a0a; // Mismo color del fondo
-  border: 1px solid #0a0a0a; // Border mismo color del fondo
-  color: #0a0a0a; // Texto mismo color del fondo
+  // Estado inicial: más oscuro con aura verde sutil
+  opacity: 0.3; // Más sutil
+  background: #0f0f0f; // Fondo más oscuro
+  border: 1px solid #222; // Border más oscuro
+  color: #444; // Texto más oscuro
   
-  // Palpitaciones sutiles profesionales
-  animation: subtlePulse 3s infinite ease-in-out;
+  // Sin animación en el botón - solo en el texto
+  animation: none;
   
   &.illuminated {
-    // Estado iluminado profesional Matrix
+    // Estado iluminado - cambio de fuente a Arial como lado derecho
     opacity: 1;
-    background: #00ff44; // Verde sólido profesional como landinpreview.png
-    border: 2px solid #00ff44;
-    color: #000; // Texto negro sobre verde
-    font-weight: 700; // Bold para contraste
+    background: #00ff44; // Verde sólido como landin.png lado derecho
+    border: 1px solid #00ff44; // Mismo border width que estado apagado
+    color: #000; // Texto negro sobre verde como landin.png
+    font-family: 'Arial', sans-serif; // Cambiar a Arial para estado prendido
     box-shadow: 
       0 0 20px rgba(0, 255, 68, 0.6),
       0 0 40px rgba(0, 255, 68, 0.3);
     
-    // Sin animaciones molestas - solo glow sutil
+    // DETENER animación de aura verde - solo cuando está apagado
     animation: none;
     
     &:hover {
@@ -79,6 +80,11 @@
   position: relative;
   z-index: 2;
   font-size: 16px; // Match button font size
+  
+  // Animación solo en el texto cuando botón está apagado
+  .consultation-btn:not(.illuminated) & {
+    animation: textOnlyPulse 3s infinite ease-in-out;
+  }
   font-weight: 600; // Semi-bold profesional
   letter-spacing: 0.1em; // Match button spacing
   transition: all 0.4s ease;
@@ -97,6 +103,59 @@
 }
 
 // Aura profesional sutil (solo cuando iluminado)
+// === ONDAS DE CARGA ENERGÍA ===
+.energy-waves {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.energy-wave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid #00ff44;
+  border-radius: 6px; // Match botón shape
+  opacity: 0;
+  
+  // Wave 1 - Más interna, más rápida
+  &.wave-1 {
+    width: 100%;
+    height: 100%;
+    animation: energyPulse1 1.5s ease-out infinite;
+  }
+  
+  // Wave 2 - Segunda onda
+  &.wave-2 {
+    width: 110%;
+    height: 110%;
+    animation: energyPulse2 1.5s ease-out infinite;
+    animation-delay: 0.3s;
+  }
+  
+  // Wave 3 - Tercera onda  
+  &.wave-3 {
+    width: 120%;
+    height: 120%;
+    animation: energyPulse3 1.5s ease-out infinite;
+    animation-delay: 0.6s;
+  }
+  
+  // Wave 4 - Onda externa más grande
+  &.wave-4 {
+    width: 130%;
+    height: 130%;
+    animation: energyPulse4 1.5s ease-out infinite;
+    animation-delay: 0.9s;
+  }
+}
+
 .magic-aura {
   position: absolute;
   top: 50%;
@@ -147,15 +206,26 @@
 
 // Animations
 
-// Palpitaciones profesionales estado apagado
-@keyframes subtlePulse {
-  0%, 100% {
-    opacity: 0.4;
-    border-color: #333;
+// Pulso sutil solo en el texto (no en el botón)
+@keyframes textOnlyPulse {
+  0%, 85% {
+    color: #444;
+    text-shadow: none;
   }
-  50% {
-    opacity: 0.6;
-    border-color: #555;
+  
+  90% {
+    color: #666;
+    text-shadow: 0 0 5px rgba(0, 255, 68, 0.3);
+  }
+  
+  95% {
+    color: #888;
+    text-shadow: 0 0 8px rgba(0, 255, 68, 0.5);
+  }
+  
+  100% {
+    color: #444;
+    text-shadow: none;
   }
 }
 
@@ -209,6 +279,92 @@
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
   20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+// === ANIMACIONES ONDAS DE ENERGÍA ===
+
+@keyframes energyPulse1 {
+  0% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1);
+    border-color: #00ff44;
+    border-width: 2px;
+  }
+  50% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(1.02);
+    border-color: #66ff66;
+    border-width: 1.5px;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.05);
+    border-color: #00aa22;
+    border-width: 1px;
+  }
+}
+
+@keyframes energyPulse2 {
+  0% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+    border-color: #00ff44;
+    border-width: 1.8px;
+  }
+  50% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1.02);
+    border-color: #66ff66;
+    border-width: 1.3px;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.05);
+    border-color: #00aa22;
+    border-width: 0.8px;
+  }
+}
+
+@keyframes energyPulse3 {
+  0% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(1);
+    border-color: #00ff44;
+    border-width: 1.5px;
+  }
+  50% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(1.02);
+    border-color: #66ff66;
+    border-width: 1px;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.05);
+    border-color: #00aa22;
+    border-width: 0.5px;
+  }
+}
+
+@keyframes energyPulse4 {
+  0% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+    border-color: #00ff44;
+    border-width: 1.2px;
+  }
+  50% {
+    opacity: 0.15;
+    transform: translate(-50%, -50%) scale(1.02);
+    border-color: #66ff66;
+    border-width: 0.8px;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.05);
+    border-color: #00aa22;
+    border-width: 0.3px;
+  }
 }
 
 // Responsive design
