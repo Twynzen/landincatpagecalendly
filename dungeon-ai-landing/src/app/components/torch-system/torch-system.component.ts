@@ -181,10 +181,10 @@ export class TorchSystemComponent implements OnInit, OnDestroy {
   onTorchClick(torch: TechTorch): void {
     if (!torch.isLit) return;
 
-    // Only allow taking torch if it's already lit
-    this.lightingService.takeTorch();
+    // DESHABILITADO: Ya no cambiamos cursor al click
+    // this.lightingService.takeTorch();
     
-    // Add visual feedback for taking torch
+    // Solo efecto visual de feedback
     const torchElement = document.getElementById(torch.id);
     if (torchElement) {
       torchElement.classList.add('taken');

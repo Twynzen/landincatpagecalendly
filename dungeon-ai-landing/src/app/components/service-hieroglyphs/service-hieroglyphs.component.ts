@@ -208,7 +208,7 @@ export class ServiceHieroglyphsComponent implements OnInit, OnDestroy {
       y: 500, // Más abajo porque hero ahora está arriba (no centrado)
       width: 600, // Mayor área de detección
       height: 80,  // Mayor área de detección
-      requiredIntensity: 0.2, // Más fácil de iluminar
+      requiredIntensity: 0.1, // MUY fácil de iluminar header
       currentIllumination: 0,
       isVisible: false,
       isPermanent: false
@@ -233,7 +233,7 @@ export class ServiceHieroglyphsComponent implements OnInit, OnDestroy {
         y: pos.y, // y ahora es posición fija (ya no porcentaje)
         width: 300, // Mayor área de detección
         height: 180, // Mayor área de detección  
-        requiredIntensity: 0.2, // Más fácil de iluminar
+        requiredIntensity: 0.1, // MUY fácil de iluminar servicios
         currentIllumination: 0,
         isVisible: false,
         isPermanent: false

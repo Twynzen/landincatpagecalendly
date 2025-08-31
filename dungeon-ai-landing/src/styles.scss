@@ -19,7 +19,14 @@ html, body {
   background: #0a0a0a;
   color: #00ff44;
   font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
-  cursor: none; // Will be replaced by custom cursor
+  
+  // CURSOR VERDE NATIVO - Flecha Matrix
+  cursor: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%2300ff44" d="M0 0v16l6-6h6l4-4z"/></svg>') 0 0, auto;
+}
+
+// CURSOR MANO VERDE para elementos clickeables
+a, button, [role="button"], .torch-container, .service-card, .clickeable {
+  cursor: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%2300ff44" d="M8.5 2.5c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5v6c0 .28-.22.5-.5.5s-.5-.22-.5-.5v-1c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5v6.5c0 2.5 2 4.5 4.5 4.5h4c2.5 0 4.5-2 4.5-4.5v-9z"/></svg>') 8 0, pointer;
 }
 
 // Matrix color variables

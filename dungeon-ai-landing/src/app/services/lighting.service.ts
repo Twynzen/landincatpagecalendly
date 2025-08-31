@@ -148,16 +148,16 @@ export class LightingService {
     const currentLights = this.lightSources.value;
     const existingIndex = currentLights.findIndex(light => light.id === cursorLightId);
 
-    // Configurar luz según tipo de cursor activo
-    let radius = 100;
-    let intensity = 0.6;
+    // Configurar luz según tipo de cursor activo - AUMENTADO para servicios
+    let radius = 180; // Base aumentado para servicios fáciles
+    let intensity = 0.9; // Más intenso para mejor iluminación
     
     if (inventory.fire.active) {
-      radius = 150; // Fire cursor tiene más alcance para hero section
-      intensity = 0.8; // Más intensidad para iluminar hero fácilmente
+      radius = 200; // Fire cursor MÁS alcance para servicios
+      intensity = 1.0; // Máxima intensidad 
     } else if (inventory.torch.active) {
-      radius = 120;
-      intensity = 0.8;
+      radius = 180; // Torch también aumentado
+      intensity = 0.9;
     }
 
     const cursorLight: LightSource = {
