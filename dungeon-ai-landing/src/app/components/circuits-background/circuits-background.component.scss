@@ -53,7 +53,7 @@
   }
   
   .circuit-symbol {
-    font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
+    font-family: 'Share Tech Mono', 'Courier New', monospace; // Font normal para circuitos (NO Glitchy)
     font-size: 20px;
     font-weight: bold;
     color: #00aa22;
@@ -74,7 +74,7 @@
     
     .matrix-char {
       position: absolute;
-      font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
+      font-family: 'Share Tech Mono', 'Courier New', monospace; // Font normal para matrix rain (NO Glitchy)
       font-size: 12px;
       color: #00ff44;
       opacity: 0;

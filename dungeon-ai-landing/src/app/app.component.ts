@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { CircuitsBackgroundComponent } from './components/circuits-background/circuits-background.component';
 import { TorchSystemComponent } from './components/torch-system/torch-system.component';
 import { ServiceHieroglyphsComponent } from './components/service-hieroglyphs/service-hieroglyphs.component';
-import { CatGuideComponent } from './components/cat-guide/cat-guide.component';
+// import { CatGuideComponent } from './components/cat-guide/cat-guide.component'; // DESHABILITADO
 import { ConsultationButtonComponent } from './components/consultation-button/consultation-button.component';
-import { CursorInventoryComponent } from './components/cursor-inventory/cursor-inventory.component';
+// import { CursorInventoryComponent } from './components/cursor-inventory/cursor-inventory.component'; // DESHABILITADO
 import { CustomCursorComponent } from './components/custom-cursor/custom-cursor.component';
 import { LightingService } from './services/lighting.service';
 import { Subject } from 'rxjs';
@@ -19,9 +19,9 @@ import { takeUntil } from 'rxjs/operators';
     CircuitsBackgroundComponent,
     TorchSystemComponent,
     ServiceHieroglyphsComponent,
-    CatGuideComponent,
+    // CatGuideComponent, // DESHABILITADO
     ConsultationButtonComponent,
-    CursorInventoryComponent,
+    // CursorInventoryComponent, // DESHABILITADO
     CustomCursorComponent
   ],
   templateUrl: './app.component.html',

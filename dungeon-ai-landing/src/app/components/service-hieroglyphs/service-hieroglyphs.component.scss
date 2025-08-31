@@ -82,14 +82,16 @@
   pointer-events: all;
   transition: all 0.4s ease;
   
-  // Estado inicial: fondo transparente como landinpreview.png
+  // Estado inicial: fondo negro sólido para tapar circuitos
   opacity: 0.4;
-  background: transparent; // Fondo transparente como Daniel pidió
+  background: #000000; // Fondo NEGRO SÓLIDO para que circuitos no se vean
   border-color: #444;
+  z-index: 15; // Más alto que circuitos para estar adelante
+  position: relative; // Para que z-index funcione
   
   &.illuminated {
     opacity: 1;
-    background: rgba(0, 255, 68, 0.05); // Fondo verde sutil transparente como landinpreview.png
+    background: #0a0a0a; // Fondo negro con mínimo verde
     border-color: #00ff44; // Border verde brillante
     box-shadow: 
       0 0 15px rgba(0, 255, 68, 0.3),

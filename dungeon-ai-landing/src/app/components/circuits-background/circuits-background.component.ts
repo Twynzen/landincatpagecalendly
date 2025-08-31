@@ -28,6 +28,14 @@ interface MatrixChar {
   delay: number;
 }
 
+interface ExclusionZone {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  element: string; // Para debug
+}
+
 @Component({
   selector: 'app-circuits-background',
   standalone: true,
@@ -86,8 +94,11 @@ export class CircuitsBackgroundComponent implements OnInit, OnDestroy {
   }
 
   private generateFixedCircuits(): void {
-    // Patrones de circuitos según design-preview.html
-    const patterns = ['-', '|', '+', '◉', '□', '○', '▣', '◈', '◊'];
+    // Patrones de circuitos Matrix binarios
+    const patterns = ['-', '|', '+', '0', '1', '0', '0', '1', '1'];
+    
+    // PASO 1: Detectar UI elements automáticamente
+    const exclusionZones = this.detectUIExclusionZones();
     
     // Generate fixed circuits in a balanced grid pattern
     const rows = 10; // Menos rows para mejor performance CSS
@@ -100,9 +111,17 @@ export class CircuitsBackgroundComponent implements OnInit, OnDestroy {
         // Skip some cells to avoid oversaturation
         if (Math.random() < 0.4) continue; // Más circuitos visibles
         
+        const circuitX = j * cellWidth + (cellWidth / 2) + (Math.random() - 0.5) * 30;
+        const circuitY = i * cellHeight + (cellHeight / 2) + (Math.random() - 0.5) * 30;
+        
+        // PASO 2: Verificar si colisiona con exclusion zone
+        if (this.collidesWithExclusionZones(circuitX, circuitY, exclusionZones)) {
+          continue; // Skip este circuito si está en zona prohibida
+        }
+        
         const circuit: FixedCircuit = {
-          x: j * cellWidth + (cellWidth / 2) + (Math.random() - 0.5) * 30,
-          y: i * cellHeight + (cellHeight / 2) + (Math.random() - 0.5) * 30,
+          x: circuitX,
+          y: circuitY,
           pattern: patterns[Math.floor(Math.random() * patterns.length)],
           baseOpacity: 0.3 + Math.random() * 0.2, // Más visible base
           litOpacity: 0.9 + Math.random() * 0.1,
@@ -205,7 +224,7 @@ export class CircuitsBackgroundComponent implements OnInit, OnDestroy {
     if (!this.matrixCharsCache.has(circuitIndex)) {
       const chars: MatrixChar[] = [];
       const charCount = 3 + Math.floor(Math.random() * 3);
-      const symbols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']; // Solo letras limpias para Glitchy Demo Italic
+      const symbols = ['-', '|', '+', '0', '1', '0', '0', '1', '1']; // Solo símbolos básicos + binario Matrix
       
       for (let i = 0; i < charCount; i++) {
         chars.push({
@@ -218,5 +237,60 @@ export class CircuitsBackgroundComponent implements OnInit, OnDestroy {
     }
     
     return this.matrixCharsCache.get(circuitIndex) || [];
+  }
+
+  // 🚫 EXCLUSION ZONES SYSTEM - Detectar UI elements automáticamente
+  private detectUIExclusionZones(): ExclusionZone[] {
+    const exclusionZones: ExclusionZone[] = [];
+    const margin = 40; // Margin más grande para mejor separación
+    
+    try {
+      // Detectar elementos UI automáticamente por clases
+      const uiSelectors = [
+        '.service-card',           // Cards de servicios
+        '.service-item',           // Items individuales de servicios
+        '.services-grid',          // Grid container completo
+        '.consultation-btn',       // Botón de consulta  
+        '.consultation-button',    // Botón alternativo
+        '.hero-section',          // Sección hero
+        '.cursor-inventory',      // Inventario cursors
+        '.cat-container',         // Container del gato
+        '.services-header'        // Header de servicios
+      ];
+      
+      uiSelectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+          const rect = element.getBoundingClientRect();
+          
+          // Solo crear zona si el elemento es visible
+          if (rect.width > 0 && rect.height > 0) {
+            exclusionZones.push({
+              x: rect.left - margin,
+              y: rect.top - margin,
+              width: rect.width + (margin * 2),
+              height: rect.height + (margin * 2),
+              element: selector
+            });
+          }
+        });
+      });
+      
+      console.log(`🚫 CircuitsBackground: Detected ${exclusionZones.length} exclusion zones`);
+      
+    } catch (error) {
+      console.warn('CircuitsBackground: Error detecting exclusion zones:', error);
+    }
+    
+    return exclusionZones;
+  }
+
+  private collidesWithExclusionZones(x: number, y: number, exclusionZones: ExclusionZone[]): boolean {
+    return exclusionZones.some(zone => {
+      return x >= zone.x && 
+             x <= zone.x + zone.width && 
+             y >= zone.y && 
+             y <= zone.y + zone.height;
+    });
   }
 }

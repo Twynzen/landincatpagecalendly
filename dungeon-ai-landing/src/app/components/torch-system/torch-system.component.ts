@@ -45,14 +45,14 @@ export class TorchSystemComponent implements OnInit, OnDestroy {
   }
 
   private initializeTechTorches(): void {
-    // Strategic placement of 6 Tech Matrix torches (eliminadas las 2 del centro)
+    // 6 antorchas en las esquinas exactas - posicionamiento simétrico
     const torchPositions = [
-      { x: 15, y: 20 },   // Top-left area
-      { x: 85, y: 25 },   // Top-right area
-      { x: 25, y: 60 },   // Mid-left for service area
-      { x: 75, y: 65 },   // Mid-right for service area
-      { x: 20, y: 85 },   // Bottom-left
-      { x: 80, y: 90 },   // Bottom-right
+      { x: 5, y: 10 },    // Top-left esquina
+      { x: 95, y: 10 },   // Top-right esquina
+      { x: 5, y: 50 },    // Middle-left
+      { x: 95, y: 50 },   // Middle-right
+      { x: 5, y: 90 },    // Bottom-left esquina
+      { x: 95, y: 90 },   // Bottom-right esquina
     ];
 
     this.torches = torchPositions.map((pos, index) => ({
