@@ -1,4 +1,4 @@
-<div class="custom-cursor" 
+<div *ngIf="!isTouchDevice" class="custom-cursor" 
      [class.cursor-fire]="currentCursor === 'fire'"
      [class.cursor-torch]="currentCursor === 'torch'"
      [class.cursor-net]="currentCursor === 'net'"

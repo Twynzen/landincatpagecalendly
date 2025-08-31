@@ -181,43 +181,63 @@
   }
 }
 
+// Mobile responsive - DESKTOP INALTERADO
 @media (max-width: 768px) {
   .hero-section {
+    margin-bottom: 3rem; // Más compacto para mobile
+    
     .author-name {
-      font-size: 0.8rem;
+      font-size: 0.8rem; // Un poco más grande para mejor legibilidad
       margin-bottom: 1rem;
+      letter-spacing: 0.12em; // Mejor spacing en mobile
     }
     
     .main-title {
-      font-size: 3.5rem; // Mantener proporcionalidad en móvil
+      font-size: 3.2rem; // Más legible en mobile
+      line-height: 1.1; // Mejor espaciado
+      margin-bottom: 0.8rem; // Más espacio debajo
+      letter-spacing: 0.03em; // Spacing ajustado para mobile
     }
     
     .blur-subtitle {
-      font-size: 1rem;
-      letter-spacing: 0.1em;
+      font-size: 1.1rem; // Un poco más grande para mobile
+      letter-spacing: 0.08em;
+      line-height: 1.4; // Mejor legibilidad
+      margin-bottom: 2.5rem; // Más separación de servicios
     }
   }
   
   .main-content {
-    padding: 1rem;
+    padding: 1.5rem; // Más padding para mobile
+    padding-top: 3rem; // Más espacio superior en mobile
   }
 }
 
 @media (max-width: 480px) {
   .hero-section {
     .author-name {
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
+      font-size: 0.75rem; // Un poco más grande para legibilidad
+      letter-spacing: 0.1em; // Menor spacing para pantallas pequeñas
+      margin-bottom: 0.8rem;
     }
     
     .main-title {
       font-size: 2.8rem; // Compacto para móvil pequeño
+      letter-spacing: 0.02em; // Spacing ajustado
+      line-height: 1.05; // Mejor proporción
     }
     
     .blur-subtitle {
-      font-size: 0.9rem;
-      letter-spacing: 0.08em;
+      font-size: 1rem; // Un poco más grande
+      letter-spacing: 0.06em; // Spacing reducido
+      line-height: 1.3;
+      margin-bottom: 2rem; // Menos separación en pantallas pequeñas
     }
+  }
+  
+  .main-content {
+    padding: 1rem; // Menos padding en pantallas muy pequeñas
+    padding-top: 2rem;
   }
 }
 

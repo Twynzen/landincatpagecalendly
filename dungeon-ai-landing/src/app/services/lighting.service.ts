@@ -49,6 +49,7 @@ export class LightingService {
 
   constructor() {
     this.initializeMouseTracking();
+    this.initializeTouchTracking(); // NUEVO: Soporte touch para mobile
     this.startLightingCalculations();
   }
 
@@ -67,6 +68,57 @@ export class LightingService {
           this.updateCursorLight(position.x, position.y);
         }
       });
+  }
+
+  // NUEVO: Touch tracking para mobile
+  private initializeTouchTracking(): void {
+    // Touch move para arrastrar luz
+    fromEvent<TouchEvent>(document, 'touchmove')
+      .pipe(
+        throttleTime(16), // ~60fps
+        map(event => {
+          const touch = event.touches[0];
+          return { x: touch.clientX, y: touch.clientY };
+        })
+      )
+      .subscribe(position => {
+        this.mousePosition.next(position);
+        this.updateCursorLight(position.x, position.y);
+      });
+
+    // Touch start/end para tap iluminación
+    fromEvent<TouchEvent>(document, 'touchstart')
+      .pipe(
+        map(event => {
+          const touch = event.touches[0];
+          return { x: touch.clientX, y: touch.clientY };
+        })
+      )
+      .subscribe(position => {
+        // Crear luz temporal más grande en tap
+        this.createTapLight(position.x, position.y);
+      });
+  }
+
+  // NUEVO: Crear luz temporal en tap
+  private createTapLight(x: number, y: number): void {
+    const tapLightId = `tap-light-${Date.now()}`;
+    const tapLight: LightSource = {
+      id: tapLightId,
+      x,
+      y,
+      radius: 250, // Radio más grande para tap
+      intensity: 1.2, // Más intenso para iluminar instantáneamente
+      type: 'portable',
+      permanent: false
+    };
+    
+    this.addLightSource(tapLight);
+    
+    // Mantener la luz por 2 segundos
+    setTimeout(() => {
+      this.removeLightSource(tapLightId);
+    }, 2000);
   }
 
   private startLightingCalculations(): void {

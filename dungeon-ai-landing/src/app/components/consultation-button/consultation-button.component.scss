@@ -382,24 +382,55 @@
 }
 
 // Responsive design
+// Responsive design - DESKTOP INALTERADO
 @media (max-width: 768px) {
   .consultation-btn {
-    font-size: 11px;
-    padding: 14px 28px;
+    font-size: 12px; // Más legible
+    padding: 16px 32px; // Más grande para touch
+    min-height: 48px; // Touch target mínimo recomendado
+    
+    // Touch feedback mejorado
+    &:active {
+      transform: translateY(1px) scale(0.98);
+    }
+    
+    // Área touch expandida
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      background: transparent;
+      border-radius: 14px;
+    }
   }
   
   .btn-text {
-    font-size: 11px;
+    font-size: 12px;
+  }
+  
+  .consultation-container {
+    bottom: 60px; // Más separación del borde en mobile
   }
 }
 
 @media (max-width: 480px) {
   .consultation-btn {
-    padding: 12px 24px;
+    padding: 14px 28px;
+    font-size: 11px;
+    min-height: 44px; // Touch target apropiado para móvil pequeño
   }
   
   .btn-text {
-    font-size: 10px;
-    letter-spacing: 0.5px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+  
+  .consultation-container {
+    bottom: 40px; // Ajuste para pantallas muy pequeñas
   }
 }
