@@ -33,7 +33,7 @@ export class ConsultationButtonComponent implements OnInit, OnDestroy {
   originalText = 'AGENDAR SESIÓN GRATUITA';
   matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Solo letras simples para Matrix
   
-  consultationUrl = 'https://calendly.com/daniel-castiblanco'; // Update with real URL
+  consultationUrl = 'https://calendly.com/darmcastiblanco/30min?back=1'; // URL correcta de Calendly
 
   constructor(
     private lightingService: LightingService,

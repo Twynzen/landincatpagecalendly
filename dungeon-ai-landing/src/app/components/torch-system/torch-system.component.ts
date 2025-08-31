@@ -66,6 +66,8 @@ export class TorchSystemComponent implements OnInit, OnDestroy {
   }
 
   private setupCursorSubscription(): void {
+    // DESHABILITADO - Ya no usamos custom cursors, solo cursor nativo verde
+    /*
     this.currentCursor$
       .pipe(takeUntil(this.destroy$))
       .subscribe(cursor => {
@@ -73,6 +75,7 @@ export class TorchSystemComponent implements OnInit, OnDestroy {
         document.body.className = document.body.className.replace(/cursor-\w+/g, '');
         document.body.classList.add(`cursor-${cursor}`);
       });
+    */
   }
 
   private showInitialHints(): void {

@@ -24,9 +24,15 @@ html, body {
   cursor: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%2300ff44" d="M0 0v16l6-6h6l4-4z"/></svg>') 0 0, auto;
 }
 
-// CURSOR MANO VERDE para elementos clickeables
-a, button, [role="button"], .torch-container, .service-card, .clickeable {
-  cursor: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%2300ff44" d="M8.5 2.5c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5v6c0 .28-.22.5-.5.5s-.5-.22-.5-.5v-1c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5v6.5c0 2.5 2 4.5 4.5 4.5h4c2.5 0 4.5-2 4.5-4.5v-9z"/></svg>') 8 0, pointer;
+// CURSOR MANO VERDE - Minimalista y limpia
+a, 
+button, 
+[role="button"], 
+.torch-container, 
+.service-card, 
+.consultation-btn,
+.clickeable {
+  cursor: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20"><rect x="4" y="0" width="2" height="10" fill="%2300ff44"/><rect x="7" y="2" width="2" height="8" fill="%2300ff44"/><rect x="10" y="3" width="2" height="7" fill="%2300ff44"/><rect x="13" y="5" width="2" height="5" fill="%2300ff44"/><rect x="1" y="8" width="14" height="10" rx="2" fill="%2300ff44"/></svg>') 6 0, pointer !important;
 }
 
 // Matrix color variables

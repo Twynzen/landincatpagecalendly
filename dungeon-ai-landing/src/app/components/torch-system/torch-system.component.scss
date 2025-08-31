@@ -12,7 +12,7 @@
 .torch-container {
   position: absolute;
   pointer-events: all;
-  cursor: pointer;
+  // cursor: pointer; // REMOVIDO - ahora usa cursor nativo verde de styles.scss
   transition: all 0.3s ease;
   opacity: 0; // OCULTO: Completamente invisible inicialmente
   
@@ -157,78 +157,13 @@
   }
 }
 
-// Custom cursor classes (applied to body)
+// Custom cursor classes - DESHABILITADO: usando cursor nativo verde
+/*
 :global(body.cursor-fire) {
   cursor: none;
-
-  &::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 16px;
-    height: 16px;
-    background: radial-gradient(circle, #00ff44 20%, #00cc33 50%, transparent 70%);
-    border-radius: 50% 0 50% 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-2px, -2px);
-    animation: fireCursorFlicker 0.8s infinite;
-  }
+  // ... resto del código comentado
 }
-
-:global(body.cursor-torch) {
-  cursor: none;
-
-  &::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 24px;
-    height: 24px;
-    background: radial-gradient(circle, #00ff44 30%, #00cc33 60%, transparent 80%);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-12px, -12px);
-    animation: torchCursorGlow 1s infinite;
-  }
-}
-
-:global(body.cursor-net) {
-  cursor: none;
-
-  &::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #00ff44;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-10px, -10px);
-    animation: netCursorPulse 1.2s infinite;
-  }
-
-  &::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 12px;
-    height: 12px;
-    border: 1px solid #00cc33;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-6px, -6px);
-    opacity: 0.6;
-  }
-}
+*/
 
 @keyframes fireCursorFlicker {
   0%, 100% {
