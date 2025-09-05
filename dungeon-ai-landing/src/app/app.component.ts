@@ -7,6 +7,7 @@ import { ServiceHieroglyphsComponent } from './components/service-hieroglyphs/se
 import { ConsultationButtonComponent } from './components/consultation-button/consultation-button.component';
 // import { CursorInventoryComponent } from './components/cursor-inventory/cursor-inventory.component'; // DESHABILITADO
 import { CustomCursorComponent } from './components/custom-cursor/custom-cursor.component';
+import { ModalServiceComponent } from './components/modal-service/modal-service.component';
 import { LightingService } from './services/lighting.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -22,7 +23,8 @@ import { takeUntil } from 'rxjs/operators';
     // CatGuideComponent, // DESHABILITADO
     ConsultationButtonComponent,
     // CursorInventoryComponent, // DESHABILITADO
-    CustomCursorComponent
+    CustomCursorComponent,
+    ModalServiceComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -32,6 +34,10 @@ export class AppComponent implements OnInit, OnDestroy {
   heroIlluminated = false; // FORZADO: DEBE iniciar en false
   heroAnimated = false; // Público para template - Para evitar animación infinita
   title = 'Daniel Castiblanco - Consultor de IA';
+  
+  // Modal state - movido desde service-hieroglyphs
+  isModalOpen = false;
+  selectedServiceId: string | null = null;
 
   constructor(private lightingService: LightingService) {}
 
@@ -212,5 +218,16 @@ export class AppComponent implements OnInit, OnDestroy {
       if (changeInterval) clearInterval(changeInterval);
       element.innerHTML = finalText;
     }, maxDuration);
+  }
+
+  // Modal event handlers - movidos desde service-hieroglyphs
+  onServiceModalOpen(data: { serviceId: string }) {
+    this.selectedServiceId = data.serviceId;
+    this.isModalOpen = true;
+  }
+
+  onCloseModal(): void {
+    this.isModalOpen = false;
+    this.selectedServiceId = null;
   }
 }

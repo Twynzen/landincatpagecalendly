@@ -38,11 +38,18 @@
     </header>
     
     <!-- Service hieroglyphs con título separado -->
-    <app-service-hieroglyphs></app-service-hieroglyphs>
+    <app-service-hieroglyphs (openModal)="onServiceModalOpen($event)"></app-service-hieroglyphs>
     
     <!-- CTA Button -->
     <app-consultation-button></app-consultation-button>
   </div>
+  
+  <!-- Modal Service - MOVIDO desde service-hieroglyphs para fix z-index -->
+  <app-modal-service 
+    [serviceId]="selectedServiceId"
+    [isOpen]="isModalOpen"
+    (closeModal)="onCloseModal()">
+  </app-modal-service>
   
   <!-- Cat guide assistant - DESHABILITADO POR AHORA -->
   <!-- <app-cat-guide></app-cat-guide> -->
