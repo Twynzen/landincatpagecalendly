@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LightingService } from '../../services/lighting.service';
 import { CatGuideComponent } from '../cat-guide/cat-guide.component';
+import { ModalServiceComponent } from '../modal-service/modal-service.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -15,13 +16,17 @@ interface ServiceCard {
 @Component({
   selector: 'app-service-hieroglyphs',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ModalServiceComponent],
   templateUrl: './service-hieroglyphs.component.html',
   styleUrl: './service-hieroglyphs.component.scss'
 })
 export class ServiceHieroglyphsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   headerIlluminated = false;
+  
+  // Modal state
+  isModalOpen = false;
+  selectedServiceId: string | null = null;
   
   services: ServiceCard[] = [
     {
@@ -248,24 +253,19 @@ export class ServiceHieroglyphsComponent implements OnInit, OnDestroy {
       return; // Can't click on dark services
     }
     
-    // Trigger cat explanation through ViewChild or service injection
-    if (this.catGuide) {
-      this.catGuide.explainService(service.id);
-    } else {
-      // Fallback: Find cat component and call method
-      setTimeout(() => {
-        const catComponent = document.querySelector('app-cat-guide') as any;
-        if (catComponent && catComponent.__ngContext__) {
-          const catInstance = catComponent.__ngContext__[0];
-          if (catInstance && catInstance.explainService) {
-            catInstance.explainService(service.id);
-          }
-        }
-      }, 100);
-    }
+    // Open modal with service details
+    this.selectedServiceId = service.id;
+    this.isModalOpen = true;
     
     // Visual feedback
     this.createClickEffect(service.id);
+  }
+
+  onCloseModal(): void {
+    // console.log('🔥 service-hieroglyphs onCloseModal ejecutado!');
+    this.isModalOpen = false;
+    this.selectedServiceId = null;
+    // console.log('🔥 Modal state actualizado:', { isModalOpen: this.isModalOpen, selectedServiceId: this.selectedServiceId });
   }
 
   private createClickEffect(serviceId: string): void {

@@ -3,7 +3,7 @@
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 100;
+  z-index: 10 !important; // Forzar DETRÁS del modal
   text-align: center;
 }
 
@@ -188,7 +188,7 @@
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 1000;
+  z-index: 9 !important; // Forzar MUY detrás del modal
 }
 
 .binary-particle {

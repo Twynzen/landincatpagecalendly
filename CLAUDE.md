@@ -3,102 +3,204 @@
 ## 🎯 **OBJETIVO DEL PROYECTO**
 Landing page profesional Matrix para **Daniel Castiblanco - Consultor de IA** con sistema de iluminación por proximidad de cursor. Los textos se revelan mediante animaciones Matrix "revelation" al acercarse el cursor.
 
-## 📋 **ESTADO ACTUAL - FUNCIONAL**
-**Fecha**: Agosto 30, 2025
-- ✅ Sistema de iluminación por proximidad funcional
-- ✅ 6 antorchas Tech Matrix (pueden encenderse permanentemente)
-- ✅ Animaciones Matrix revelation automáticas en todos los textos
-- ✅ Cursor personalizado (fire/torch/net)
-- ✅ Full SCSS + CSS animations (sin Canvas)
-- ✅ Responsive design
-- 🔒 `CatGuideComponent` y `CursorInventoryComponent` deshabilitados (posible uso futuro)
+## 📋 **ESTADO ACTUAL - SISTEMA MODAL FUNCIONAL**
+**Fecha**: Septiembre 05, 2025 - v4.4
 
-## 🏗️ **ESTRUCTURA DEL PROYECTO**
+### ✅ **IMPLEMENTACIONES COMPLETADAS:**
+- **Sistema de modales informativos** para 6 servicios completamente funcional
+- **Iconos SVG animados personalizados** (ECG pulse, eye blink, brain pulse, chart bars, escudo medieval)
+- **Event handlers híbridos** (Angular + Native listeners para máxima compatibilidad)
+- **Z-index nuclear** para modal (999999) con backdrop click funcional
+- **Dot verde clickeable** en terminal header para cerrar modal
+- **Scroll horizontal eliminado** en modales
+- **Estética Matrix completa** con efectos visuales coherentes
 
-### Componentes Activos:
-- **`app.component`** - Main container con hero section
-- **`circuits-background`** - Fondo con circuitos CSS animados
-- **`torch-system`** - 6 antorchas que se encienden permanentemente
-- **`service-hieroglyphs`** - 6 servicios de consultoría en grid 3x2
-- **`consultation-button`** - Botón CTA con pulso sutil verde y ondas de carga
-- **`custom-cursor`** - Cursor personalizado fire/torch/net
+### 🚨 **ISSUE PENDIENTE CRÍTICO:**
+1. **Botón CTA Z-index**: El botón "AGENDAR SESIÓN GRATUITA" sigue apareciendo encima del modal
+   - **Cambio de requerimientos**: Originalmente se quería que el botón estuviera siempre visible, pero ahora debe quedarse DETRÁS de los modales porque se ve feo que se interponga
+   - **Estado actual**: Probados z-index extremos (999999 vs 10) con `!important` sin éxito
+   - **Posible causa**: Stacking context issue o CSS conflictivo más profundo
 
-### Servicios:
-- **`lighting.service`** - Control de iluminación por proximidad
-- **`services-data.service`** - Data de los 6 servicios
-- **`game-state.service`** - Estado general de la app
+## 🏗️ **ARQUITECTURA TÉCNICA**
 
-## ⚡ **MECÁNICA DE ILUMINACIÓN**
+### **📁 ESTRUCTURA DE COMPONENTES:**
 
-### Sistema "Raspa y Ganas":
+#### **Componente Modal** ✅
 ```
-Cursor se acerca a elemento → Se ilumina gradualmente → 
-Animación Matrix revelation → Permanece iluminado
+src/app/components/modal-service/
+├── modal-service.component.ts      # Event handlers híbridos + lifecycle hooks
+├── modal-service.component.html    # Template con dot verde clickeable  
+├── modal-service.component.scss    # Z-index 999999 + overflow hidden
+└── modal-service.component.spec.ts
 ```
 
-### Elementos que se Iluminan:
-1. **Hero Section** (app.component):
-   - "DANIEL CASTIBLANCO" (pequeño)
-   - "CONSULTOR DE IA" (grande)  
-   - "Para PERSONAS y NEGOCIOS" (blur effect)
+#### **Servicios de Datos** ✅
+```
+src/app/services/services-data.service.ts
+- Interface ServiceDetail con iconos animados
+- 6 servicios con features y tecnologías detalladas
+- Métodos getServiceDetail() y getAllServiceDetails()
+```
 
-2. **Services Section**:
-   - Header "ESPECIALIDADES DE CONSULTORÍA"
-   - 6 cards individuales con títulos
+#### **Integración Principal** ✅
+```
+src/app/components/service-hieroglyphs/
+├── service-hieroglyphs.component.ts   # Modal state management
+└── service-hieroglyphs.component.html # Modal component render
+```
 
-3. **Consultation Button**:
-   - Estado apagado: Pulso sutil verde cada 3s (texto + contorno)
-   - Estado iluminado: 4 ondas de carga concéntricas + verde brillante
+### **🎯 FUNCIONALIDADES IMPLEMENTADAS:**
 
-4. **Antorchas**:
-   - Se encienden permanentemente al hover/click
+#### **1. Sistema Modal Completo**
+- **Apertura**: Click en tarjeta servicio iluminada
+- **Cierre método 1**: Click en dot verde del terminal header  
+- **Cierre método 2**: Click en backdrop (fuera del contenido)
+- **Protección**: Click dentro del modal NO lo cierra
+- **Animaciones**: Matrix rain, terminal header, glow effects
 
-## 🎨 **DISEÑO VISUAL**
+#### **2. Iconos SVG Personalizados**
+- **ECG Pulse**: `modal-service.component.html:54-59` - Waveform médico animado
+- **Eye Blink**: `modal-service.component.html:61-70` - Parpadeo realista
+- **Brain Pulse**: `modal-service.component.html:72-84` - Pulso cerebral con glow
+- **Chart Bars**: `modal-service.component.html:86-92` - Barras animadas
+- **Shield Medieval**: `modal-service.component.html:90-95` - Escudo futurista con checkmark
 
-### Layout Base (según `landinpreview.png`):
-- **Header**: Títulos principales arriba
-- **Services**: Grid 3x2 profesional con íconos SVG
-- **CTA**: Botón verde Matrix prominente
-- **Background**: Circuitos CSS que se iluminan
+#### **3. Event Handling Robusto**
+- **Angular Bindings**: `(click)="onClose()"` en dot verde
+- **Native Listeners**: `addEventListener` en backdrop con `afterViewInit`
+- **Change Detection**: Forzada con `ChangeDetectorRef.detectChanges()`
+- **Error Handling**: Try-catch con debugging comentado
 
-### Animaciones Matrix Revelation:
-- **Técnica**: Caracteres aleatorios (`01!@#$%^&*`) que se revelan desordenadamente
-- **Timing**: 80ms por carácter
-- **Efecto**: Texto se "hackea/descifra" mágicamente
-- **Color**: Verde Matrix `#00ff44` con glow
+#### **4. Estilos Matrix Coherentes**
+- **Terminal Header**: Dots rojos/amarillos/verdes con hover effects
+- **Typography**: Courier New monospace con green glow
+- **Scrollbar Custom**: Verde Matrix con border-radius
+- **Responsive**: Mobile-friendly con breakpoints
 
-### Typography:
-- **Font**: Courier New (monospace robótico)
-- **Sizes**: Según `landinpreview.png` exactos
-- **Effects**: Text-shadow brillante verde
-- **Botón CTA**: Glitchy Demo Italic (apagado) → Arial (iluminado) con pulso sutil
+### **🔧 CONFIGURACIÓN TÉCNICA ACTUAL:**
 
-## 🔧 **COMANDOS ÚTILES**
+#### **Z-Index Hierarchy (PROBLEMÁTICA)**
+```css
+Modal Backdrop:     999999 !important  ← Máximo intentado
+Botón Consulta:     10 !important      ← Mínimo intentado  
+Partículas:         9 !important       ← Mínimo intentado
+Otros elementos:    < 9                 ← Normal
+```
 
+#### **Event Listeners**
+```typescript
+// Angular bindings
+(click)="onClose()" 
+(click)="onBackdropClick($event)"
+
+// Native listeners (fallback)
+backdrop.addEventListener('click', handler)
+greenDot.addEventListener('click', handler)
+```
+
+#### **CSS Overflow Control**
+```scss
+.modal-container {
+  overflow: hidden;
+  overflow-x: hidden;  // Sin scroll horizontal
+}
+
+.modal-content {
+  overflow-y: auto;    // Solo vertical
+  overflow-x: hidden;  // Sin horizontal
+  word-wrap: break-word;
+  box-sizing: border-box;
+}
+```
+
+## 🚨 **ROADMAP PARA PRÓXIMO DESARROLLADOR**
+
+### **PRIORIDAD 1 - CRÍTICA (Z-index Issue)**
+**Problema**: Botón "AGENDAR SESIÓN GRATUITA" aparece encima del modal  
+**Ubicación**: `consultation-button.component.scss:6` 
+
+**Intentos realizados SIN éxito:**
+- Z-index extremos (999999 vs 10) con `!important`
+- Inline styles en modal backdrop  
+- Múltiples niveles de z-index
+- Verificación de CSS conflicts
+
+**Próximas estrategias a probar:**
+1. **Stacking Context Reset**: Crear nuevo stacking context para modal
+2. **CSS Transform Fix**: Usar `transform: translateZ(0)` para forzar layer
+3. **Position Strategy**: Cambiar position del botón de `fixed` a `absolute`
+4. **DOM Order**: Mover modal al final del body con `document.body.appendChild`
+5. **CSS Isolation**: Usar `isolation: isolate` en modal container
+
+### **Código sugerido para probar:**
+```scss
+// Opción 1: Stacking context
+.modal-backdrop {
+  z-index: 999999 !important;
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+// Opción 2: Cambiar botón
+.consultation-container {
+  position: absolute;  // En lugar de fixed
+  z-index: 1;
+}
+```
+
+### **PRIORIDAD 2 - MEJORAS OPCIONALES**
+
+#### **A. Re-activar Animaciones Angular**
+**Estado**: Deshabilitadas por errores que mataban event handlers  
+**Ubicación**: `modal-service.component.ts:15`  
+**Causa**: `ExpressionChangedAfterItHasBeenCheckedException`
+
+#### **B. Limpieza de Debug Code**
+**Ubicación**: Múltiples console.log comentados en:
+- `modal-service.component.ts` 
+- `service-hieroglyphs.component.ts`
+- `app.component.ts`
+
+## 🎮 **GUÍA DE USO ACTUAL**
+
+### **Para el Usuario:**
+1. **Abrir modal**: Click en cualquier servicio iluminado  
+2. **Ver información**: Scroll dentro del modal para ver features/tecnologías
+3. **Cerrar modal**: Click en dot verde (terminal header) O click fuera del contenido
+
+### **Para el Desarrollador:**
 ```bash
 ng serve          # Testing local
-ng build          # Build producción  
+ng build          # Build producción
 ng lint          # Verificar código
 ```
 
-## 📝 **NOTAS PARA DESARROLLADOR**
+### **Testing Checklist:**
+- [ ] Modal abre con click en servicio
+- [ ] Dot verde cierra modal  
+- [ ] Backdrop click cierra modal
+- [ ] Click dentro NO cierra modal
+- [ ] **PENDIENTE: Botón CTA queda detrás del modal**
+- [ ] Sin scroll horizontal en modal
+- [ ] Iconos SVG se renderizan y animan
+- [ ] Responsive funciona en mobile
 
-### Reglas Importantes:
-- **Full SCSS**: No usar Canvas, todo con CSS animations
-- **Arquitectura modular**: Componentes separados y servicios
-- **Comunicación constante**: Preguntar ante dudas
-- **Design Preview**: Usar `design-preview.html` para cambios visuales
+## 🤝 **METODOLOGÍA DE DESARROLLO ESTABLECIDA**
 
-### Componentes Deshabilitados:
-- `CatGuideComponent` - Gato interactivo (posible uso futuro)
-- `CursorInventoryComponent` - Arsenal de cursors (posible uso futuro)
+### **Principios:**
+- **"Ultra Think"** - Análisis profundo antes de implementar
+- **Debugging extremo** - Console logs detallados para diagnóstico  
+- **Event handling híbrido** - Angular + Native para máxima compatibilidad
+- **Z-index nuclear** - Valores extremos cuando sea necesario
+- **Comunicación constante** - Documentar TODO en CLAUDE.md
 
-### Próximas Mejoras Potenciales:
-- Reactivar componentes deshabilitados
-- Nuevas animaciones específicas
-- Optimizaciones de performance
-- Nuevas mecánicas de interacción
+### **Git Workflow:**
+- **Branch actual**: `main` (desarrollo directo)
+- **Commits**: Descriptivos con emoji + Claude Code signature
+- **Documentation**: CLAUDE.md siempre actualizado antes de commits
 
 ---
 
-**🎯 FILOSOFÍA**: Landing profesional Matrix con interacción mágica - la información se revela gradualmente mediante proximidad del cursor, creando experiencia inmersiva pero elegante.
+**🎯 PRÓXIMO DESARROLLADOR**: Sistema modal 95% funcional. Solo falta resolver z-index del botón CTA. Probar estrategias de stacking context sugeridas. El resto del sistema funciona perfectamente.
+
+**🚀 ÚLTIMA MEJORA**: Modal completamente funcional con dot verde clickeable, scroll horizontal eliminado, iconos SVG personalizados. Solo el z-index del botón CTA sigue siendo problemático.

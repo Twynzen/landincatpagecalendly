@@ -27,4 +27,11 @@
       </div>
     </div>
   </div>
+  
+  <!-- Modal Component -->
+  <app-modal-service 
+    [serviceId]="selectedServiceId"
+    [isOpen]="isModalOpen"
+    (closeModal)="onCloseModal()">
+  </app-modal-service>
 </div>
