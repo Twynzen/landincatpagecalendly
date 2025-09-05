@@ -64,10 +64,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.lightingService.registerIlluminatedElement(heroElement);
     
     // DEBUG: Verificar estado INMEDIATAMENTE después de registrar
-    console.log('✅ Hero registrado. Estado inicial:', {
-      isVisible: heroElement.isVisible,
-      currentIllumination: heroElement.currentIllumination
-    });
+    // console.log('✅ Hero registrado. Estado inicial:', {
+    //   isVisible: heroElement.isVisible,
+    //   currentIllumination: heroElement.currentIllumination
+    // });
 
     // Suscribirse a cambios de iluminación
     this.lightingService.getIlluminatedElements()
@@ -79,13 +79,13 @@ export class AppComponent implements OnInit, OnDestroy {
         
         // DEBUG SIMPLE: Solo cambios importantes
         if (wasIlluminated !== this.heroIlluminated) {
-          console.log(`🎯 Hero cambió: ${wasIlluminated} → ${this.heroIlluminated}`);
-          console.log(`📊 Illumination: ${heroElementState?.currentIllumination} / ${heroElementState?.requiredIntensity}`);
+          // console.log(`🎯 Hero cambió: ${wasIlluminated} → ${this.heroIlluminated}`);
+          // console.log(`📊 Illumination: ${heroElementState?.currentIllumination} / ${heroElementState?.requiredIntensity}`);
         }
         
         // Trigger typing animations SOLO si no ha sido animado antes
         if (this.heroIlluminated && !this.heroAnimated) {
-          console.log('🎯 Hero se iluminó por primera vez! Triggering Matrix animations...');
+          // console.log('🎯 Hero se iluminó por primera vez! Triggering Matrix animations...');
           this.triggerTypingAnimations();
         }
       });
@@ -95,18 +95,18 @@ export class AppComponent implements OnInit, OnDestroy {
     // Buscar elementos con clase typing que estén iluminados
     setTimeout(() => { // Dar tiempo para que Angular actualice las clases
       const typingElements = document.querySelectorAll('.hero-section .typing');
-      console.log('🎬 Found typing elements:', typingElements.length);
-      console.log('🔍 Hero section classes:', document.querySelector('.hero-section')?.className);
+      // console.log('🎬 Found typing elements:', typingElements.length);
+      // console.log('🔍 Hero section classes:', document.querySelector('.hero-section')?.className);
       
       if (typingElements.length === 0) {
-        console.log('❌ NO typing elements found! Checking what exists:');
-        console.log('Hero section:', document.querySelector('.hero-section'));
-        console.log('All elements with data-text:', document.querySelectorAll('[data-text]'));
+        // console.log('❌ NO typing elements found! Checking what exists:');
+        // console.log('Hero section:', document.querySelector('.hero-section'));
+        // console.log('All elements with data-text:', document.querySelectorAll('[data-text]'));
       }
       
       typingElements.forEach((element, index) => {
         setTimeout(() => {
-          console.log(`🎯 Starting Matrix animation for element ${index}:`, element);
+          // console.log(`🎯 Starting Matrix animation for element ${index}:`, element);
           this.typeText(element as HTMLElement);
           
           // Marcar como completamente animado después del último elemento
@@ -114,7 +114,7 @@ export class AppComponent implements OnInit, OnDestroy {
             // Esperar a que termine la última animación (1.5 segundos exactos)
             setTimeout(() => {
               this.heroAnimated = true;
-              console.log('✅ Hero animations completed!');
+              // console.log('✅ Hero animations completed!');
             }, 1500);
           }
         }, index * 250); // Stagger más rápido - 250ms entre cada texto (mitad)

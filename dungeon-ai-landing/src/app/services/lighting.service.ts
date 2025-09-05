@@ -46,6 +46,12 @@ export class LightingService {
 
   // Cat state
   private catCaressed = new BehaviorSubject<boolean>(false);
+  
+  // Modal state - NUEVO: Control de listeners cuando modal está abierto
+  private isModalOpen = new BehaviorSubject<boolean>(false);
+  private mouseSubscription: any = null;
+  private touchSubscription: any = null;
+  private touchStartSubscription: any = null;
 
   constructor() {
     this.initializeMouseTracking();
