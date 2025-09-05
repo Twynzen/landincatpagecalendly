@@ -167,11 +167,36 @@ export class ServicesDataService {
       title: 'AGENT ORCHESTRATION',
       description: 'Coordinación inteligente de múltiples agentes de IA especializados que trabajan en conjunto para resolver problemas complejos y automatizar flujos de trabajo empresariales.',
       features: [
-        { icon: '🤖', iconType: 'emoji', text: 'Diseño de agentes especializados por dominio' },
-        { icon: '🔄', iconType: 'emoji', text: 'Orquestación de tareas multi-agente' },
-        { icon: '💬', iconType: 'emoji', text: 'Comunicación inter-agente con protocolos definidos' },
-        { icon: '📈', iconType: 'emoji', text: 'Monitoreo de rendimiento y optimización continua' },
-        { icon: '🎯', iconType: 'emoji', text: 'Routing inteligente basado en capacidades' }
+        { 
+          icon: 'bot',
+          iconType: 'lucide',
+          animation: 'pulse',
+          text: 'Diseño de agentes especializados por dominio' 
+        },
+        { 
+          icon: 'workflow',
+          iconType: 'lucide',
+          animation: 'rotate',
+          text: 'Orquestación de tareas multi-agente' 
+        },
+        { 
+          icon: 'message-circle',
+          iconType: 'lucide',
+          animation: 'bounce',
+          text: 'Comunicación inter-agente con protocolos definidos' 
+        },
+        { 
+          icon: 'trending-up',
+          iconType: 'lucide',
+          animation: 'bars-move',
+          text: 'Monitoreo de rendimiento y optimización continua' 
+        },
+        { 
+          icon: 'target',
+          iconType: 'lucide',
+          animation: 'glow',
+          text: 'Routing inteligente basado en capacidades' 
+        }
       ],
       technologies: ['AutoGPT', 'LangGraph', 'CrewAI', 'Apache Airflow', 'Temporal', 'Microsoft AutoGen']
     },
@@ -180,11 +205,36 @@ export class ServicesDataService {
       title: 'PROCESS AUTOMATION',
       description: 'Automatización end-to-end de procesos empresariales mediante IA, reduciendo trabajo manual y mejorando eficiencia operativa con flujos de trabajo inteligentes.',
       features: [
-        { icon: '⚙️', iconType: 'emoji', text: 'Mapeo y digitalización de procesos existentes' },
-        { icon: '🚀', iconType: 'emoji', text: 'Automatización con RPA + IA conversacional' },
-        { icon: '📋', iconType: 'emoji', text: 'Gestión de excepciones con decisiones inteligentes' },
-        { icon: '🔔', iconType: 'emoji', text: 'Alertas proactivas y escalamiento automático' },
-        { icon: '📊', iconType: 'emoji', text: 'Dashboard de métricas y KPIs en tiempo real' }
+        { 
+          icon: 'map',
+          iconType: 'lucide',
+          animation: 'pulse',
+          text: 'Mapeo y digitalización de procesos existentes' 
+        },
+        { 
+          icon: 'rocket',
+          iconType: 'lucide',
+          animation: 'bounce',
+          text: 'Automatización con RPA + IA conversacional' 
+        },
+        { 
+          icon: 'clipboard-check',
+          iconType: 'lucide',
+          animation: 'glow',
+          text: 'Gestión de excepciones con decisiones inteligentes' 
+        },
+        { 
+          icon: 'bell',
+          iconType: 'lucide',
+          animation: 'heartbeat',
+          text: 'Alertas proactivas y escalamiento automático' 
+        },
+        { 
+          icon: 'bar-chart-3',
+          iconType: 'lucide',
+          animation: 'bars-move',
+          text: 'Dashboard de métricas y KPIs en tiempo real' 
+        }
       ],
       technologies: ['UiPath', 'Zapier', 'Make', 'n8n', 'Power Automate', 'Python Automation']
     },
@@ -193,11 +243,36 @@ export class ServicesDataService {
       title: 'LOCAL LLMS',
       description: 'Implementación y optimización de modelos de lenguaje ejecutados localmente, garantizando privacidad total de datos y cumplimiento regulatorio sin dependencias cloud.',
       features: [
-        { icon: '🖥️', iconType: 'emoji', text: 'Deployment on-premise de modelos open source' },
-        { icon: '🔐', iconType: 'emoji', text: 'Privacidad total - datos nunca salen de tu infraestructura' },
-        { icon: '⚡', iconType: 'emoji', text: 'Optimización de inferencia con quantization' },
-        { icon: '🎛️', iconType: 'emoji', text: 'Fine-tuning con datos propietarios' },
-        { icon: '📱', iconType: 'emoji', text: 'Edge deployment para aplicaciones móviles' }
+        { 
+          icon: 'server',
+          iconType: 'lucide',
+          animation: 'pulse',
+          text: 'Deployment on-premise de modelos open source' 
+        },
+        { 
+          icon: 'lock',
+          iconType: 'lucide',
+          animation: 'glow',
+          text: 'Privacidad total - datos nunca salen de tu infraestructura' 
+        },
+        { 
+          icon: 'zap',
+          iconType: 'lucide',
+          animation: 'bounce',
+          text: 'Optimización de inferencia con quantization' 
+        },
+        { 
+          icon: 'settings',
+          iconType: 'lucide',
+          animation: 'rotate',
+          text: 'Fine-tuning con datos propietarios' 
+        },
+        { 
+          icon: 'smartphone',
+          iconType: 'lucide',
+          animation: 'heartbeat',
+          text: 'Edge deployment para aplicaciones móviles' 
+        }
       ],
       technologies: ['Llama 3', 'Mistral', 'Ollama', 'LocalAI', 'vLLM', 'GGUF/GGML', 'TensorRT']
     },
@@ -206,11 +281,36 @@ export class ServicesDataService {
       title: 'FINOPS AI',
       description: 'Optimización financiera de recursos cloud e IA mediante análisis predictivo, identificando oportunidades de ahorro y mejorando el ROI de inversiones tecnológicas.',
       features: [
-        { icon: '💰', iconType: 'emoji', text: 'Análisis de costos cloud multi-proveedor' },
-        { icon: '📉', iconType: 'emoji', text: 'Detección de recursos subutilizados con ML' },
-        { icon: '🎯', iconType: 'emoji', text: 'Recomendaciones de rightsizing automáticas' },
-        { icon: '📊', iconType: 'emoji', text: 'Forecasting de gastos con series temporales' },
-        { icon: '⚡', iconType: 'emoji', text: 'Optimización de costos de inferencia LLM' }
+        { 
+          icon: 'dollar-sign',
+          iconType: 'lucide',
+          animation: 'pulse',
+          text: 'Análisis de costos cloud multi-proveedor' 
+        },
+        { 
+          icon: 'trending-down',
+          iconType: 'lucide',
+          animation: 'bars-move',
+          text: 'Detección de recursos subutilizados con ML' 
+        },
+        { 
+          icon: 'target',
+          iconType: 'lucide',
+          animation: 'glow',
+          text: 'Recomendaciones de rightsizing automáticas' 
+        },
+        { 
+          icon: 'line-chart',
+          iconType: 'lucide',
+          animation: 'bars-move',
+          text: 'Forecasting de gastos con series temporales' 
+        },
+        { 
+          icon: 'zap',
+          iconType: 'lucide',
+          animation: 'bounce',
+          text: 'Optimización de costos de inferencia LLM' 
+        }
       ],
       technologies: ['AWS Cost Explorer', 'Azure Cost Management', 'Kubecost', 'CloudHealth', 'Prophet', 'Custom Analytics']
     },
@@ -219,11 +319,36 @@ export class ServicesDataService {
       title: 'CUSTOM INTEGRATIONS',
       description: 'Desarrollo de integraciones personalizadas que conectan sistemas legacy con tecnologías de IA modernas, creando ecosistemas tecnológicos cohesivos y eficientes.',
       features: [
-        { icon: '🔌', iconType: 'emoji', text: 'APIs REST/GraphQL con capacidades IA' },
-        { icon: '🔄', iconType: 'emoji', text: 'ETL pipelines inteligentes con validación ML' },
-        { icon: '📡', iconType: 'emoji', text: 'Webhooks y event-driven architectures' },
-        { icon: '🛡️', iconType: 'emoji', text: 'Middleware de seguridad y autenticación' },
-        { icon: '📈', iconType: 'emoji', text: 'Real-time data streaming con procesamiento IA' }
+        { 
+          icon: 'plug',
+          iconType: 'lucide',
+          animation: 'pulse',
+          text: 'APIs REST/GraphQL con capacidades IA' 
+        },
+        { 
+          icon: 'repeat',
+          iconType: 'lucide',
+          animation: 'rotate',
+          text: 'ETL pipelines inteligentes con validación ML' 
+        },
+        { 
+          icon: 'radio',
+          iconType: 'lucide',
+          animation: 'heartbeat',
+          text: 'Webhooks y event-driven architectures' 
+        },
+        { 
+          icon: 'shield-check',
+          iconType: 'lucide',
+          animation: 'glow',
+          text: 'Middleware de seguridad y autenticación' 
+        },
+        { 
+          icon: 'activity',
+          iconType: 'lucide',
+          animation: 'bars-move',
+          text: 'Real-time data streaming con procesamiento IA' 
+        }
       ],
       technologies: ['FastAPI', 'Apache Kafka', 'Redis', 'RabbitMQ', 'Airbyte', 'Mulesoft', 'Custom Python/Node.js']
     }
