@@ -61,7 +61,7 @@
     color: #333; // Gris oscuro inicial
     text-shadow: none;
     opacity: 0.5;
-    font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
+    font-family: "Courier New", monospace;
     filter: blur(0.5px); // Efecto blur sutil
     transition: all 0.4s ease;
   }
@@ -82,7 +82,7 @@
     text-transform: uppercase;
     color: #222; // Casi invisible inicialmente
     text-shadow: none;
-    font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
+    font-family: "Courier New", monospace;
     filter: blur(1px); // Efecto blur inicial
     animation: none;
     transition: all 0.4s ease;
@@ -106,7 +106,7 @@
     color: #222; // Oscuro inicial
     text-shadow: none;
     opacity: 0.3;
-    font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace;
+    font-family: "Courier New", monospace;
     letter-spacing: 0.12em;
     filter: blur(1.2px); // Efecto borroso inicial fuerte
     text-transform: uppercase;

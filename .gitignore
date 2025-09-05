@@ -43,3 +43,7 @@ coverage/
 # Cache
 .cache/
 .parcel-cache/
+
+# Others
+debug.png
+informelibrerias.txt
