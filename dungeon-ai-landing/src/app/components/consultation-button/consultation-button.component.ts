@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, Renderer2, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LightingService } from '../../services/lighting.service';
 import { Subject } from 'rxjs';
@@ -22,7 +22,7 @@ interface BinaryParticle {
   templateUrl: './consultation-button.component.html',
   styleUrl: './consultation-button.component.scss'
 })
-export class ConsultationButtonComponent implements OnInit, OnDestroy {
+export class ConsultationButtonComponent implements OnInit, OnDestroy, AfterViewInit {
   private destroy$ = new Subject<void>();
   
   isIlluminated = false;
@@ -43,8 +43,25 @@ export class ConsultationButtonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setupLightingSubscription();
-    this.registerIlluminatedElement();
     this.initializeButtonText();
+    // NO registrar aquí - esperar a AfterViewInit para DOM real
+  }
+  
+  ngAfterViewInit(): void {
+    // Registrar con coordenadas DOM reales después del render
+    this.registerElementWithRealCoordinates();
+  }
+  
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(event: any): void {
+    // Re-registrar elemento cuando cambie el tamaño de ventana
+    this.updateElementCoordinates();
+  }
+  
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(event: any): void {
+    // Actualizar coordenadas cuando se hace scroll
+    this.updateElementCoordinates();
   }
 
   private initializeButtonText(): void {
@@ -69,20 +86,54 @@ export class ConsultationButtonComponent implements OnInit, OnDestroy {
       });
   }
 
-  private registerIlluminatedElement(): void {
-    const element = {
-      id: 'consultation-button',
-      x: window.innerWidth * 0.5, // Center horizontally
-      y: window.innerHeight * 0.85, // Near bottom
-      width: 400, // Mayor área de detección
-      height: 100, // Mayor área de detección
-      requiredIntensity: 0.2,
-      currentIllumination: 0,
-      isVisible: false,
-      isPermanent: false
-    };
+  private registerElementWithRealCoordinates(): void {
+    // Esperar a que Angular complete el render
+    setTimeout(() => {
+      const buttonElement = this.elementRef.nativeElement.querySelector('.consultation-btn');
+      if (buttonElement) {
+        const rect = buttonElement.getBoundingClientRect();
+        
+        // COORDENADAS REALES del centro del botón + scroll offset
+        const element = {
+          id: 'consultation-button',
+          x: rect.left + rect.width / 2 + window.scrollX, // Centro X real
+          y: rect.top + rect.height / 2 + window.scrollY, // Centro Y real
+          width: rect.width + 100, // Área de detección generosa
+          height: rect.height + 80, // Área de detección generosa
+          requiredIntensity: 0.15, // Más fácil de iluminar
+          currentIllumination: 0,
+          isVisible: false,
+          isPermanent: false
+        };
+        
+        this.lightingService.registerIlluminatedElement(element);
+        
+        // DEBUG temporal para verificar calibración
+        console.log('🔆 Button registered:', {
+          id: 'consultation-button',
+          realCoords: { x: element.x, y: element.y },
+          domRect: { 
+            left: rect.left, 
+            top: rect.top, 
+            width: rect.width, 
+            height: rect.height 
+          },
+          viewport: { 
+            width: window.innerWidth, 
+            height: window.innerHeight,
+            scrollY: window.scrollY
+          }
+        });
+      }
+    }, 200); // Dar tiempo al render completo
+  }
+  
+  private updateElementCoordinates(): void {
+    // Desregistrar elemento existente
+    this.lightingService.unregisterIlluminatedElement('consultation-button');
     
-    this.lightingService.registerIlluminatedElement(element);
+    // Re-registrar con nuevas coordenadas
+    this.registerElementWithRealCoordinates();
   }
 
   private triggerIlluminationParticles(): void {

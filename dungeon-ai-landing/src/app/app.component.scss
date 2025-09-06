@@ -4,7 +4,7 @@
   width: 100%;
   overflow-x: hidden;
   overflow-y: visible; // Permitir efectos de glow verticales
-  font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace; // Fuente principal
+  font-family: "Courier New", monospace; // Fuente principal
 }
 
 .main-content {
@@ -37,7 +37,7 @@
   .typing {
     .typing-text {
       display: inline-block;
-      font-family: 'Glitchy Demo Italic', 'Share Tech Mono', monospace; // Mantener fuente Glitchy
+      font-family: "Courier New", monospace; // Cambiar a Courier New
       border-right: none;
       padding-right: 2px; // Espacio para cursor
       

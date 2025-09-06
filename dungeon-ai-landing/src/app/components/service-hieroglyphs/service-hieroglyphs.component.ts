@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, HostListener, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LightingService } from '../../services/lighting.service';
 import { CatGuideComponent } from '../cat-guide/cat-guide.component';
@@ -19,7 +19,7 @@ interface ServiceCard {
   templateUrl: './service-hieroglyphs.component.html',
   styleUrl: './service-hieroglyphs.component.scss'
 })
-export class ServiceHieroglyphsComponent implements OnInit, OnDestroy {
+export class ServiceHieroglyphsComponent implements OnInit, OnDestroy, AfterViewInit {
   private destroy$ = new Subject<void>();
   headerIlluminated = false;
   
@@ -77,7 +77,24 @@ export class ServiceHieroglyphsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setupLightingSubscription();
-    this.registerIlluminatedElements();
+    // NO registrar aquí - esperar a AfterViewInit para DOM real
+  }
+  
+  ngAfterViewInit(): void {
+    // Registrar con coordenadas DOM reales después del render
+    this.registerElementsWithRealCoordinates();
+  }
+  
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(event: any): void {
+    // Re-registrar elementos cuando cambie el tamaño de ventana
+    this.updateElementCoordinates();
+  }
+  
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(event: any): void {
+    // Actualizar coordenadas cuando se hace scroll
+    this.updateElementCoordinates();
   }
 
   private setupLightingSubscription(): void {
@@ -203,47 +220,79 @@ export class ServiceHieroglyphsComponent implements OnInit, OnDestroy {
     }, 80); // Revelar una letra cada 80ms - más rápido para servicios
   }
 
-  private registerIlluminatedElements(): void {
-    // Register header
-    const headerElement = {
-      id: 'services-header',
-      x: window.innerWidth / 2,
-      y: 500, // Más abajo porque hero ahora está arriba (no centrado)
-      width: 600, // Mayor área de detección
-      height: 80,  // Mayor área de detección
-      requiredIntensity: 0.1, // MUY fácil de iluminar header
-      currentIllumination: 0,
-      isVisible: false,
-      isPermanent: false
-    };
-    this.lightingService.registerIlluminatedElement(headerElement);
-    
-    // Register each service card in grid positions
-    const gridPositions = [
-      { x: 0.25, y: 600 }, // RAG Systems - posición fija, no porcentaje
-      { x: 0.5, y: 600 },  // Agent Orchestration  
-      { x: 0.75, y: 600 }, // Process Automation
-      { x: 0.25, y: 800 }, // Local LLMs
-      { x: 0.5, y: 800 },  // FinOps AI
-      { x: 0.75, y: 800 }  // Custom Integrations
-    ];
-    
-    this.services.forEach((service, index) => {
-      const pos = gridPositions[index];
-      const element = {
-        id: `service-${service.id}`,
-        x: window.innerWidth * pos.x, // x sigue siendo porcentaje
-        y: pos.y, // y ahora es posición fija (ya no porcentaje)
-        width: 300, // Mayor área de detección
-        height: 180, // Mayor área de detección  
-        requiredIntensity: 0.1, // MUY fácil de iluminar servicios
-        currentIllumination: 0,
-        isVisible: false,
-        isPermanent: false
-      };
+  private registerElementsWithRealCoordinates(): void {
+    // Esperar a que Angular complete el render
+    setTimeout(() => {
+      // Register header si existe
+      const headerElement = document.querySelector('.services-header');
+      if (headerElement) {
+        const headerRect = headerElement.getBoundingClientRect();
+        const header = {
+          id: 'services-header',
+          x: headerRect.left + headerRect.width / 2 + window.scrollX,
+          y: headerRect.top + headerRect.height / 2 + window.scrollY,
+          width: headerRect.width + 100, // Área generosa
+          height: headerRect.height + 50,
+          requiredIntensity: 0.1,
+          currentIllumination: 0,
+          isVisible: false,
+          isPermanent: false
+        };
+        this.lightingService.registerIlluminatedElement(header);
+      }
       
-      this.lightingService.registerIlluminatedElement(element);
+      // Register each service card con coordenadas DOM REALES
+      this.services.forEach((service, index) => {
+        const domElement = document.getElementById(`service-${service.id}`);
+        if (domElement) {
+          const rect = domElement.getBoundingClientRect();
+          
+          // COORDENADAS REALES del centro del elemento + scroll offset
+          const element = {
+            id: `service-${service.id}`,
+            x: rect.left + rect.width / 2 + window.scrollX, // Centro X real
+            y: rect.top + rect.height / 2 + window.scrollY, // Centro Y real
+            width: rect.width + 80, // Área de detección generosa
+            height: rect.height + 80, // Área de detección generosa
+            requiredIntensity: 0.08, // Aún más fácil de iluminar
+            currentIllumination: 0,
+            isVisible: false,
+            isPermanent: false
+          };
+          
+          this.lightingService.registerIlluminatedElement(element);
+          
+          // DEBUG temporal para verificar calibración
+          console.log('🎯 Service registered:', {
+            id: service.id,
+            title: service.title,
+            realCoords: { x: element.x, y: element.y },
+            domRect: { 
+              left: rect.left, 
+              top: rect.top, 
+              width: rect.width, 
+              height: rect.height 
+            },
+            viewport: { 
+              width: window.innerWidth, 
+              height: window.innerHeight,
+              scrollY: window.scrollY
+            }
+          });
+        }
+      });
+    }, 200); // Dar tiempo al render completo
+  }
+  
+  private updateElementCoordinates(): void {
+    // Desregistrar elementos existentes
+    this.services.forEach(service => {
+      this.lightingService.unregisterIlluminatedElement(`service-${service.id}`);
     });
+    this.lightingService.unregisterIlluminatedElement('services-header');
+    
+    // Re-registrar con nuevas coordenadas
+    this.registerElementsWithRealCoordinates();
   }
 
   onServiceClick(service: ServiceCard): void {
@@ -278,5 +327,6 @@ export class ServiceHieroglyphsComponent implements OnInit, OnDestroy {
     this.services.forEach(service => {
       this.lightingService.unregisterIlluminatedElement(`service-${service.id}`);
     });
+    this.lightingService.unregisterIlluminatedElement('services-header');
   }
 }
